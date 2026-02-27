@@ -14,7 +14,7 @@
             <div>
                 <h6 class="text-muted mb-1">Total Menu</h6>
                 <h3 class="mb-0">24</h3>
-                <small class="tACext-success">+3 baru</small>
+                <small class="text-success">+3 baru</small>
             </div>
         </div>
     </div>
