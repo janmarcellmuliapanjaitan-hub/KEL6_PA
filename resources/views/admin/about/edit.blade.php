@@ -32,16 +32,6 @@
                     <div class="mb-3">
                         <label class="form-label">Deskripsi Lengkap <span class="text-danger">*</span></label>
                         
-                        <div class="alert alert-info">
-                            <strong>Panduan Format:</strong>
-                            <ul class="mb-0">
-                                <li><code># Judul Utama</code> - untuk judul besar</li>
-                                <li><code>## Sub Judul</code> - untuk sub judul</li>
-                                <li><code>- teks</code> - untuk bullet point</li>
-                                <li><code>&lt;br&gt;</code> - untuk baris baru</li>
-                                <li><code>**teks**</code> - untuk teks tebal (bold)</li>
-                            </ul>
-                        </div>
                         
                         <textarea name="deskripsi" rows="20" class="form-control" required>{{ old('deskripsi', $about->deskripsi) }}</textarea>
                     </div>
