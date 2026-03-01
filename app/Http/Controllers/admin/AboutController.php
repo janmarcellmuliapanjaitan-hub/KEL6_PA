@@ -5,12 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\AboutUs;
-use Illuminate\Support\Facades\Storage;
 
 class AboutController extends Controller
 {
     /**
-     * Menampilkan form edit about us (biasanya hanya 1 data)
+     * Menampilkan data about us
      */
     public function index()
     {
@@ -19,7 +18,7 @@ class AboutController extends Controller
     }
 
     /**
-     * Menampilkan form create
+     * Menampilkan form tambah data
      */
     public function create()
     {
@@ -34,16 +33,25 @@ class AboutController extends Controller
         $request->validate([
             'judul' => 'required',
             'sejarah' => 'required',
-            'visi' => 'required',
-            'misi' => 'required',
-            'gambar' => 'image|mimes:jpeg,png,jpg|max:2048'
+            'visi' => 'nullable',
+            'how_to_order' => 'required',
+            'gambar' => 'image|mimes:jpeg,png,jpg|max:2048',
+            'tahun_berdiri' => 'nullable',
+            'lokasi' => 'nullable'
         ]);
 
-        $data = $request->all();
+        $data = [
+            'judul' => $request->judul,
+            'sejarah' => $request->sejarah,
+            'visi' => $request->visi,
+            'how_to_order' => $request->how_to_order,
+            'tahun_berdiri' => $request->tahun_berdiri,
+            'lokasi' => $request->lokasi
+        ];
 
         if ($request->hasFile('gambar')) {
-            $gambar = time().'.'.$request->gambar->extension();
-            $request->gambar->move(public_path('uploads/about'), $gambar);
+            $gambar = time() . '_' . $request->file('gambar')->getClientOriginalName();
+            $request->file('gambar')->move(public_path('uploads/about'), $gambar);
             $data['gambar'] = $gambar;
         }
 
@@ -62,7 +70,7 @@ class AboutController extends Controller
         return view('admin.about.edit', compact('about'));
     }
 
-    /**
+    /**s
      * Mengupdate data
      */
     public function update(Request $request, $id)
@@ -72,21 +80,30 @@ class AboutController extends Controller
         $request->validate([
             'judul' => 'required',
             'sejarah' => 'required',
-            'visi' => 'required',
-            'misi' => 'required',
-            'gambar' => 'image|mimes:jpeg,png,jpg|max:2048'
+            'visi' => 'nullable',
+            'how_to_order' => 'required',
+            'gambar' => 'image|mimes:jpeg,png,jpg|max:2048',
+            'tahun_berdiri' => 'nullable',
+            'lokasi' => 'nullable'
         ]);
 
-        $data = $request->all();
+        $data = [
+            'judul' => $request->judul,
+            'sejarah' => $request->sejarah,
+            'visi' => $request->visi,
+            'how_to_order' => $request->how_to_order,
+            'tahun_berdiri' => $request->tahun_berdiri,
+            'lokasi' => $request->lokasi
+        ];
 
         if ($request->hasFile('gambar')) {
             // Hapus gambar lama
-            if ($about->gambar && file_exists(public_path('uploads/about/'.$about->gambar))) {
-                unlink(public_path('uploads/about/'.$about->gambar));
+            if ($about->gambar && file_exists(public_path('uploads/about/' . $about->gambar))) {
+                unlink(public_path('uploads/about/' . $about->gambar));
             }
 
-            $gambar = time().'.'.$request->gambar->extension();
-            $request->gambar->move(public_path('uploads/about'), $gambar);
+            $gambar = time() . '_' . $request->file('gambar')->getClientOriginalName();
+            $request->file('gambar')->move(public_path('uploads/about'), $gambar);
             $data['gambar'] = $gambar;
         }
 
@@ -103,8 +120,9 @@ class AboutController extends Controller
     {
         $about = AboutUs::findOrFail($id);
 
-        if ($about->gambar && file_exists(public_path('uploads/about/'.$about->gambar))) {
-            unlink(public_path('uploads/about/'.$about->gambar));
+        // Hapus gambar
+        if ($about->gambar && file_exists(public_path('uploads/about/' . $about->gambar))) {
+            unlink(public_path('uploads/about/' . $about->gambar));
         }
 
         $about->delete();

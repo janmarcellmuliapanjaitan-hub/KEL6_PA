@@ -14,17 +14,29 @@
 <div class="container py-5">
     @if($about)
         <div class="row">
-            <div class="col-md-6 mb-4">
+            <!-- Kolom Kiri: Gambar dan HOW TO ORDER -->
+            <div class="col-md-6">
+                <!-- Gambar -->
                 @if($about->gambar)
                     <img src="{{ asset('uploads/about/'.$about->gambar) }}" 
                          alt="Janji Martahan Coffee" 
-                         class="img-fluid rounded">
+                         class="img-fluid rounded mb-4">
                 @else
                     <img src="https://images.unsplash.com/photo-1559925393-8be0ec4767c8?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80" 
                          alt="Janji Martahan Coffee" 
-                         class="img-fluid rounded">
+                         class="img-fluid rounded mb-4">
                 @endif
+
+                <!-- HOW TO ORDER (di bawah gambar) -->
+                <h4 class="mb-3">HOW TO ORDER</h4>
+                <div class="how-to-order-content">
+                    {!! nl2br(e($about->how_to_order)) !!}
+                </div>
+
+                <!-- TOMBOL DIHAPUS - TATA LETAK TETAP SAMA -->
             </div>
+
+            <!-- Kolom Kanan: Info Tahun, Sejarah, Visi -->
             <div class="col-md-6">
                 @if($about->tahun_berdiri || $about->lokasi)
                     <div class="mb-3">
@@ -42,9 +54,6 @@
                 
                 <h4 class="mt-4 mb-3">Visi</h4>
                 <p>{{ $about->visi }}</p>
-                
-                <h4 class="mt-4 mb-3">Misi</h4>
-                <p>{{ $about->misi }}</p>
             </div>
         </div>
     @else
@@ -55,23 +64,34 @@
     @endif
 </div>
 
-<!-- Info Sederhana -->
-<div class="bg-light py-4">
+<!-- Info Sederhana (Diperkecil) -->
+<div class="bg-light py-3">
     <div class="container">
         <div class="row text-center">
             <div class="col-4">
-                <i class="bi bi-cup-hot fs-2" style="color: #c4a27a;"></i>
-                <p class="mt-2">Kopi Berkualitas</p>
+                <i class="bi bi-cup-hot" style="color: #c4a27a; font-size: 1.5rem;"></i>
+                <p class="mt-1 mb-0 small">Kopi Berkualitas</p>
             </div>
             <div class="col-4">
-                <i class="bi bi-tree fs-2" style="color: #c4a27a;"></i>
-                <p class="mt-2">Suasana Asri</p>
+                <i class="bi bi-tree" style="color: #c4a27a; font-size: 1.5rem;"></i>
+                <p class="mt-1 mb-0 small">Suasana Asri</p>
             </div>
             <div class="col-4">
-                <i class="bi bi-people fs-2" style="color: #c4a27a;"></i>
-                <p class="mt-2">Ramah Keluarga</p>
+                <i class="bi bi-people" style="color: #c4a27a; font-size: 1.5rem;"></i>
+                <p class="mt-1 mb-0 small">Ramah Keluarga</p>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+.how-to-order-content {
+    line-height: 1.8;
+}
+.how-to-order-content br {
+    display: block;
+    margin: 8px 0;
+    content: "";
+}
+</style>
 @endsection

@@ -15,7 +15,7 @@ class AboutUs extends Model
         'judul',
         'sejarah',
         'visi',
-        'misi',
+        'how_to_order',
         'gambar',
         'tahun_berdiri',
         'lokasi'

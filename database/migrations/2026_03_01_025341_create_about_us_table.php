@@ -10,10 +10,10 @@ return new class extends Migration
     {
         Schema::create('about_us', function (Blueprint $table) {
             $table->id();
-            $table->string('judul')->default('Tentang Kami');
-            $table->text('sejarah');
-            $table->text('visi');
-            $table->text('misi');
+            $table->string('judul')->nullable();
+            $table->text('sejarah')->nullable();
+            $table->text('visi')->nullable();
+            $table->text('how_to_order')->nullable();
             $table->string('gambar')->nullable();
             $table->string('tahun_berdiri')->nullable();
             $table->string('lokasi')->nullable();
