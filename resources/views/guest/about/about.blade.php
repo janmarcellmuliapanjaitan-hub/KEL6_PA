@@ -12,9 +12,12 @@
 
 @section('content')
 <!-- Header -->
-<div style="background: #2c1810; margin-top: -76px;">
-    <div class="container py-5">
-        <h1 class="text-center text-white">{{ $about->judul ?? 'Tentang Janji Martahan Coffee' }}</h1>
+<!-- Header -->
+<div style="background: #2c1810; margin-top: -76px; padding: 70px 0;">
+    <div class="container">
+        <h1 class="text-center text-white" style="font-size: 2.5rem; font-weight: 700; margin: 0;">
+            {{ $about->judul ?? 'Tentang Janji Martahan Coffee' }}
+        </h1>
     </div>
 </div>
 
