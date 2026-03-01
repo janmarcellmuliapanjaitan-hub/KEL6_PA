@@ -1,0 +1,120 @@
+ /* Hero Section */
+    .hero-section {
+        height: 100vh;
+        background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+                    url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-4.0.3&auto=format&fit=crop&w=2047&q=80');
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        align-items: center;
+        margin-top: -76px;
+    }
+    
+    .hero-title {
+        color: white;
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+    
+    .hero-subtitle {
+        color: #c4a27a;
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+    
+    .section {
+        padding: 60px 0;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 40px;
+        text-align: center;
+        position: relative;
+    }
+    
+    .section-title:after {
+        content: '';
+        display: block;
+        width: 50px;
+        height: 3px;
+        background: #c4a27a;
+        margin: 10px auto 0;
+    }
+    
+    .about-img {
+        width: 100%;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    
+    .testimoni-card {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .testimoni-img {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 15px;
+    }
+    
+    .rating {
+        color: #ffc107;
+        margin: 10px 0;
+    }
+    
+    .info-box {
+        background: #c4a27a;
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        height: 100%;
+    }
+    
+    .info-box i {
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+    
+    .jam-operasional {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 30px;
+    }
+    
+    .jam-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+        border-bottom: 1px dashed #ddd;
+    }
+    
+    .jam-item:last-child {
+        border-bottom: none;
+    }
+    
+    .btn-custom {
+        background: #c4a27a;
+        color: white;
+        padding: 10px 25px;
+        border-radius: 5px;
+        text-decoration: none;
+        display: inline-block;
+    }
+    
+    .btn-custom:hover {
+        background: #a8865e;
+        color: white;
+    }

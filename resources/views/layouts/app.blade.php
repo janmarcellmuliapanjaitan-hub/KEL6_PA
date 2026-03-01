@@ -16,6 +16,12 @@
     @stack('styles')
     
     <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body {
             font-family: 'Poppins', sans-serif;
             padding-top: 76px;

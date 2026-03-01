@@ -9,15 +9,9 @@ class AboutUs extends Model
 {
     use HasFactory;
 
-    protected $table = 'about_us';
-
     protected $fillable = [
         'judul',
-        'sejarah',
-        'visi',
-        'how_to_order',
-        'gambar',
-        'tahun_berdiri',
-        'lokasi'
+        'deskripsi', // SATU FIELD
+        'gambar'
     ];
 }
