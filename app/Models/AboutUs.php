@@ -11,7 +11,7 @@ class AboutUs extends Model
 
     protected $fillable = [
         'judul',
-        'deskripsi', // SATU FIELD
+        'deskripsi', // TU FIELDSA
         'gambar'
     ];
 }

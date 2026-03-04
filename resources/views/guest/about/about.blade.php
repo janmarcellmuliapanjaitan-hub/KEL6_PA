@@ -11,62 +11,51 @@
 @endpush
 
 @section('content')
-<!-- Header -->
-<!-- Header -->
-<div style="background: #2c1810; margin-top: -76px; padding: 70px 0;">
+<!-- Simple Header -->
+<div class="page-header">
     <div class="container">
-        <h1 class="text-center text-white" style="font-size: 2.5rem; font-weight: 700; margin: 0;">
-            {{ $about->judul ?? 'Tentang Janji Martahan Coffee' }}
-        </h1>
+        <h1>{{ $about->judul ?? 'Tentang Janji Martahan Coffee' }}</h1>
     </div>
 </div>
 
-<!-- Konten About -->
+<!-- Main Content -->
 <div class="container py-5">
     @if($about)
         @php
             $deskripsi = $about->deskripsi;
             
-            // 1. AMBIL BAGIAN HOW TO ORDER (UNTUK DI BAWAH GAMBAR)
+            // 1. AMBIL BAGIAN HOW TO ORDER
             $howToOrder = '';
             if (preg_match('/## HOW TO ORDER(.*?)(?=##|$)/s', $deskripsi, $matches)) {
-                $howToOrder = $matches[0]; // Ambil termasuk judulnya
+                $howToOrder = $matches[0];
                 $howToOrder = FormatHelper::parseManualFormat($howToOrder);
-                
-                // Hapus HOW TO ORDER dari deskripsi utama
                 $deskripsi = str_replace($matches[0], '', $deskripsi);
             }
             
-            // 2. SISA KONTEN (UNTUK DI KANAN)
+            // 2. SISA KONTEN
             $kontenUtama = FormatHelper::parseManualFormat($deskripsi);
         @endphp
 
-        <div class="row">
-            <!-- Kolom Kiri: Gambar + HOW TO ORDER -->
+        <div class="row g-4">
+            <!-- Left Column -->
             <div class="col-md-6">
-                <!-- Gambar -->
-                @if($about->gambar)
-                    <img src="{{ asset('uploads/about/'.$about->gambar) }}" 
-                         alt="Janji Martahan Coffee" 
-                         class="img-fluid rounded mb-4 w-100">
-                @else
-                    <img src="https://images.unsplash.com/photo-1559925393-8be0ec4767c8?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80" 
-                         alt="Janji Martahan Coffee" 
-                         class="img-fluid rounded mb-4 w-100">
-                @endif
-
-                <!-- HOW TO ORDER (DI BAWAH GAMBAR) -->
+                <!-- Image -->
+                <img src="{{ $about->gambar ? asset('uploads/about/'.$about->gambar) : 'https://images.unsplash.com/photo-1559925393-8be0ec4767c8?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80' }}" 
+                     alt="Janji Martahan Coffee" 
+                     class="about-image">
+                
+                <!-- How to Order -->
                 @if($howToOrder)
-                    <div class="how-to-order-section">
+                    <div class="order-box">
                         {!! $howToOrder !!}
                     </div>
                 @endif
             </div>
             
-            <!-- Kolom Kanan: Tentang Kami dan Our Vision -->
+            <!-- Right Column -->
             <div class="col-md-6">
                 @if($kontenUtama)
-                    <div class="about-content">
+                    <div class="content-section">
                         {!! $kontenUtama !!}
                     </div>
                 @endif
@@ -74,32 +63,37 @@
         </div>
     @else
         <div class="text-center py-5">
-            <i class="bi bi-info-circle fs-1 text-muted"></i>
-            <p class="mt-3">Informasi tentang kami sedang dalam pengembangan.</p>
+            <i class="bi bi-cup-hot fs-1" style="color: #c4a27a;"></i>
+            <p class="mt-3">Informasi sedang dalam pengembangan</p>
         </div>
     @endif
 </div>
 
-<!-- Info Sederhana -->
-<div class="bg-light py-4">
-    <div class="container">
-        <div class="row text-center">
-            <div class="col-4">
-                <i class="bi bi-cup-hot fs-2" style="color: #c4a27a;"></i>
-                <p class="mt-2">Kopi Berkualitas</p>
+<!-- Simple Divider -->
+<div class="divider"></div>
+
+<!-- Simple Features -->
+<div class="container pb-5">
+    <div class="row">
+        <div class="col-4">
+            <div class="feature-item">
+                <i class="bi bi-cup-hot"></i>
+                <p>Kopi Berkualitas</p>
             </div>
-            <div class="col-4">
-                <i class="bi bi-tree fs-2" style="color: #c4a27a;"></i>
-                <p class="mt-2">Suasana Asri</p>
+        </div>
+        <div class="col-4">
+            <div class="feature-item">
+                <i class="bi bi-tree"></i>
+                <p>Suasana Asri</p>
             </div>
-            <div class="col-4">
-                <i class="bi bi-people fs-2" style="color: #c4a27a;"></i>
-                <p class="mt-2">Ramah Keluarga</p>
+        </div>
+        <div class="col-4">
+            <div class="feature-item">
+                <i class="bi bi-people"></i>
+                <p>Ramah Keluarga</p>
             </div>
         </div>
     </div>
 </div>
-
-
-</style>
 @endsection
+bagian ini nya?

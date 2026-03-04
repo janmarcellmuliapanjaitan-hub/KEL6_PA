@@ -42,7 +42,14 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::delete('/location/{id}', [LocationController::class, 'destroy'])->name('location.destroy'); // Tambah delete
     
     // About Us - Gunakan resource agar dapat CRUD lengkap
-    Route::resource('about', AboutController::class);
+    Route::prefix('about')->name('about.')->controller(AboutController::class)->group(function () {
+    Route::get('/', 'index')->name('index');           // List
+    Route::get('/create', 'create')->name('create');   // Form create
+    Route::post('/', 'store')->name('store');          // Simpan data
+    Route::get('/{id}/edit', 'edit')->name('edit');    // Form edit
+    Route::put('/{id}', 'update')->name('update');     // Update data
+    Route::delete('/{id}', 'destroy')->name('destroy'); // Hapus data
+});
 });
 
 // Auth Routes
