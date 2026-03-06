@@ -2,57 +2,54 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\guest\TestimoniController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\MenuController;
-use App\Http\Controllers\Admin\TestimonialController;
-use App\Http\Controllers\Admin\ContactController;
-use App\Http\Controllers\Admin\LocationController;
 use App\Http\Controllers\Admin\AboutController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 
-// Halaman Public
-Route::get('/', [PageController::class, 'home'])->name('home'); // Ubah dari 'welcome' jadi 'home' biar konsisten
+/*
+|--------------------------------------------------------------------------
+| Public Routes (Halaman User)
+|--------------------------------------------------------------------------
+*/
+Route::get('/', [PageController::class, 'home'])->name('home');
 Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/menu', [PageController::class, 'menu'])->name('menu');
-Route::get('/testimoni', [PageController::class, 'testimoni'])->name('testimoni');
+Route::get('/testimoni', [TestimoniController::class, 'index'])->name('testimoni');
+Route::post('/testimoni', [TestimoniController::class, 'store'])->name('testimoni.store');
 Route::get('/kontak', [PageController::class, 'kontak'])->name('kontak');
 
-// Halaman Admin (dengan middleware auth)
+/*
+|--------------------------------------------------------------------------
+| Admin Routes (Halaman Admin - Perlu Login)
+|--------------------------------------------------------------------------
+*/
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
-    // Dashboard
+    
+    // Dashboard Admin
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     
-    // Menu
-    Route::resource('menus', MenuController::class); // Ubah dari 'menu' jadi 'menus' biar konsisten dengan resource
+    // Testimoni Management - Using singular 'testimoni' to match view expectations
+    Route::resource('testimoni', \App\Http\Controllers\Admin\TestimoniController::class);
+    Route::get('testimoni/{id}/approve', [\App\Http\Controllers\Admin\TestimoniController::class, 'approve'])->name('testimoni.approve');
     
-    // Testimoni
-    Route::resource('testimonials', TestimonialController::class);
-    
-    // Contact
-    Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
-    Route::post('/contact', [ContactController::class, 'store'])->name('contact.store'); // Tambah store
-    Route::put('/contact/{id}', [ContactController::class, 'update'])->name('contact.update');
-    Route::delete('/contact/{id}', [ContactController::class, 'destroy'])->name('contact.destroy'); // Tambah delete
-    
-    // Location
-    Route::get('/location', [LocationController::class, 'index'])->name('location.index');
-    Route::post('/location', [LocationController::class, 'store'])->name('location.store'); // Tambah store
-    Route::put('/location/{id}', [LocationController::class, 'update'])->name('location.update');
-    Route::delete('/location/{id}', [LocationController::class, 'destroy'])->name('location.destroy'); // Tambah delete
-    
-    // About Us - Gunakan resource agar dapat CRUD lengkap
-    Route::prefix('about')->name('about.')->controller(AboutController::class)->group(function () {
-    Route::get('/', 'index')->name('index');           // List
-    Route::get('/create', 'create')->name('create');   // Form create
-    Route::post('/', 'store')->name('store');          // Simpan data
-    Route::get('/{id}/edit', 'edit')->name('edit');    // Form edit
-    Route::put('/{id}', 'update')->name('update');     // Update data
-    Route::delete('/{id}', 'destroy')->name('destroy'); // Hapus data
-});
+    // About Us Management
+    Route::prefix('about')->name('about.')->group(function () {
+        Route::get('/', [AboutController::class, 'index'])->name('index');
+        Route::get('/create', [AboutController::class, 'create'])->name('create');
+        Route::post('/', [AboutController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [AboutController::class, 'edit'])->name('edit');
+        Route::put('/{id}', [AboutController::class, 'update'])->name('update');
+        Route::delete('/{id}', [AboutController::class, 'destroy'])->name('destroy');
+    });
 });
 
-// Auth Routes
+/*
+|--------------------------------------------------------------------------
+| Authentication Routes
+|--------------------------------------------------------------------------
+*/
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');

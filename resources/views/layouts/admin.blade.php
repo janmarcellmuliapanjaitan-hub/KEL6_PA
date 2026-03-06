@@ -152,32 +152,15 @@
             </li>
             
            <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('admin.testimonials*') ? 'active' : '' }}" 
-                   href="{{ route('admin.testimonials.index') }}">
-                    <i class="bi bi-star"></i> Menu
-                </a>
-            </li>
-            
-            <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('admin.testimonials*') ? 'active' : '' }}" 
-                   href="{{ route('admin.testimonials.index') }}">
+                <a class="nav-link {{ request()->routeIs('admin.testimoni*') ? 'active' : '' }}" 
+                   href="{{ route('admin.testimoni.index') }}">
                     <i class="bi bi-star"></i> Testimoni
                 </a>
             </li>
             
-            <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('admin.contact*') ? 'active' : '' }}" 
-                   href="{{ route('admin.contact.index') }}">
-                    <i class="bi bi-telephone"></i> Contact
-                </a>
-            </li>
+          
+        
             
-            <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('admin.location*') ? 'active' : '' }}" 
-                   href="{{ route('admin.location.index') }}">
-                    <i class="bi bi-geo-alt"></i> Location
-                </a>
-            </li>
             
             <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('admin.about.index*') ? 'active' : '' }}" 

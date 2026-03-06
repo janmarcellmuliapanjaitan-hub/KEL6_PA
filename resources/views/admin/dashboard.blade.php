@@ -113,7 +113,7 @@
         <div class="card">
             <div class="card-header bg-white d-flex justify-content-between align-items-center">
                 <h6 class="mb-0">Testimoni Terbaru</h6>
-                <a href="{{ route('admin.testimonials.index') }}" class="btn btn-sm btn-outline-primary">Lihat Semua</a>
+                <a href="{{ route('admin.testimoni.index') }}" class="btn btn-sm btn-outline-primary">Lihat Semua</a>
             </div>
             <div class="card-body">
                 <div class="list-group">
