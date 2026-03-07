@@ -479,7 +479,6 @@ body {
           <span class="story__counter-label">Est.</span>
         </div>
       </div>
-
       <div class="story__text reveal reveal-d1">
         <p class="label-tag">Tentang Kami</p>
         <h2 class="story__heading">
