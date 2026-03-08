@@ -5,8 +5,10 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\guest\TestimoniController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AboutController;
+use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Guest\ContactController as GuestContactController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +20,8 @@ Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/menu', [PageController::class, 'menu'])->name('menu');
 Route::get('/testimoni', [TestimoniController::class, 'index'])->name('testimoni');
 Route::post('/testimoni', [TestimoniController::class, 'store'])->name('testimoni.store');
-Route::get('/kontak', [PageController::class, 'kontak'])->name('kontak');
+Route::get('/kontak', [GuestContactController::class, 'index'])->name('kontak');
+Route::get('/contacts', [GuestContactController::class, 'index'])->name('contacts');
 
 /*
 |--------------------------------------------------------------------------
@@ -30,9 +33,9 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     // Dashboard Admin
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     
-    // Testimoni Management - Using singular 'testimoni' to match view expectations
+    // Testimoni Management
     Route::resource('testimoni', \App\Http\Controllers\Admin\TestimoniController::class);
-    Route::get('testimoni/{id}/approve', [\App\Http\Controllers\Admin\TestimoniController::class, 'approve'])->name('testimoni.approve');
+    Route::post('testimoni/{id}/approve', [\App\Http\Controllers\Admin\TestimoniController::class, 'approve'])->name('testimoni.approve');
     
     // About Us Management
     Route::prefix('about')->name('about.')->group(function () {
@@ -42,6 +45,16 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::get('/{id}/edit', [AboutController::class, 'edit'])->name('edit');
         Route::put('/{id}', [AboutController::class, 'update'])->name('update');
         Route::delete('/{id}', [AboutController::class, 'destroy'])->name('destroy');
+    });
+    
+    // CONTACT MANAGEMENT - Dengan struktur seperti About
+    Route::prefix('contacts')->name('contacts.')->group(function () {
+        Route::get('/', [ContactController::class, 'index'])->name('index');
+        Route::get('/create', [ContactController::class, 'create'])->name('create');
+        Route::post('/', [ContactController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [ContactController::class, 'edit'])->name('edit');
+        Route::put('/{id}', [ContactController::class, 'update'])->name('update');
+        Route::delete('/{id}', [ContactController::class, 'destroy'])->name('destroy');
     });
 });
 

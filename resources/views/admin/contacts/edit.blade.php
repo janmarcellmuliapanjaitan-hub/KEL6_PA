@@ -1,12 +1,10 @@
 @extends('layout.main')
 
-@section('title','Edit Kontak')
-@section('page-title','Edit Kontak')
-
 @section('content')
+<div class="container py-4">
 <div class="card">
-<div class="card-header">
-<h3 class="card-title">Edit Kontak</h3>
+<div class="card-header bg-warning">
+<h5 class="mb-0">Edit Kontak</h5>
 </div>
 
 <div class="card-body">
@@ -34,10 +32,13 @@
 <input type="text" name="jadwal" class="form-control" value="{{ $contact->jadwal }}" required>
 </div>
 
+<div class="d-flex justify-content-between">
+<a href="{{ route('admin.contacts.index') }}" class="btn btn-secondary">Batal</a>
 <button class="btn btn-primary">Update</button>
-<a href="{{ route('admin.contacts.index') }}" class="btn btn-secondary">Kembali</a>
+</div>
 
 </form>
+</div>
 </div>
 </div>
 @endsection
