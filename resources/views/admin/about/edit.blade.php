@@ -1,43 +1,87 @@
 @extends('layout.main')
 
-@section('title','Edit Kontak')
-@section('page-title','Edit Kontak')
+@section('title','Edit About Us')
+@section('page-title','Edit About Us')
 
 @section('content')
-<div class="card">
-<div class="card-header">
-<h3 class="card-title">Edit Kontak</h3>
+
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="card card-primary">
+
+            <div class="card-header">
+                <h3 class="card-title">Form Edit About Us</h3>
+            </div>
+
+            <form action="{{ route('admin.about.update',$about->id) }}" 
+                  method="POST"
+                  enctype="multipart/form-data">
+
+                @csrf
+                @method('PUT')
+
+                <div class="card-body">
+
+                    <div class="form-group">
+                        <label>Judul</label>
+
+                        <input type="text"
+                               name="judul"
+                               class="form-control"
+                               value="{{ old('judul',$about->judul) }}"
+                               required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Deskripsi</label>
+
+                        <textarea name="deskripsi"
+                                  rows="8"
+                                  class="form-control"
+                                  required>{{ old('deskripsi',$about->deskripsi) }}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Gambar Baru</label>
+
+                        <input type="file"
+                               name="gambar"
+                               class="form-control">
+                    </div>
+
+                    @if($about->gambar)
+
+                    <div class="form-group">
+                        <label>Gambar Saat Ini</label><br>
+
+                        <img src="{{ asset('uploads/about/'.$about->gambar) }}"
+                             width="150"
+                             class="img-thumbnail">
+                    </div>
+
+                    @endif
+
+                </div>
+
+                <div class="card-footer">
+
+                    <button type="submit" class="btn btn-primary">
+                        Update
+                    </button>
+
+                    <a href="{{ route('admin.about.index') }}" 
+                       class="btn btn-secondary">
+                        Batal
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
 </div>
 
-<div class="card-body">
-<form action="{{ route('admin.contacts.update',$contact->id) }}" method="POST">
-@csrf
-@method('PUT')
-
-<div class="mb-3">
-<label>Email</label>
-<input type="email" name="email" class="form-control" value="{{ $contact->email }}" required>
-</div>
-
-<div class="mb-3">
-<label>No Telepon</label>
-<input type="text" name="no_telepon" class="form-control" value="{{ $contact->no_telepon }}" required>
-</div>
-
-<div class="mb-3">
-<label>Alamat</label>
-<textarea name="alamat" class="form-control" rows="3" required>{{ $contact->alamat }}</textarea>
-</div>
-
-<div class="mb-3">
-<label>Jadwal</label>
-<input type="text" name="jadwal" class="form-control" value="{{ $contact->jadwal }}" required>
-</div>
-
-<button class="btn btn-primary">Update</button>
-<a href="{{ route('admin.contacts.index') }}" class="btn btn-secondary">Kembali</a>
-
-</form>
-</div>
-</div>
 @endsection

@@ -84,11 +84,14 @@
                      <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('testimoni') ? 'active' : '' }}" href="{{ route('testimoni') }}">Testimoni</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('testimoni') ? 'active' : '' }}" href="{{ route('testimoni') }}">Promo</a>
+                    </li>
                      <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('about') ? 'active' : '' }}" href="{{ route('about') }}">Location</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('about') ? 'active' : '' }}" href="{{ route('about') }}">Galerry</a>
+                        <a class="nav-link {{ request()->routeIs('about') ? 'active' : '' }}" href="{{ route('about') }}">Gallery</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('contacts') ? 'active' : '' }}" href="{{ route('contacts') }}">Contact</a>
@@ -97,6 +100,7 @@
                     
                     <!-- Login/Admin Area -->
                     @auth
+                        @if(Auth::user()->role === 'admin')
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                                 <i class="bi bi-person-circle me-1"></i>
@@ -115,76 +119,49 @@
                                 </li>
                             </ul>
                         </li>
+                        @else
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                <i class="bi bi-person-circle me-1"></i>
+                                {{ Auth::user()->name }}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Profil Saya</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item text-danger" href="#" onclick="event.preventDefault(); document.getElementById('logout-form-nav').submit();">
+                                        <i class="bi bi-box-arrow-right me-2"></i>Logout
+                                    </a>
+                                    <form id="logout-form-nav" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                        @endif
                     @else
-                        <li class="nav-item">
-                            <a class="nav-link btn btn-outline-light btn-sm px-3" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link btn btn-outline-light btn-sm px-3 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                                 <i class="bi bi-box-arrow-in-right me-1"></i>Login
                             </a>
+                            <ul class="dropdown-menu dropdown-menu-end" style="min-width: 200px;">
+                                <li><a class="dropdown-item" href="{{ route('guest.login.form') }}">
+                                    <i class="bi bi-person me-2"></i>Login Pelanggan
+                                </a></li>
+                                <li><a class="dropdown-item" href="{{ route('guest.register.form') }}">
+                                    <i class="bi bi-person-plus me-2"></i>Daftar Pelanggan
+                                </a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{{ route('login') }}">
+                                    <i class="bi bi-shield-lock me-2"></i>Login Admin
+                                </a></li>
+                            </ul>
                         </li>
                     @endauth
                 </ul>
             </div>
         </div>
     </nav>
-
-    <!-- Login Modal -->
-    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header" style="background: #2c1810; color: white;">
-                    <h5 class="modal-title" id="loginModalLabel">
-                        <i class="bi bi-cup-hot-fill me-2"></i>Login 
-                    </h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
-                        
-                        @if(session('error'))
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                <i class="bi bi-exclamation-triangle me-2"></i>
-                                {{ session('error') }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                            </div>
-                        @endif
-
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" placeholder="Masukkan email admin" required autofocus>
-                            @error('email')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" placeholder="Masukkan password" required>
-                            @error('password')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="remember" name="remember">
-                            <label class="form-check-label" for="remember">Ingat saya</label>
-                        </div>
-                        
-                        <button type="submit" class="btn w-100" style="background: #2c1810; color: white;">
-                            <i class="bi bi-box-arrow-in-right me-2"></i>Login
-                        </button>
-                    </form>
-                    
-                    <hr>
-                    
-                    <div class="text-center">
-                        <p class="mb-0 small">Belum punya akun admin?</p>
-                        <a href="{{ route('register') }}" class="small">Daftar sebagai Admin</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Content -->
     <main>

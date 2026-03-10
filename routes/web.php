@@ -47,7 +47,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::delete('/{id}', [AboutController::class, 'destroy'])->name('destroy');
     });
     
-    // CONTACT MANAGEMENT - Dengan struktur seperti About
+    // CONTACT MANAGEMENT 
     Route::prefix('contacts')->name('contacts.')->group(function () {
         Route::get('/', [ContactController::class, 'index'])->name('index');
         Route::get('/create', [ContactController::class, 'create'])->name('create');
@@ -63,9 +63,19 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 | Authentication Routes
 |--------------------------------------------------------------------------
 */
+// Admin Auth Routes
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
+
+// Guest (Pelanggan) Auth Routes
+Route::prefix('guest')->name('guest.')->group(function () {
+    Route::get('/login', [LoginController::class, 'showGuestLoginForm'])->name('login.form');
+    Route::post('/login', [LoginController::class, 'guestLogin'])->name('login');
+    
+    Route::get('/register', [RegisterController::class, 'showGuestRegistrationForm'])->name('register.form');
+    Route::post('/register', [RegisterController::class, 'guestRegister'])->name('register');
+});
