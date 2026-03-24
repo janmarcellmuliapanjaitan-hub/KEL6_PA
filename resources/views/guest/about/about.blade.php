@@ -15,7 +15,7 @@
 
 {{-- ── PAGE HERO ── --}}
 <div class="page-hero">
-    <img src="{{ $about->gambar ? asset('uploads/about/'.$about->gambar) : 'https://images.unsplash.com/photo-1559925393-8be0ec4767c8?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80' }}" alt="">
+    <img src="{{ $about && $about->gambar ? asset('uploads/about/'.$about->gambar) : 'https://images.unsplash.com/photo-1559925393-8be0ec4767c8?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80' }}" alt="">
     <div class="page-hero__body">
         <p class="page-hero__eyebrow">Janji Martahan Coffee</p>
         <h1>{{ $about->judul ?? 'Tentang Janji Martahan Coffee' }}</h1>
@@ -32,16 +32,16 @@
 
         @if($about)
             @php
-                $deskripsi = $about->deskripsi;
+                $deskripsi = $about->deskripsi ?? '';
 
                 $howToOrder = '';
-                if (preg_match('/## HOW TO ORDER(.*?)(?=##|$)/s', $deskripsi, $matches)) {
+                if ($deskripsi && preg_match('/## HOW TO ORDER(.*?)(?=##|$)/s', $deskripsi, $matches)) {
                     $howToOrder = $matches[0];
                     $howToOrder = FormatHelper::parseManualFormat($howToOrder);
                     $deskripsi  = str_replace($matches[0], '', $deskripsi);
                 }
 
-                $kontenUtama = FormatHelper::parseManualFormat($deskripsi);
+                $kontenUtama = $deskripsi ? FormatHelper::parseManualFormat($deskripsi) : '';
             @endphp
 
             <div class="about-grid">
@@ -63,6 +63,10 @@
                     @if($kontenUtama)
                         <div class="about-content">
                             {!! $kontenUtama !!}
+                        </div>
+                    @else
+                        <div class="about-content">
+                            <p>Informasi tentang Janji Martahan Coffee akan segera hadir. Kami sedang mempersiapkan cerita dan filosofi di balik setiap cangkir kopi yang kami sajikan.</p>
                         </div>
                     @endif
                 </div>
