@@ -14,7 +14,7 @@ return new class extends Migration
             $table->string('email');
             $table->string('no_telepon');
             $table->text('alamat');
-            $table->string('jadwal'); // Contoh: "Senin - Jumat: 08.00 - 20.00"
+            $table->string('jadwal'); 
             $table->timestamps();
         });
     }

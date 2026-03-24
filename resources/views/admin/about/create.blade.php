@@ -1,42 +1,74 @@
 @extends('layout.main')
 
-@section('title','Tambah Kontak')
-@section('page-title','Tambah Kontak')
+@section('title','Tambah About Us')
+@section('page-title','Tambah About Us')
 
 @section('content')
-<div class="card">
-<div class="card-header">
-<h3 class="card-title">Tambah Kontak</h3>
+
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="card card-primary">
+
+            <div class="card-header">
+                <h3 class="card-title">Form Tambah About Us</h3>
+            </div>
+
+            <form action="{{ route('admin.about.store') }}" 
+                  method="POST"
+                  enctype="multipart/form-data">
+
+                @csrf
+
+                <div class="card-body">
+
+                    <div class="form-group">
+                        <label>Judul</label>
+
+                        <input type="text"
+                               name="judul"
+                               class="form-control"
+                               value="{{ old('judul') }}"
+                               required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Deskripsi</label>
+
+                        <textarea name="deskripsi"
+                                  rows="8"
+                                  class="form-control"
+                                  required>{{ old('deskripsi') }}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Gambar</label>
+
+                        <input type="file"
+                               name="gambar"
+                               class="form-control">
+                    </div>
+
+                </div>
+
+                <div class="card-footer">
+
+                    <button type="submit" class="btn btn-primary">
+                        Simpan
+                    </button>
+
+                    <a href="{{ route('admin.about.index') }}" 
+                       class="btn btn-secondary">
+                        Batal
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
 </div>
 
-<div class="card-body">
-<form action="{{ route('admin.contacts.store') }}" method="POST">
-@csrf
-
-<div class="mb-3">
-<label>Email</label>
-<input type="email" name="email" class="form-control" required>
-</div>
-
-<div class="mb-3">
-<label>No Telepon</label>
-<input type="text" name="no_telepon" class="form-control" required>
-</div>
-
-<div class="mb-3">
-<label>Alamat</label>
-<textarea name="alamat" class="form-control" rows="3" required></textarea>
-</div>
-
-<div class="mb-3">
-<label>Jadwal</label>
-<input type="text" name="jadwal" class="form-control" placeholder="Senin - Jumat: 08.00 - 20.00" required>
-</div>
-
-<button class="btn btn-primary">Simpan</button>
-<a href="{{ route('admin.contacts.index') }}" class="btn btn-secondary">Kembali</a>
-
-</form>
-</div>
-</div>
 @endsection
