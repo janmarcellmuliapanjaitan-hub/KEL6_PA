@@ -25,6 +25,21 @@ Route::get('/contacts', [GuestContactController::class, 'index'])->name('contact
 
 /*
 |--------------------------------------------------------------------------
+| Guest Protected Routes (Pelanggan)
+|--------------------------------------------------------------------------
+*/
+Route::middleware('auth')->group(function () {
+    Route::post('/cart/add/{menu}', [\App\Http\Controllers\Guest\CartController::class, 'add'])->name('guest.cart.add');
+    Route::get('/cart', [\App\Http\Controllers\Guest\CartController::class, 'index'])->name('guest.cart.index');
+    Route::put('/cart/update/{id}', [\App\Http\Controllers\Guest\CartController::class, 'update'])->name('guest.cart.update');
+    Route::delete('/cart/remove/{id}', [\App\Http\Controllers\Guest\CartController::class, 'remove'])->name('guest.cart.remove');
+
+    Route::get('/checkout', [\App\Http\Controllers\Guest\CheckoutController::class, 'index'])->name('guest.checkout.index');
+    Route::post('/checkout/process', [\App\Http\Controllers\Guest\CheckoutController::class, 'process'])->name('guest.checkout.process');
+});
+
+/*
+|--------------------------------------------------------------------------
 | Admin Routes (Halaman Admin - Perlu Login)
 |--------------------------------------------------------------------------
 */
@@ -32,6 +47,12 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     
     // Dashboard Admin
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    
+    // Menu Management
+    Route::resource('menu', \App\Http\Controllers\Admin\MenuController::class);
+
+    // Order Management
+    Route::resource('orders', \App\Http\Controllers\Admin\OrderController::class)->only(['index', 'show', 'destroy']);
     
     // Testimoni Management
     Route::resource('testimoni', \App\Http\Controllers\Admin\TestimoniController::class);

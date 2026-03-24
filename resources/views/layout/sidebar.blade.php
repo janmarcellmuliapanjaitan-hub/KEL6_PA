@@ -43,6 +43,20 @@
                         </li>
 
                         <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('admin.menu*') ? 'active' : '' }}" 
+                               href="{{ route('admin.menu.index') }}">
+                                <i class="fas fa-list"></i> Menu
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('admin.orders*') ? 'active' : '' }}" 
+                               href="{{ route('admin.orders.index') }}">
+                                <i class="fas fa-shopping-bag"></i> Pesanan
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs('admin.about*') ? 'active' : '' }}" 
                                href="{{ route('admin.about.index') }}">
                                 <i class="fas fa-bullhorn"></i> About us
