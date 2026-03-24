@@ -17,9 +17,13 @@
             <div class="alert alert-success mb-2">{{ session('success') }}</div>
         @endif
 
+        @if(session('error'))
+            <div class="alert alert-danger mb-2">{{ session('error') }}</div>
+        @endif
+
         <table class="table table-bordered table-hover mb-0">
             <thead>
-                <tr>
+                32
                     <th width="50">No</th>
                     <th>Nama</th>
                     <th>Email</th>
@@ -36,7 +40,7 @@
                     <td>{{ $testimoni->nama }}</td>
                     <td>{{ $testimoni->email }}</td>
                     <td>{{ \Illuminate\Support\Str::limit($testimoni->ulasan,60) }}</td>
-                    <td>{{ $testimoni->tanggal }}</td>
+                    <td>{{ $testimoni->created_at->format('d/m/Y H:i') }}</td>
                     <td>
                         @if($testimoni->status)
                             <span class="badge badge-success">Ditampilkan</span>
@@ -45,21 +49,30 @@
                         @endif
                     </td>
                     <td>
+                        {{-- FORM APPROVE - Menggunakan POST method --}}
                         @if(!$testimoni->status)
-                            <a href="{{ route('admin.testimoni.approve',$testimoni->id) }}" 
-                               class="btn btn-success btn-sm"
-                               onclick="return confirm('Setujui testimoni ini?')">
-                               <i class="fas fa-check"></i>
-                            </a>
+                            <form action="{{ route('admin.testimoni.approve', $testimoni->id) }}" 
+                                  method="POST" 
+                                  style="display: inline-block;">
+                                @csrf
+                                <button type="submit" 
+                                        class="btn btn-success btn-sm"
+                                        onclick="return confirm('Setujui testimoni dari {{ $testimoni->nama }}?')">
+                                    <i class="fas fa-check"></i> Setujui
+                                </button>
+                            </form>
                         @endif
 
-                        <form action="{{ route('admin.testimoni.destroy',$testimoni->id) }}" 
-                              method="POST" class="d-inline">
+                        {{-- FORM DELETE - Menggunakan DELETE method --}}
+                        <form action="{{ route('admin.testimoni.destroy', $testimoni->id) }}" 
+                              method="POST" 
+                              style="display: inline-block;">
                             @csrf
                             @method('DELETE')
-                            <button class="btn btn-danger btn-sm"
-                                    onclick="return confirm('Hapus testimoni ini?')">
-                                <i class="fas fa-trash"></i>
+                            <button type="submit" 
+                                    class="btn btn-danger btn-sm"
+                                    onclick="return confirm('Hapus testimoni dari {{ $testimoni->nama }}?')">
+                                <i class="fas fa-trash"></i> Hapus
                             </button>
                         </form>
                     </td>

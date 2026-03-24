@@ -14,7 +14,7 @@ class TestimoniController extends Controller
     {
         $testimonis = Testimoni::orderBy('created_at', 'desc')->get();
         
-        // Hitung jumlah testimoni menunggu
+        // Hitung jumlah testimoni menunggu (status false = pending)
         $menunggu = Testimoni::where('status', false)->count();
         
         return view('admin.testimoni.index', compact('testimonis', 'menunggu'));
@@ -23,19 +23,34 @@ class TestimoniController extends Controller
     // Menyetujui testimoni
     public function approve($id)
     {
-        $testimoni = Testimoni::find($id);
-        $testimoni->status = true;
-        $testimoni->save();
+        try {
+            $testimoni = Testimoni::findOrFail($id);
+            
+            if ($testimoni->status) {
+                return redirect()->back()->with('info', 'Testimoni sudah disetujui sebelumnya.');
+            }
+            
+            $testimoni->status = true;
+            $testimoni->save();
 
-        return redirect()->back()->with('success', 'Testimoni disetujui dan ditampilkan.');
+            return redirect()->back()->with('success', 'Testimoni berhasil disetujui dan ditampilkan.');
+            
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
     }
 
     // Menghapus testimoni
     public function destroy($id)
     {
-        $testimoni = Testimoni::find($id);
-        $testimoni->delete();
+        try {
+            $testimoni = Testimoni::findOrFail($id);
+            $testimoni->delete();
 
-        return redirect()->back()->with('success', 'Testimoni berhasil dihapus.');
+            return redirect()->back()->with('success', 'Testimoni berhasil dihapus.');
+            
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
     }
 }
