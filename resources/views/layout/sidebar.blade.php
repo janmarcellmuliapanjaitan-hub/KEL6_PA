@@ -50,6 +50,13 @@
                         </li>
 
                         <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('admin.promo*') ? 'active' : '' }}" 
+                               href="{{ route('admin.promo.index') }}">
+                                <i class="fas fa-tags"></i> Promo
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs('admin.orders*') ? 'active' : '' }}" 
                                href="{{ route('admin.orders.index') }}">
                                 <i class="fas fa-shopping-bag"></i> Pesanan

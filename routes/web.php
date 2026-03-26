@@ -18,6 +18,7 @@ use App\Http\Controllers\Guest\ContactController as GuestContactController;
 Route::get('/', [PageController::class, 'home'])->name('home');
 Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/menu', [PageController::class, 'menu'])->name('menu');
+Route::get('/promo', [PageController::class, 'promo'])->name('promo');
 Route::get('/testimoni', [TestimoniController::class, 'index'])->name('testimoni');
 Route::post('/testimoni', [TestimoniController::class, 'store'])->name('testimoni.store');
 Route::get('/kontak', [GuestContactController::class, 'index'])->name('kontak');
@@ -54,6 +55,9 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     // Order Management
     Route::resource('orders', \App\Http\Controllers\Admin\OrderController::class)->only(['index', 'show', 'destroy']);
     
+    // Promo Management
+    Route::resource('promo', \App\Http\Controllers\Admin\PromoController::class);
+
     // Testimoni Management
     Route::resource('testimoni', \App\Http\Controllers\Admin\TestimoniController::class);
     Route::post('testimoni/{id}/approve', [\App\Http\Controllers\Admin\TestimoniController::class, 'approve'])->name('testimoni.approve');

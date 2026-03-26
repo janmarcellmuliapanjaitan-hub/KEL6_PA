@@ -22,4 +22,11 @@ class PageController extends Controller
         $menus = \App\Models\Menu::all()->groupBy('category');
         return view('guest.menu.index', compact('menus'));
     }
+
+    public function promo()
+    {
+        // Get valid promos or just latest promos
+        $promos = \App\Models\Promo::latest()->get();
+        return view('guest.promo.index', compact('promos'));
+    }
 }

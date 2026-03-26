@@ -12,17 +12,21 @@
 <div class="menu-container">
     
     <div class="cart-float-btn">
-        <a href="{{ route('guest.cart.index') }}">
-            <i class="fas fa-shopping-cart"></i> Keranjang
-            @auth
+        @auth
+            <a href="{{ route('guest.cart.index') }}">
+                <i class="fas fa-shopping-cart"></i> Keranjang
                 @php
                     $cartCount = \App\Models\Cart::where('user_id', auth()->id())->sum('quantity');
                 @endphp
                 @if($cartCount > 0)
                     <span class="cart-badge">{{ $cartCount }}</span>
                 @endif
-            @endauth
-        </a>
+            </a>
+        @else
+            <a href="{{ route('guest.register.form') }}" onclick="alert('Silakan daftar menjadi pelanggan terlebih dahulu untuk melihat keranjang.')">
+                <i class="fas fa-shopping-cart"></i> Keranjang
+            </a>
+        @endauth
     </div>
 
     <h2 class="menu-title-main">Menu Spesial Kami</h2>
