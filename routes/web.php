@@ -20,6 +20,7 @@ Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/menu', [PageController::class, 'menu'])->name('menu');
 Route::get('/promo', [PageController::class, 'promo'])->name('promo');
 Route::get('/gallery', [PageController::class, 'gallery'])->name('gallery');
+Route::get('/location', [PageController::class, 'location'])->name('location');
 Route::get('/testimoni', [TestimoniController::class, 'index'])->name('testimoni');
 Route::post('/testimoni', [TestimoniController::class, 'store'])->name('testimoni.store');
 Route::get('/kontak', [GuestContactController::class, 'index'])->name('kontak');
@@ -62,6 +63,9 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     // Gallery Management
     Route::resource('gallery', \App\Http\Controllers\Admin\GalleryController::class);
 
+    // Location Management
+    Route::resource('locations', \App\Http\Controllers\Admin\LocationController::class);
+
     // Testimoni Management
     Route::resource('testimoni', \App\Http\Controllers\Admin\TestimoniController::class);
     Route::post('testimoni/{id}/approve', [\App\Http\Controllers\Admin\TestimoniController::class, 'approve'])->name('testimoni.approve');
@@ -81,9 +85,9 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::get('/', [ContactController::class, 'index'])->name('index');
         Route::get('/create', [ContactController::class, 'create'])->name('create');
         Route::post('/', [ContactController::class, 'store'])->name('store');
-        Route::get('/{id}/edit', [ContactController::class, 'edit'])->name('edit');
-        Route::put('/{id}', [ContactController::class, 'update'])->name('update');
-        Route::delete('/{id}', [ContactController::class, 'destroy'])->name('destroy');
+        Route::get('/{contact}/edit', [ContactController::class, 'edit'])->name('edit');
+        Route::put('/{contact}', [ContactController::class, 'update'])->name('update');
+        Route::delete('/{contact}', [ContactController::class, 'destroy'])->name('destroy');
     });
 });
 

@@ -23,7 +23,7 @@
 
         <table class="table table-bordered table-hover mb-0">
             <thead>
-                32
+                
                     <th width="50">No</th>
                     <th>Nama</th>
                     <th>Email</th>

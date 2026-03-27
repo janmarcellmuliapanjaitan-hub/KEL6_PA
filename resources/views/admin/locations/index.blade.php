@@ -1,16 +1,16 @@
 @extends('layout.main')
 
-@section('title','Kelola Menu')
-@section('page-title','Data Menu')
+@section('title','Kelola Lokasi')
+@section('page-title','Data Lokasi Peta')
 
 @section('content')
 <div class="row">
     <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h3 class="card-title mb-0">Daftar Menu</h3>
-                <a href="{{ route('admin.menu.create') }}" class="btn btn-light btn-sm ml-auto text-primary">
-                    <i class="fas fa-plus"></i> Tambah Menu
+                <h3 class="card-title mb-0">Daftar Titik Lokasi</h3>
+                <a href="{{ route('admin.locations.create') }}" class="btn btn-light btn-sm ml-auto text-primary">
+                    <i class="fas fa-plus"></i> Tambah Lokasi
                 </a>
             </div>
 
@@ -32,38 +32,30 @@
                         <thead>
                             <tr>
                                 <th width="50">No</th>
-                                <th width="120">Gambar</th>
-                                <th>Nama Menu</th>
-                                <th>Kategori</th>
-                                <th>Harga</th>
-                                <th>Deskripsi</th>
+                                <th>Nama Tempat</th>
+                                <th>Alamat</th>
+                                <th>Latitude</th>
+                                <th>Longitude</th>
                                 <th width="150">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @if(count($menus) > 0)
-                                @foreach($menus as $menu)
+                            @if(count($locations) > 0)
+                                @foreach($locations as $location)
                                 <tr>
                                     <td class="align-middle">{{ $loop->iteration }}</td>
+                                    <td class="align-middle">{{ $location->name }}</td>
+                                    <td class="align-middle text-left">{{ Str::limit($location->address, 50) }}</td>
+                                    <td class="align-middle">{{ $location->latitude }}</td>
+                                    <td class="align-middle">{{ $location->longitude }}</td>
                                     <td class="align-middle">
-                                        @if($menu->image)
-                                        <img src="{{ asset($menu->image) }}" alt="{{ $menu->name }}" class="img-thumbnail" width="100">
-                                        @else
-                                        <span class="text-muted">No Image</span>
-                                        @endif
-                                    </td>
-                                    <td class="align-middle">{{ $menu->name }}</td>
-                                    <td class="align-middle"><span class="badge badge-info">{{ $menu->category }}</span></td>
-                                    <td class="align-middle">Rp {{ number_format($menu->price, 0, ',', '.') }}</td>
-                                    <td class="align-middle text-left">{{ Str::limit($menu->description, 50) }}</td>
-                                    <td class="align-middle">
-                                        <a href="{{ route('admin.menu.edit', $menu->id) }}" class="btn btn-warning btn-sm">
+                                        <a href="{{ route('admin.locations.edit', $location->id) }}" class="btn btn-warning btn-sm">
                                             <i class="fas fa-edit"></i> Edit
                                         </a>
-                                        <form action="{{ route('admin.menu.destroy', $menu->id) }}" method="POST" class="d-inline">
+                                        <form action="{{ route('admin.locations.destroy', $location->id) }}" method="POST" class="d-inline">
                                             @csrf
                                             @method('DELETE')
-                                            <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin hapus menu ini?')">
+                                            <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin hapus lokasi ini?')">
                                                 <i class="fas fa-trash"></i> Hapus
                                             </button>
                                         </form>
@@ -72,7 +64,7 @@
                                 @endforeach
                             @else
                                 <tr>
-                                    <td colspan="7" class="text-center">Belum ada menu.</td>
+                                    <td colspan="6" class="text-center">Belum ada data lokasi.</td>
                                 </tr>
                             @endif
                         </tbody>

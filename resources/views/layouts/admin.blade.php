@@ -165,6 +165,14 @@
                 </a>
             </li>
             
+           <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('admin.locations.*') ? 'active' : '' }}" 
+                   href="{{ route('admin.locations.index') }}">
+                    <i class="bi bi-geo-alt"></i> Lokasi Peta
+                </a>
+            </li>
+
+            
             
             <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('admin.about.index*') ? 'active' : '' }}" 

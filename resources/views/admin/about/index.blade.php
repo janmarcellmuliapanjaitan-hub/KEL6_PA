@@ -11,10 +11,10 @@
         <div class="card card-primary">
 
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h3 class="card-title">Data About Us</h3>
+                <h3 class="card-title mb-0">Data About Us</h3>
 
                 @if(!$about)
-                    <a href="{{ route('admin.about.create') }}" class="btn btn-primary btn-sm">
+                    <a href="{{ route('admin.about.create') }}" class="btn btn-light btn-sm ml-auto text-primary">
                         <i class="fas fa-plus"></i> Tambah Data
                     </a>
                 @endif
@@ -40,12 +40,13 @@
 
                 <div class="row">
 
-                    <div class="col-md-4">
+                    <div class="col-md-4 text-center mb-3">
                         @if($about->gambar)
                             <img src="{{ asset('uploads/about/'.$about->gambar) }}" 
-                                 class="img-fluid img-thumbnail">
+                                 class="img-fluid img-thumbnail shadow-sm" style="max-height: 250px; object-fit: cover;">
                         @else
-                            <div class="bg-light text-center p-5">
+                            <div class="bg-light p-5 text-muted border rounded">
+                                <i class="fas fa-image fa-2x mb-2"></i><br>
                                 Tidak ada gambar
                             </div>
                         @endif
@@ -53,38 +54,39 @@
 
                     <div class="col-md-8">
 
-                        <table class="table table-bordered">
+                        <table class="table table-bordered table-striped">
 
                             <tr>
-                                <th width="150">Judul</th>
-                                <td>{{ $about->judul }}</td>
+                                <th width="150" class="align-middle">Judul</th>
+                                <td class="align-middle">{{ $about->judul }}</td>
                             </tr>
 
                             <tr>
-                                <th>Deskripsi</th>
-                                <td>{!! nl2br(e($about->deskripsi)) !!}</td>
+                                <th class="align-middle">Deskripsi</th>
+                                <td class="align-middle">{!! nl2br(e($about->deskripsi)) !!}</td>
                             </tr>
 
                         </table>
 
-                        <a href="{{ route('admin.about.edit',$about->id) }}" 
-                           class="btn btn-warning">
-                            <i class="fas fa-edit"></i> Edit
-                        </a>
+                        <div class="mt-3">
+                            <a href="{{ route('admin.about.edit', $about->id) }}" 
+                               class="btn btn-warning btn-sm">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
 
-                        <form action="{{ route('admin.about.destroy',$about->id) }}" 
-                              method="POST"
-                              class="d-inline"
-                              onsubmit="return confirm('Yakin hapus data?')">
+                            <form action="{{ route('admin.about.destroy', $about->id) }}" 
+                                  method="POST"
+                                  class="d-inline"
+                                  onsubmit="return confirm('Yakin hapus data About Us ini?')">
 
-                            @csrf
-                            @method('DELETE')
+                                @csrf
+                                @method('DELETE')
 
-                            <button class="btn btn-danger">
-                                <i class="fas fa-trash"></i> Hapus
-                            </button>
-
-                        </form>
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    <i class="fas fa-trash"></i> Hapus
+                                </button>
+                            </form>
+                        </div>
 
                     </div>
 
@@ -93,17 +95,12 @@
                 {{-- DATA KOSONG --}}
                 @else
 
-                <div class="text-center p-5">
-
+                <div class="text-center p-5 border rounded bg-light">
                     <i class="fas fa-info-circle fa-3x text-muted mb-3"></i>
-
-                    <h5>Belum ada data About Us</h5>
-
-                    <a href="{{ route('admin.about.create') }}" 
-                       class="btn btn-primary mt-3">
-                        Tambah Data
+                    <h5 class="text-muted">Belum ada data About Us.</h5>
+                    <a href="{{ route('admin.about.create') }}" class="btn btn-primary btn-sm mt-2">
+                        <i class="fas fa-plus"></i> Tambah Data Sekarang
                     </a>
-
                 </div>
 
                 @endif

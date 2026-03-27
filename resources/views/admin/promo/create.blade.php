@@ -4,7 +4,7 @@
 @section('page-title','Tambah Promo Baru')
 
 @section('content')
-<div class="row justify-content-center">
+<div class="row justify-content-start">
     <div class="col-md-8">
         <div class="card card-primary">
             <div class="card-header">

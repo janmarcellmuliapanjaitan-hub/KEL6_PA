@@ -78,6 +78,13 @@
                         </li>
 
                         <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('admin.locations*') ? 'active' : '' }}" 
+                               href="{{ route('admin.locations.index') }}">
+                                <i class="fas fa-bullhorn"></i> Lokasi
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs('admin.gallery*') ? 'active' : '' }}" 
                                href="{{ route('admin.gallery.index') }}">
                                 <i class="fas fa-bullhorn"></i> Gallery

@@ -88,7 +88,7 @@
                         <a class="nav-link {{ request()->routeIs('promo') ? 'active' : '' }}" href="{{ route('promo') }}">Promo</a>
                     </li>
                      <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('about') ? 'active' : '' }}" href="{{ route('about') }}">Location</a>
+                        <a class="nav-link {{ request()->routeIs('location') ? 'active' : '' }}" href="{{ route('location') }}">Location</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('gallery') ? 'active' : '' }}" href="{{ route('gallery') }}">Gallery</a>

@@ -30,6 +30,12 @@ class PageController extends Controller
         return view('guest.promo.index', compact('promos'));
     }
 
+    public function location()
+    {
+        $locations = \App\Models\Location::all();
+        return view('guest.location.index', compact('locations'));
+    }
+
     public function gallery()
     {
         $galleries = \App\Models\Gallery::latest()->get();
