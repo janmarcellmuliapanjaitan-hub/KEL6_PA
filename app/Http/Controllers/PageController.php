@@ -29,4 +29,10 @@ class PageController extends Controller
         $promos = \App\Models\Promo::latest()->get();
         return view('guest.promo.index', compact('promos'));
     }
+
+    public function gallery()
+    {
+        $galleries = \App\Models\Gallery::latest()->get();
+        return view('guest.gallery.index', compact('galleries'));
+    }
 }

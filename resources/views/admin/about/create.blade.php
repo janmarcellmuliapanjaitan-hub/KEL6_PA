@@ -1,5 +1,4 @@
 @extends('layout.main')
-
 @section('title','Tambah About Us')
 @section('page-title','Tambah About Us')
 
@@ -29,6 +28,7 @@
                                name="judul"
                                class="form-control"
                                value="{{ old('judul') }}"
+                               placeholder="Masukkan judul"
                                required>
                     </div>
 
@@ -38,6 +38,7 @@
                         <textarea name="deskripsi"
                                   rows="8"
                                   class="form-control"
+                                  placeholder="Masukkan deskripsi"
                                   required>{{ old('deskripsi') }}</textarea>
                     </div>
 
@@ -46,7 +47,8 @@
 
                         <input type="file"
                                name="gambar"
-                               class="form-control">
+                               class="form-control"
+                               required>
                     </div>
 
                 </div>

@@ -10,39 +10,45 @@
 
         <div class="card card-primary">
 
-            <div class="card-header d-flex justify-content-between">
+            <div class="card-header d-flex justify-content-between align-items-center">
                 <h3 class="card-title">Data About Us</h3>
 
                 @if(!$about)
-                <a href="{{ route('admin.about.create') }}" class="btn btn-light btn-sm">
-                    <i class="fas fa-plus"></i> Tambah Data
-                </a>
+                    <a href="{{ route('admin.about.create') }}" class="btn btn-primary btn-sm">
+                        <i class="fas fa-plus"></i> Tambah Data
+                    </a>
                 @endif
             </div>
 
             <div class="card-body">
 
+                {{-- ALERT --}}
                 @if(session('success'))
                     <div class="alert alert-success">
                         {{ session('success') }}
                     </div>
                 @endif
 
+                @if(session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                @endif
+
+                {{-- DATA ADA --}}
                 @if($about)
 
                 <div class="row">
 
                     <div class="col-md-4">
-
                         @if($about->gambar)
-                        <img src="{{ asset('uploads/about/'.$about->gambar) }}" 
-                             class="img-fluid img-thumbnail">
+                            <img src="{{ asset('uploads/about/'.$about->gambar) }}" 
+                                 class="img-fluid img-thumbnail">
                         @else
-                        <div class="bg-light text-center p-5">
-                            Tidak ada gambar
-                        </div>
+                            <div class="bg-light text-center p-5">
+                                Tidak ada gambar
+                            </div>
                         @endif
-
                     </div>
 
                     <div class="col-md-8">
@@ -68,14 +74,13 @@
 
                         <form action="{{ route('admin.about.destroy',$about->id) }}" 
                               method="POST"
-                              class="d-inline">
+                              class="d-inline"
+                              onsubmit="return confirm('Yakin hapus data?')">
 
                             @csrf
                             @method('DELETE')
 
-                            <button class="btn btn-danger"
-                                    onclick="return confirm('Yakin hapus data?')">
-
+                            <button class="btn btn-danger">
                                 <i class="fas fa-trash"></i> Hapus
                             </button>
 
@@ -85,15 +90,17 @@
 
                 </div>
 
+                {{-- DATA KOSONG --}}
                 @else
 
                 <div class="text-center p-5">
+
+                    <i class="fas fa-info-circle fa-3x text-muted mb-3"></i>
 
                     <h5>Belum ada data About Us</h5>
 
                     <a href="{{ route('admin.about.create') }}" 
                        class="btn btn-primary mt-3">
-
                         Tambah Data
                     </a>
 

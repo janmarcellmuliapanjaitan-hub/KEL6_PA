@@ -19,6 +19,7 @@ Route::get('/', [PageController::class, 'home'])->name('home');
 Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/menu', [PageController::class, 'menu'])->name('menu');
 Route::get('/promo', [PageController::class, 'promo'])->name('promo');
+Route::get('/gallery', [PageController::class, 'gallery'])->name('gallery');
 Route::get('/testimoni', [TestimoniController::class, 'index'])->name('testimoni');
 Route::post('/testimoni', [TestimoniController::class, 'store'])->name('testimoni.store');
 Route::get('/kontak', [GuestContactController::class, 'index'])->name('kontak');
@@ -57,6 +58,9 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     
     // Promo Management
     Route::resource('promo', \App\Http\Controllers\Admin\PromoController::class);
+
+    // Gallery Management
+    Route::resource('gallery', \App\Http\Controllers\Admin\GalleryController::class);
 
     // Testimoni Management
     Route::resource('testimoni', \App\Http\Controllers\Admin\TestimoniController::class);

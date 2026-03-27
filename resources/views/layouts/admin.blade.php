@@ -158,8 +158,12 @@
                 </a>
             </li>
             
-          
-        
+           <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('admin.gallery.*') ? 'active' : '' }}" 
+                   href="{{ route('admin.gallery.index') }}">
+                    <i class="bi bi-images"></i> Galeri
+                </a>
+            </li>
             
             
             <li class="nav-item">
