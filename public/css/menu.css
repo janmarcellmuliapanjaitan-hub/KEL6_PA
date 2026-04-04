@@ -24,8 +24,19 @@
 .menu-empty-message { width: 100%; text-align: center; padding: 50px; color: #666; font-size: 1.1rem; }
 
 @media (max-width: 768px) {
+    .menu-container { padding: 12px; overflow-x: hidden; }
+    .cart-float-btn { position: fixed; bottom: 20px; right: 16px; margin-bottom: 0; z-index: 999; }
+    .menu-filter { display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 8px; padding-bottom: 8px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+    .menu-filter::-webkit-scrollbar { display: none; }
+    .menu-filter button { flex-shrink: 0; white-space: nowrap; margin: 0; }
+    .menu-card { display: flex; flex-direction: column; height: 100%; }
+    .menu-img { height: auto; aspect-ratio: 4 / 3; }
+    .menu-img-empty { height: auto; aspect-ratio: 4 / 3; }
+    .btn-add-cart { width: calc(100% - 30px); text-align: center; font-size: 13px; padding: 8px 4px; margin-top: auto; box-sizing: border-box; }
+    .menu-alert-success { word-break: break-word; }
     .menu-item { width: 50%; }
 }
+
 @media (max-width: 480px) {
     .menu-item { width: 100%; }
 }

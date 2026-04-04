@@ -171,7 +171,7 @@
     <!-- Footer -->
     <footer>
         <div class="container">
-            <p class="mb-0">&copy; {{ date('Y') }} Janji Martahan Coffee</p>
+            <p class="mb-0">{{ date('Y') }} Janji Martahan Coffee</p>
         </div>
     </footer>
 

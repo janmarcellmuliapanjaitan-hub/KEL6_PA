@@ -32,13 +32,14 @@
             </div>
           @endif
 
+          @auth
           <form action="{{ route('testimoni.store') }}" method="POST">
             @csrf
 
             <div class="mb-3">
               <label for="nama" class="form-label">Nama Lengkap</label>
               <input type="text" class="form-control @error('nama') is-invalid @enderror"
-                     id="nama" name="nama" value="{{ old('nama') }}" placeholder="Nama kamu" required>
+                     id="nama" name="nama" value="{{ old('nama', auth()->user()->name) }}" placeholder="Nama kamu" required readonly>
               @error('nama')
                 <div class="invalid-feedback">{{ $message }}</div>
               @enderror
@@ -47,7 +48,7 @@
             <div class="mb-3">
               <label for="email" class="form-label">Email</label>
               <input type="email" class="form-control @error('email') is-invalid @enderror"
-                     id="email" name="email" value="{{ old('email') }}" placeholder="email@kamu.com" required>
+                     id="email" name="email" value="{{ old('email', auth()->user()->email) }}" placeholder="email@kamu.com" required readonly>
               @error('email')
                 <div class="invalid-feedback">{{ $message }}</div>
               @enderror
@@ -67,6 +68,23 @@
               <i class="bi bi-send me-1"></i> Kirim Testimoni
             </button>
           </form>
+          @else
+          <div class="text-center py-4">
+            <div class="mb-3 text-muted">
+              <i class="bi bi-lock" style="font-size: 3rem;"></i>
+            </div>
+            <h5 class="mb-3">Login Diperlukan</h5>
+            <p class="text-muted mb-4" style="font-size: 0.9rem;">
+              Silakan login sebagai pelanggan terlebih dahulu untuk dapat membagikan pengalaman Anda.
+            </p>
+            <a href="{{ route('guest.login.form') }}" class="btn btn-submit w-100 mb-2">
+              <i class="bi bi-box-arrow-in-right me-1"></i> Login Pelanggan
+            </a>
+            <p class="mb-0 text-muted" style="font-size: 0.85rem;">
+              Belum punya akun? <a href="{{ route('guest.register.form') }}" style="color: var(--primary-color);">Daftar di sini</a>
+            </p>
+          </div>
+          @endauth
 
         </div>
       </div>

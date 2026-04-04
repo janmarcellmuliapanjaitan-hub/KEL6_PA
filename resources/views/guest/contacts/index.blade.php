@@ -30,7 +30,7 @@
 
   .info-icon {
     width: 46px; height: 46px; border-radius: 50%;
-    background: #e8192c; color: #fff; flex-shrink: 0;
+    background: #3b1800; color: #fff; flex-shrink: 0;
     display: flex; align-items: center; justify-content: center;
     font-size: 1.1rem;
   }

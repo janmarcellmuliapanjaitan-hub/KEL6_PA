@@ -13,10 +13,10 @@
     }
 
     .gallery-item {
-        margin-bottom: 30px;
+        margin-bottom: 24px;
         transition: all 0.3s;
     }
-    
+
     .gallery-card {
         border: none;
         border-radius: 12px;
@@ -25,39 +25,85 @@
         height: 100%;
         background: #fff;
     }
-    
+
     .media-container {
         position: relative;
         overflow: hidden;
-        aspect-ratio: 3 / 4; /* Membuat tampilan portrait */
+        aspect-ratio: 3 / 4;
         background: #f8f9fa;
     }
-    
+
     .media-container img {
         width: 100%;
         height: 100%;
         object-fit: cover;
         transition: transform 0.5s ease;
     }
-    
+
     .gallery-card:hover .media-container img {
         transform: scale(1.05);
     }
-    
+
     .gallery-body {
         padding: 20px;
     }
-    
+
     .gallery-desc {
         color: #555;
         font-size: 0.95rem;
         margin-bottom: 0;
     }
+
+    @media (max-width: 768px) {
+        .gallery-header {
+            padding: 80px 15px 40px;
+            margin-top: -56px;
+        }
+
+        .gallery-header h1 {
+            font-size: 2rem;
+        }
+
+        .gallery-header p {
+            font-size: 0.95rem;
+        }
+
+        .gallery-item {
+            width: 50%;
+            padding: 0 6px;
+            margin-bottom: 12px;
+            float: left;
+            box-sizing: border-box;
+        }
+
+        .media-container {
+            aspect-ratio: 3 / 3.5;
+        }
+
+        .gallery-body {
+            padding: 10px 12px;
+        }
+
+        .gallery-desc {
+            font-size: 0.85rem;
+        }
+    }
+
+    @media (max-width: 400px) {
+        .gallery-item {
+            width: 100%;
+            float: none;
+            padding: 0;
+        }
+
+        .media-container {
+            aspect-ratio: 4 / 3;
+        }
+    }
 </style>
 @endpush
 
 @section('content')
-<!-- Header -->
 <div class="gallery-header">
     <div class="container mt-5">
         <h1 class="display-4 fw-bold mb-3">Galeri Kami</h1>
@@ -66,13 +112,12 @@
 </div>
 
 <div class="container py-5">
-    <!-- Gallery Grid -->
-    <div class="row">
+    <div class="row g-3">
         @forelse($galleries as $item)
             <div class="col-md-6 col-lg-4 gallery-item">
                 <div class="gallery-card">
                     <div class="media-container">
-                        <img src="{{ asset('storage/' . $item->file_path) }}" alt="Gallery Image">
+                        <img src="{{ asset('storage/' . $item->file_path) }}" alt="Gallery Image" loading="lazy">
                     </div>
                     @if($item->description)
                     <div class="gallery-body">

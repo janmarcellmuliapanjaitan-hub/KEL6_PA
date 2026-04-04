@@ -22,7 +22,6 @@ Route::get('/promo', [PageController::class, 'promo'])->name('promo');
 Route::get('/gallery', [PageController::class, 'gallery'])->name('gallery');
 Route::get('/location', [PageController::class, 'location'])->name('location');
 Route::get('/testimoni', [TestimoniController::class, 'index'])->name('testimoni');
-Route::post('/testimoni', [TestimoniController::class, 'store'])->name('testimoni.store');
 Route::get('/kontak', [GuestContactController::class, 'index'])->name('kontak');
 Route::get('/contacts', [GuestContactController::class, 'index'])->name('contacts');
 
@@ -39,6 +38,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/checkout', [\App\Http\Controllers\Guest\CheckoutController::class, 'index'])->name('guest.checkout.index');
     Route::post('/checkout/process', [\App\Http\Controllers\Guest\CheckoutController::class, 'process'])->name('guest.checkout.process');
+
+    Route::post('/testimoni', [TestimoniController::class, 'store'])->name('testimoni.store');
 });
 
 /*

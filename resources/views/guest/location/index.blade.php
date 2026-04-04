@@ -18,7 +18,7 @@
             z-index: 1; /* Prevent map from overlapping dropdowns/navbars */
         }
         .hero-section {
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('{{ asset("images/hero-bg.jpg") }}') center/cover;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgb(87, 42, 0)), url('{{ asset("images/hero-bg.jpg") }}') center/cover;
             color: white;
             padding: 80px 0;
             margin-bottom: 40px;
