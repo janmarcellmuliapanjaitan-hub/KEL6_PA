@@ -40,17 +40,20 @@
 
                 <div class="row">
 
-                    <div class="col-md-4 text-center mb-3">
-                        @if($about->gambar)
-                            <img src="{{ asset('uploads/about/'.$about->gambar) }}" 
-                                 class="img-fluid img-thumbnail shadow-sm" style="max-height: 250px; object-fit: cover;">
-                        @else
-                            <div class="bg-light p-5 text-muted border rounded">
+                
+                <div class="col-md-4 p-0">
+                    @if($about->gambar)
+                        <img src="{{ asset('uploads/about/'.$about->gambar) }}" 
+                            style="width: 100%; height: 100%; object-fit: cover; display: block; min-height: 300px;">
+                    @else
+                        <div class="bg-light p-5 text-muted border rounded h-100 d-flex align-items-center justify-content-center">
+                            <div class="text-center">
                                 <i class="fas fa-image fa-2x mb-2"></i><br>
                                 Tidak ada gambar
                             </div>
-                        @endif
-                    </div>
+                        </div>
+                    @endif
+                </div>
 
                     <div class="col-md-8">
 

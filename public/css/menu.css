@@ -10,7 +10,7 @@
 .menu-filter button.active, .menu-filter button:hover { background: #333; color: #fff; border-color: #333; }
 .menu-card { border: 1px solid #eee; border-radius: 10px; overflow: hidden; margin-bottom: 20px; text-align: center; padding-bottom: 15px; transition: transform 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
 .menu-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px rgba(0,0,0,0.1); }
-.menu-img { width: 100%; height: 200px; object-fit: cover; }
+.menu-img { width: 100%; height: 250px; object-fit: cover; }
 .menu-img-empty { width: 100%; height: 200px; background: #eee; display: flex; align-items: center; justify-content: center; color: #999; font-weight: bold; }
 .menu-title { font-size: 1.2rem; font-weight: bold; margin: 15px 0 5px; }
 .menu-desc { font-size: 0.9rem; color: #666; padding: 0 15px; margin-bottom: 15px; height: 40px; overflow: hidden; }

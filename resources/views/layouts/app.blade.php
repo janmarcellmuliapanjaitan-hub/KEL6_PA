@@ -171,7 +171,7 @@
     <!-- Footer -->
     <footer>
         <div class="container">
-            <p class="mb-0">&copy; {{ date('Y') }} Janji Martahan Coffee. All rights reserved.</p>
+            <p class="mb-0">&copy; {{ date('Y') }} Janji Martahan Coffee</p>
         </div>
     </footer>
 
