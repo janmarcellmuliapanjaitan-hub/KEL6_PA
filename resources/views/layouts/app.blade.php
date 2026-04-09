@@ -170,8 +170,15 @@
 
     <!-- Footer -->
     <footer>
-        <div class="container">
-            <p class="mb-0">{{ date('Y') }} Janji Martahan Coffee</p>
+        <div class="container text-center">
+            <h5 class="mb-2">Janji Martahan Coffee</h5>
+            <p class="small text-white-50 mb-3">Menyajikan secangkir kehangatan dan kenyamanan untuk Anda.</p>
+            <div class="d-flex justify-content-center gap-3 mb-3">
+                <a href="{{ route('home') }}" class="text-white text-decoration-none small">Beranda</a>
+                <a href="{{ route('menu') }}" class="text-white text-decoration-none small">Menu</a>
+                <a href="{{ route('contacts') }}" class="text-white text-decoration-none small">Kontak</a>
+            </div>
+            <p class="mb-0 small text-white-50">&copy; {{ date('Y') }} Janji Martahan Coffee. All rights reserved.</p>
         </div>
     </footer>
 
