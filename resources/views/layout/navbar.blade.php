@@ -44,22 +44,12 @@
             </a>
 
             <div class="dropdown-menu dropdown-menu-right">
-
-                <a href="#" class="dropdown-item">
-                    Profile
-                </a>
-
-                <a href="#" class="dropdown-item">
-                    Settings
-                </a>
-
-                <div class="dropdown-divider"></div>
-
-                <a href="#"
+                 <a href="#"
                    class="dropdown-item text-danger"
                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     Logout
                 </a>
+              
 
                 <form id="logout-form"
                       action="{{ route('logout') }}"

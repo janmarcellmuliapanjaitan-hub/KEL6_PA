@@ -57,6 +57,8 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
     // Order Management
     Route::resource('orders', \App\Http\Controllers\Admin\OrderController::class)->only(['index', 'show', 'destroy']);
+    Route::post('orders/{id}/approve', [\App\Http\Controllers\Admin\OrderController::class, 'approve'])->name('orders.approve');
+    Route::post('orders/{id}/cancel', [\App\Http\Controllers\Admin\OrderController::class, 'cancel'])->name('orders.cancel');
     
     // Promo Management
     Route::resource('promo', \App\Http\Controllers\Admin\PromoController::class);

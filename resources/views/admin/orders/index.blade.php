@@ -25,8 +25,9 @@
                                 <th>Tipe</th>
                                 <th>Alamat</th>
                                 <th>Total</th>
+                                <th>Status</th>
                                 <th>Waktu</th>
-                                <th width="150">Aksi</th>
+                                <th width="180">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -41,15 +42,38 @@
                                     <td><span class="badge badge-info">{{ $order->delivery_type }}</span></td>
                                     <td>{{ filter_var($order->address, FILTER_SANITIZE_STRING) ?: '-' }}</td>
                                     <td class="text-success font-weight-bold">Rp {{ number_format($order->total_price, 0, ',', '.') }}</td>
+                                    <td>
+                                        @if($order->status == 'pending')
+                                            <span class="badge badge-warning">Pending</span>
+                                        @elseif($order->status == 'completed')
+                                            <span class="badge badge-success">Selesai</span>
+                                        @else
+                                            <span class="badge badge-danger">Dibatalkan</span>
+                                        @endif
+                                    </td>
                                     <td>{{ $order->created_at->format('d M Y, H:i') }}</td>
                                     <td>
-                                        <a href="{{ route('admin.orders.show', $order->id) }}" class="btn btn-info btn-sm">
-                                            <i class="fas fa-eye"></i> Detail
+                                        <a href="{{ route('admin.orders.show', $order->id) }}" class="btn btn-info btn-sm" title="Detail">
+                                            <i class="fas fa-eye"></i>
                                         </a>
+                                        @if($order->status == 'pending')
+                                            <form action="{{ route('admin.orders.approve', $order->id) }}" method="POST" class="d-inline">
+                                                @csrf
+                                                <button class="btn btn-success btn-sm" title="Setujui/Selesaikan" onclick="return confirm('Selesaikan pesanan ini?')">
+                                                    <i class="fas fa-check"></i>
+                                                </button>
+                                            </form>
+                                            <form action="{{ route('admin.orders.cancel', $order->id) }}" method="POST" class="d-inline">
+                                                @csrf
+                                                <button class="btn btn-warning btn-sm" title="Batalkan" onclick="return confirm('Batalkan pesanan ini?')">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            </form>
+                                        @endif
                                         <form action="{{ route('admin.orders.destroy', $order->id) }}" method="POST" class="d-inline">
                                             @csrf
                                             @method('DELETE')
-                                            <button class="btn btn-danger btn-sm" onclick="return confirm('Hapus pesanan ini secara permanen?')">
+                                            <button class="btn btn-danger btn-sm" title="Hapus" onclick="return confirm('Hapus pesanan ini secara permanen?')">
                                                 <i class="fas fa-trash"></i>
                                             </button>
                                         </form>
@@ -58,7 +82,7 @@
                                 @endforeach
                             @else
                                 <tr>
-                                    <td colspan="7" class="text-center">Belum ada pesanan masuk.</td>
+                                    <td colspan="8" class="text-center">Belum ada pesanan masuk.</td>
                                 </tr>
                             @endif
                         </tbody>
