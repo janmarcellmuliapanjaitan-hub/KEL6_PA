@@ -234,7 +234,7 @@
                     Tetap terhubung dengan kami di media sosial untuk info promo dan update terbaru.
                 </p>
                 <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                    <a href="#" style="width: 32px; height: 32px; border-radius: 50%; background: #3b2416; border: 1px solid #5a3a28; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: all 0.2s;"
+                    <a href="https://www.instagram.com/janji.martahan/" style="width: 32px; height: 32px; border-radius: 50%; background: #3b2416; border: 1px solid #5a3a28; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: all 0.2s;"
                        onmouseover="this.style.background='#c4a27a'; this.style.borderColor='#c4a27a';"
                        onmouseout="this.style.background='#3b2416'; this.style.borderColor='#5a3a28';">
                         <i class="bi bi-instagram" style="color: #c4a27a; font-size: 13px;"></i>

@@ -97,20 +97,5 @@
 
 <hr class="divider">
 
-{{-- ── FEATURES STRIP ── --}}
-<div class="features-strip">
-    <div class="feature-item">
-        <div class="feature-icon"><i class="bi bi-cup-hot-fill"></i></div>
-        <p>Kopi Berkualitas</p>
-    </div>
-    <div class="feature-item">
-        <div class="feature-icon"><i class="bi bi-tree-fill"></i></div>
-        <p>Suasana Asri</p>
-    </div>
-    <div class="feature-item">
-        <div class="feature-icon"><i class="bi bi-people-fill"></i></div>
-        <p>Ramah Keluarga</p>
-    </div>
-</div>
 
 @endsection
