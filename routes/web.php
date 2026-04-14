@@ -1,7 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PageController;
+use App\Http\Controllers\Guest\HomeController as GuestHomeController;
+use App\Http\Controllers\Guest\AboutController as GuestAboutController;
+use App\Http\Controllers\Guest\MenuController as GuestMenuController;
+use App\Http\Controllers\Guest\PromoController as GuestPromoController;
+use App\Http\Controllers\Guest\GalleryController as GuestGalleryController;
+use App\Http\Controllers\Guest\LocationController as GuestLocationController;
 use App\Http\Controllers\guest\TestimoniController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AboutController;
@@ -15,12 +20,12 @@ use App\Http\Controllers\Guest\ContactController as GuestContactController;
 | Public Routes (Halaman User)
 |--------------------------------------------------------------------------
 */
-Route::get('/', [PageController::class, 'home'])->name('home');
-Route::get('/about', [PageController::class, 'about'])->name('about');
-Route::get('/menu', [PageController::class, 'menu'])->name('menu');
-Route::get('/promo', [PageController::class, 'promo'])->name('promo');
-Route::get('/gallery', [PageController::class, 'gallery'])->name('gallery');
-Route::get('/location', [PageController::class, 'location'])->name('location');
+Route::get('/', [GuestHomeController::class, 'index'])->name('home');
+Route::get('/about', [GuestAboutController::class, 'index'])->name('about');
+Route::get('/menu', [GuestMenuController::class, 'index'])->name('menu');
+Route::get('/promo', [GuestPromoController::class, 'index'])->name('promo');
+Route::get('/gallery', [GuestGalleryController::class, 'index'])->name('gallery');
+Route::get('/location', [GuestLocationController::class, 'index'])->name('location');
 Route::get('/testimoni', [TestimoniController::class, 'index'])->name('testimoni');
 Route::get('/kontak', [GuestContactController::class, 'index'])->name('kontak');
 Route::get('/contacts', [GuestContactController::class, 'index'])->name('contacts');
@@ -57,6 +62,8 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
     // Order Management
     Route::resource('orders', \App\Http\Controllers\Admin\OrderController::class)->only(['index', 'show', 'destroy']);
+    Route::post('orders/{id}/approve', [\App\Http\Controllers\Admin\OrderController::class, 'approve'])->name('orders.approve');
+    Route::post('orders/{id}/cancel', [\App\Http\Controllers\Admin\OrderController::class, 'cancel'])->name('orders.cancel');
     
     // Promo Management
     Route::resource('promo', \App\Http\Controllers\Admin\PromoController::class);

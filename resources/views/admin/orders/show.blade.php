@@ -19,6 +19,15 @@
                     <tr><th>Alamat</th><td>{{ $order->address }}</td></tr>
                     @endif
                     <tr><th>Waktu</th><td>{{ $order->created_at->format('d F Y, H:i') }}</td></tr>
+                    <tr><th>Status</th><td>
+                        @if($order->status == 'pending')
+                            <span class="badge badge-warning">Pending</span>
+                        @elseif($order->status == 'completed')
+                            <span class="badge badge-success">Selesai</span>
+                        @else
+                            <span class="badge badge-danger">Dibatalkan</span>
+                        @endif
+                    </td></tr>
                     <tr><th>Catatan</th><td>{{ $order->notes ?: '-' }}</td></tr>
                 </table>
             </div>

@@ -26,4 +26,18 @@ class OrderController extends Controller
         $order->delete();
         return redirect()->route('admin.orders.index')->with('success', 'Pesanan berhasil dihapus.');
     }
+
+    public function approve($id)
+    {
+        $order = Order::findOrFail($id);
+        $order->update(['status' => 'completed']);
+        return redirect()->back()->with('success', 'Pesanan berhasil disetujui/diselesaikan.');
+    }
+
+    public function cancel($id)
+    {
+        $order = Order::findOrFail($id);
+        $order->update(['status' => 'cancelled']);
+        return redirect()->back()->with('success', 'Pesanan berhasil dibatalkan.');
+    }
 }
