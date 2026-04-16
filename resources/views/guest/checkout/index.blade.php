@@ -3,15 +3,19 @@
 @section('title', 'Checkout Pesanan')
 
 @push('styles')
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ asset('css/checkout.css') }}">
 @endpush
 
 @section('content')
 <div class="checkout-container">
-    <h2 class="checkout-title">Checkout Pesanan</h2>
+    <div class="checkout-header">
+        <p class="lbl">Selesaikan Pesanan</p>
+        <h2 class="checkout-title">Ringkasan <em>Checkout</em></h2>
+    </div>
 
-    <div class="row">
-        <div class="col-md-7">
+    <div class="checkout-row">
+        <div class="checkout-col-form">
             <div class="checkout-card">
                 <h4 class="checkout-card-title">Detail Pengiriman</h4>
                 
@@ -32,7 +36,7 @@
 
                     <div class="checkout-form-group" id="address_container" style="display: none;">
                         <label class="checkout-label">Alamat Lengkap Pengiriman</label>
-                        <textarea name="address" id="address" class="checkout-input" rows="3" placeholder="Isi detail alamat jika delivery..."></textarea>
+                        <textarea name="address" id="address" class="checkout-input" rows="3" placeholder="Isi detail alamat jika pesanan diantar..."></textarea>
                     </div>
 
                     <div class="checkout-form-group">
@@ -41,28 +45,28 @@
                     </div>
 
                     <button type="submit" class="checkout-btn-submit">
-                        <i class="fab fa-whatsapp"></i> Pesan via WhatsApp
+                        <i class="fab fa-whatsapp"></i> Pesan Sekarang via WhatsApp
                     </button>
                 </form>
             </div>
         </div>
         
-        <div class="col-md-5">
+        <div class="checkout-col-summary">
             <div class="checkout-summary-card">
-                <h4 class="checkout-summary-title">Ringkasan Belanja</h4>
+                <h4 class="checkout-summary-title">Pesanan Anda</h4>
                 
                 @foreach($carts as $cart)
                 <div class="checkout-summary-item">
-                    <div>{{ $cart->quantity }}x {{ $cart->menu->name }}</div>
-                    <div>Rp {{ number_format($cart->menu->price * $cart->quantity, 0, ',', '.') }}</div>
+                    <span>{{ $cart->quantity }}x {{ $cart->menu->name }}</span>
+                    <span>Rp {{ number_format($cart->menu->price * $cart->quantity, 0, ',', '.') }}</span>
                 </div>
                 @endforeach
                 
                 <div class="checkout-summary-divider"></div>
                 
                 <div class="checkout-total-row">
-                    <div>Total</div>
-                    <div>Rp {{ number_format($total, 0, ',', '.') }}</div>
+                    <span>Total</span>
+                    <span>Rp {{ number_format($total, 0, ',', '.') }}</span>
                 </div>
             </div>
         </div>

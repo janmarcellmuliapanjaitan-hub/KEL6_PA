@@ -55,7 +55,7 @@
     <div style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem; margin-bottom: 3rem;">
       <div>
         <p class="lbl">Menu Kami</p>
-        <h2 class="title">Sajian <em>Istimewa</em></h2>
+        <h2 class="title">Menu <em>Istimewa</em></h2>
       </div>
       <div>
         <a href="{{ route('menu') }}" class="btn-link">Lihat Selengkapnya <i class="bi bi-arrow-right"></i></a>
