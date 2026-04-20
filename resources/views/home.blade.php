@@ -11,11 +11,11 @@
 
 {{-- HERO --}}
 <section class="hero">
-  <img src="https://images.unsplash.com/photo-1559925393-8be0ec4767c8?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80" alt="">
+    <img src="{{ asset('image/home.png') }}" alt="">
   <div class="hero-body">
     <p class="hero-eyebrow">Janji Martahan Coffee</p>
-    <h1>Temukan Kenikmatan<br><em>Keasrian Alam</em></h1>
-    <p class="hero-sub">Kopi lokal terbaik Sumatera Utara, suasana asri, dan kehangatan yang selalu membuat kamu ingin kembali.</p>
+    <h1>Temukan Kenikmatan<br><em>Kopi Khas Balige</em></h1>
+    <p class="hero-sub">Kopi lokal terbaik Sumatera Utara dan Suasana yang nyaman</p>
   </div>
 </section>
 
