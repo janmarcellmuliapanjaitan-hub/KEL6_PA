@@ -57,6 +57,13 @@
             padding: 30px 0;
             text-align: center;
         }
+
+        @media all and (min-width: 992px) {
+            .navbar .nav-item.dropdown:hover .dropdown-menu {
+                display: block;
+                margin-top: 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -75,26 +82,30 @@
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">Beranda</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('about') ? 'active' : '' }}" href="{{ route('about') }}">About Us</a>
+                
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle {{ request()->routeIs('about') || request()->routeIs('contacts') ? 'active' : '' }}" href="{{ route('about') }}" onclick="if(window.innerWidth > 991){ window.location.href=this.href; return false; }" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            About Us
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item {{ request()->routeIs('about') ? 'active' : '' }}" href="{{ route('about') }}">Tentang Kami</a></li>
+                            <li><a class="dropdown-item {{ request()->routeIs('contacts') ? 'active' : '' }}" href="{{ route('contacts') }}">Hubungi Kami</a></li>
+                        </ul>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('menu') ? 'active' : '' }}" href="{{ route('menu') }}">Menu</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle {{ request()->routeIs('menu') || request()->routeIs('promo') ? 'active' : '' }}" href="{{ route('menu') }}" onclick="if(window.innerWidth > 991){ window.location.href=this.href; return false; }" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Menu
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item {{ request()->routeIs('menu') ? 'active' : '' }}" href="{{ route('menu') }}">Daftar Menu</a></li>
+                            <li><a class="dropdown-item {{ request()->routeIs('promo') ? 'active' : '' }}" href="{{ route('promo') }}">Promo</a></li>
+                        </ul>
                     </li>
                      <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('testimoni') ? 'active' : '' }}" href="{{ route('testimoni') }}">Testimoni</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('promo') ? 'active' : '' }}" href="{{ route('promo') }}">Promo</a>
-                    </li>
-                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('location') ? 'active' : '' }}" href="{{ route('location') }}">Location</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('gallery') ? 'active' : '' }}" href="{{ route('gallery') }}">Gallery</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('contacts') ? 'active' : '' }}" href="{{ route('contacts') }}">Contact</a>
                     </li>
 
                     
@@ -168,6 +179,13 @@
         @yield('content')
     </main>
 <footer style="background: #2c1810; color: white; padding: 30px 0 0;">
+    @php
+        $footerLocation = \App\Models\Location::first();
+        $address = $footerLocation ? $footerLocation->address : 'Balige, Sumatera Utara, Indonesia';
+        $mapQuery = $footerLocation && $footerLocation->latitude && $footerLocation->longitude 
+            ? "{$footerLocation->latitude},{$footerLocation->longitude}" 
+            : urlencode($address);
+    @endphp
     <div class="container px-4 px-lg-3">
         <div class="row g-3 pb-3 justify-content-between">
 
@@ -190,7 +208,7 @@
                         </div>
                         <div>
                             <p style="font-size: 10px; color: #888; margin: 0; text-transform: uppercase; letter-spacing: 0.06em;">Alamat</p>
-                            <p style="font-size: 12px; color: #ddd; margin: 0;">Balige, Sumatera Utara, Indonesia</p>
+                            <p style="font-size: 12px; color: #ddd; margin: 0;">{{ $address }}</p>
                         </div>
                     </div>
 
@@ -245,6 +263,10 @@
                        onmouseout="this.style.background='#3b2416'; this.style.borderColor='#5a3a28';">
                         <i class="bi bi-whatsapp" style="color: #c4a27a; font-size: 13px;"></i>
                     </a>
+                </div>
+
+                <div style="margin-top: 15px;">
+                    <iframe src="https://maps.google.com/maps?q={{ $mapQuery }}&t=&z=17&ie=UTF8&iwloc=&output=embed" width="100%" height="120" frameborder="0" style="border:0; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);" allowfullscreen loading="lazy"></iframe>
                 </div>
 
                 {{-- Tagline Box --}}
