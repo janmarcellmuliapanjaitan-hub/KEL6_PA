@@ -126,9 +126,88 @@
 
 @push('scripts')
 <script>
+  // Navbar scroll effect (existing)
   window.addEventListener('scroll', function () {
     const nav = document.querySelector('.navbar');
     if (nav) nav.classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  // ========== SCROLL REVEAL ANIMATION ==========
+  // Add reveal classes to elements you want to animate on scroll
+  document.addEventListener('DOMContentLoaded', function() {
+    // Add reveal classes to sections
+    const sections = document.querySelectorAll('.s');
+    sections.forEach((section, index) => {
+      // Add different reveal classes based on section index
+      if (index === 0) {
+        section.classList.add('reveal-fade-up');
+      } else if (index === 1) {
+        section.classList.add('reveal-fade-left');
+      } else if (index === 2) {
+        section.classList.add('reveal-fade-right');
+      } else {
+        section.classList.add('reveal-scale');
+      }
+    });
+
+    // Add reveal to hero body if needed
+    const heroBody = document.querySelector('.hero-body');
+    if (heroBody && !heroBody.classList.contains('reveal-fade-up')) {
+      heroBody.classList.add('reveal-fade-up');
+    }
+
+    // Create Intersection Observer
+    const observerOptions = {
+      threshold: 0.15,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          // Optional: unobserve after animation
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    // Observe all elements with reveal classes
+    const revealElements = document.querySelectorAll('[class*="reveal-"]');
+    revealElements.forEach(el => observer.observe(el));
+
+    // Also observe menu cards individually for smoother animation
+    const menuCards = document.querySelectorAll('.h-menu-card');
+    menuCards.forEach(card => {
+      if (!card.classList.contains('reveal-scale')) {
+        card.style.opacity = '0';
+        card.style.animation = 'none';
+        observer.observe(card);
+      }
+    });
+
+    // Add animation to menu cards when observed
+    const menuObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry, idx) => {
+        if (entry.isIntersecting) {
+          const card = entry.target;
+          const delay = (Array.from(menuCards).indexOf(card) * 0.08);
+          card.style.animation = `scaleIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) ${delay}s forwards`;
+          menuObserver.unobserve(card);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    menuCards.forEach(card => menuObserver.observe(card));
+  });
+
+  // Parallax effect for hero image (optional)
+  window.addEventListener('scroll', function() {
+    const heroImg = document.querySelector('.hero img');
+    if (heroImg) {
+      const scrolled = window.pageYOffset;
+      heroImg.style.transform = `translateY(${scrolled * 0.5}px) scale(1.05)`;
+    }
   });
 </script>
 @endpush

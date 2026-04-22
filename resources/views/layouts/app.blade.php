@@ -58,6 +58,27 @@
             text-align: center;
         }
 
+        .dropdown-menu {
+            background-color: #2c1810;
+            border: 1px solid rgba(196, 162, 122, 0.3);
+        }
+        
+        .dropdown-item {
+            color: white !important;
+            transition: all 0.3s ease;
+        }
+        
+        .dropdown-item:hover, .dropdown-item:focus {
+            background-color: #3b2416;
+            color: #c4a27a !important;
+        }
+        
+        .dropdown-item.active {
+            background-color: #3b2416;
+            color: #c4a27a !important;
+            font-weight: 500;
+        }
+
         @media all and (min-width: 992px) {
             .navbar .nav-item.dropdown:hover .dropdown-menu {
                 display: block;
