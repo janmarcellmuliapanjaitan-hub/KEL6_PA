@@ -90,7 +90,7 @@
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-        <div class="container">
+        <div class="container-fluid px-4 px-lg-5">
             <a class="navbar-brand" href="{{ route('home') }}">
                 <i class="bi bi-cup-hot-fill me-2"></i>
                 Janji Martahan Coffee
