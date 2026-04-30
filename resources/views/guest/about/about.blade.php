@@ -50,14 +50,14 @@
             <div class="about-grid">
 
                 {{-- LEFT — image dengan efek premium --}}
-                <div>
+                <div style="position: relative;">
                     <div class="img-wrap">
                         <img src="{{ $about->gambar ? asset('uploads/about/'.$about->gambar) : 'https://images.unsplash.com/photo-1559925393-8be0ec4767c8?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80' }}"
                              alt="Janji Martahan Coffee">
-                        <div class="img-chip">
-                            <strong>2025</strong>
-                            <span>Berdiri sejak</span>
-                        </div>
+                    </div>
+                    <div class="img-chip">
+                        <strong>2025</strong>
+                        <span>Berdiri sejak</span>
                     </div>
                 </div>
 
