@@ -83,20 +83,17 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
             
-            // Only allow 'user' role for guest login
-            if ($user->role !== 'user') {
-                Auth::logout();
-                return back()->withErrors([
-                    'email' => 'Akun ini bukan akun pelanggan.',
-                ])->withInput($request->except('password'));
+            $request->session()->regenerate();
+            Log::info('User logged in via guest login: ' . $user->email);
+            
+            if ($user->role === 'admin') {
+                return redirect()->intended(route('admin.dashboard'))->with('success', 'Selamat datang, ' . $user->name . '!');
             }
             
-            $request->session()->regenerate();
-            Log::info('Guest logged in: ' . $user->email);
             return redirect()->intended(route('home'))->with('success', 'Selamat datang, ' . $user->name . '!');
         }
 
-        Log::warning('Failed guest login attempt for email: ' . $request->email);
+        Log::warning('Failed login attempt for email: ' . $request->email);
         return back()->withErrors([
             'email' => 'Email atau password yang Anda masukkan salah.',
         ])->withInput($request->except('password'));
