@@ -1,0 +1,164 @@
+/* =============================================
+   Deep Espresso Theme — Janji Martahan Coffee
+   Primary:  #1a0f08  (navbar, komponen gelap)
+   Surface:  #2b1a10  (hover, dropdown bg)
+   Accent:   #e8c98a  (gold — highlight aktif, CTA)
+   Footer:   #140b05  (footer bg)
+   Text:     #f5e6d3  (teks utama di bg gelap)
+   Muted:    #c4a27a  (teks sekunder / ikon)
+   Page BG:  #fdf6ef  (body background)
+============================================= */
+
+:root {
+    --esp-dark:    #1a0f08;
+    --esp-surface: #2b1a10;
+    --esp-footer:  #140b05;
+    --esp-accent:  #e8c98a;
+    --esp-text:    #f5e6d3;
+    --esp-muted:   #c4a27a;
+    --esp-page-bg: #fdf6ef;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    padding-top: 76px;
+    background-color: var(--esp-page-bg);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+}
+
+/* ── Navbar ─────────────────────────────── */
+.navbar {
+    background: #ffffff;
+    padding: 15px 0;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.navbar-brand {
+    font-family: 'Playfair Display', serif;
+    color: var(--esp-dark) !important;
+    font-weight: 700;
+    font-size: 1.4rem;
+    letter-spacing: 0.02em;
+    transition: color 0.2s;
+}
+
+.navbar-brand:hover {
+    color: var(--esp-accent) !important;
+}
+
+.navbar-brand i {
+    color: var(--esp-accent);
+}
+
+.nav-link {
+    font-family: 'Poppins', sans-serif;
+    color: var(--esp-dark) !important;
+    margin: 0 12px;
+    transition: color 0.2s;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.nav-link:hover {
+    color: var(--esp-accent) !important;
+}
+
+.nav-link.active {
+    color: var(--esp-accent) !important;
+    font-weight: 700;
+    position: relative;
+}
+
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 12px;
+    right: 12px;
+    height: 2px;
+    background-color: var(--esp-accent);
+    border-radius: 2px;
+}
+
+
+/* ── Dropdown ───────────────────────────── */
+.dropdown-menu {
+    background-color: var(--esp-surface);
+    border: 1px solid rgba(232, 201, 138, 0.2);
+    border-top: 2px solid var(--esp-accent);
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    padding: 6px 0;
+}
+
+.dropdown-item {
+    color: #d4b896 !important;
+    font-size: 0.88rem;
+    padding: 8px 18px;
+    transition: all 0.2s;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+    background-color: rgba(232, 201, 138, 0.1);
+    color: var(--esp-accent) !important;
+    padding-left: 22px;
+}
+
+.dropdown-item.active {
+    background-color: rgba(232, 201, 138, 0.12);
+    color: var(--esp-accent) !important;
+    font-weight: 500;
+}
+
+.dropdown-item i {
+    color: var(--esp-muted);
+}
+
+.dropdown-divider {
+    border-color: rgba(232, 201, 138, 0.15);
+}
+
+.dropdown-item.text-danger {
+    color: #e07070 !important;
+}
+
+.dropdown-item.text-danger:hover {
+    color: #f08080 !important;
+}
+
+/* ── Hover-open on desktop ──────────────── */
+@media all and (min-width: 992px) {
+    .navbar .nav-item.dropdown:hover .dropdown-menu {
+        display: block;
+        margin-top: 0;
+    }
+}
+
+/* ── Footer ─────────────────────────────── */
+footer {
+    background: var(--esp-footer);
+    color: var(--esp-text);
+    padding: 30px 0 0;
+}
+
+/* ── Navbar toggler ─────────────────────── */
+.navbar-toggler {
+    border-color: rgba(232, 201, 138, 0.3);
+}
+
+.navbar-toggler-icon {
+    filter: brightness(1.5);
+}

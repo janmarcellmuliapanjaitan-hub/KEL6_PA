@@ -7,17 +7,20 @@
 @endphp
 
 @push('styles')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ asset('css/about.css') }}">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 @endpush
 
 @section('content')
 
-{{-- ── PAGE HERO ── --}}
+{{-- ── PREMIUM HERO ── --}}
 <div class="page-hero">
-    <img src="{{ $about && $about->gambar ? asset('uploads/about/'.$about->gambar) : 'https://images.unsplash.com/photo-1559925393-8be0ec4767c8?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80' }}" alt="">
+    <img src="{{ $about && $about->gambar ? asset('uploads/about/'.$about->gambar) : 'https://images.unsplash.com/photo-1559925393-8be0ec4767c8?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80' }}" alt="Janji Martahan Coffee">
     <div class="page-hero__body">
-        <p class="page-hero__eyebrow">Janji Martahan Coffee</p>
+        <div class="page-hero__eyebrow">
+            <span>Janji Martahan Coffee</span>
+        </div>
         <h1>{{ $about->judul ?? 'Tentang Janji Martahan Coffee' }}</h1>
     </div>
 </div>
@@ -27,7 +30,7 @@
 {{-- ── MAIN CONTENT ── --}}
 <section class="s">
     <div class="pg">
-        <p class="lbl">Kisah Kami</p>
+        <div class="lbl">Kisah Kami</div>
         <h2 class="title">Mengenal <em>Janji Martahan</em></h2>
 
         @if($about)
@@ -46,15 +49,15 @@
 
             <div class="about-grid">
 
-                {{-- LEFT — foto saja --}}
-                <div>
+                {{-- LEFT — image dengan efek premium --}}
+                <div style="position: relative;">
                     <div class="img-wrap">
                         <img src="{{ $about->gambar ? asset('uploads/about/'.$about->gambar) : 'https://images.unsplash.com/photo-1559925393-8be0ec4767c8?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80' }}"
                              alt="Janji Martahan Coffee">
-                        <div class="img-chip">
-                            <strong>2025</strong>
-                            <span>Berdiri sejak</span>
-                        </div>
+                    </div>
+                    <div class="img-chip">
+                        <strong>2025</strong>
+                        <span>Berdiri sejak</span>
                     </div>
                 </div>
 
@@ -66,21 +69,22 @@
                         </div>
                     @else
                         <div class="about-content">
-                            <p>Informasi tentang Janji Martahan Coffee akan segera hadir. Kami sedang mempersiapkan cerita dan filosofi di balik setiap cangkir kopi yang kami sajikan.</p>
+                            <p>✨ Informasi tentang Janji Martahan Coffee akan segera hadir. Kami sedang mempersiapkan cerita dan filosofi di balik setiap cangkir kopi yang kami sajikan.</p>
+                            <p>Setiap tegukan kopi kami membawa cerita tentang passion, dedikasi, dan cinta terhadap budaya kopi Indonesia.</p>
                         </div>
                     @endif
                 </div>
 
             </div>
 
-            {{-- HOW TO ORDER — full-width card di bawah grid --}}
+            {{-- HOW TO ORDER — banner premium di bawah grid --}}
             @if($howToOrder)
                 <div class="order-banner">
                     <div class="order-banner__left">
-                        <p class="lbl-dark">Panduan</p>
+                        <div class="lbl-dark">Panduan</div>
                         <h3>How to<br>Order</h3>
                     </div>
-                    <div class="order-banner__body" style="color:#f0e8dc;">
+                    <div class="order-banner__body">
                         {!! $howToOrder !!}
                     </div>
                 </div>
@@ -88,8 +92,9 @@
 
         @else
             <div class="about-empty">
-                <i class="bi bi-cup-hot"></i>
+                <i class="fas fa-mug-hot"></i>
                 <p>Informasi sedang dalam pengembangan</p>
+                <p style="font-size: 0.85rem; margin-top: 0.5rem;">Kami akan segera hadir dengan cerita yang menarik</p>
             </div>
         @endif
     </div>
@@ -97,5 +102,70 @@
 
 <hr class="divider">
 
-
 @endsection
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // ========== SCROLL REVEAL ANIMATION ==========
+    const sections = document.querySelectorAll('.s, .order-banner, .about-grid, .img-wrap, .about-content');
+    
+    sections.forEach((section, index) => {
+        if (!section.classList.contains('reveal-fade-up') && 
+            !section.classList.contains('reveal-fade-left') && 
+            !section.classList.contains('reveal-fade-right') && 
+            !section.classList.contains('reveal-scale')) {
+            
+            if (index % 3 === 0) {
+                section.classList.add('reveal-fade-up');
+            } else if (index % 3 === 1) {
+                section.classList.add('reveal-fade-left');
+            } else {
+                section.classList.add('reveal-fade-right');
+            }
+        }
+    });
+
+    // Intersection Observer
+    const observerOptions = {
+        threshold: 0.15,
+        rootMargin: '0px 0px -30px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('revealed');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    const revealElements = document.querySelectorAll('[class*="reveal-"]');
+    revealElements.forEach(el => observer.observe(el));
+
+    // ========== PARALLAX EFFECT ==========
+    window.addEventListener('scroll', function() {
+        const heroImg = document.querySelector('.page-hero img');
+        if (heroImg) {
+            const scrolled = window.pageYOffset;
+            heroImg.style.transform = `translateY(${scrolled * 0.4}px) scale(1.05)`;
+        }
+    });
+
+    // ========== SMOOTH SCROLL ==========
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                e.preventDefault();
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+});
+</script>
+@endpush

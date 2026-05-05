@@ -52,11 +52,6 @@
                     
                     <div class="text-center mt-3">
                         <small>
-                            Belum punya akun? 
-                            <a href="{{ route('register') }}" style="color: #c4a27a;">Daftar</a>
-                        </small>
-                        <br>
-                        <small>
                             <a href="{{ route('home') }}" style="color: #6c757d;">Kembali ke Beranda</a>
                         </small>
                     </div>

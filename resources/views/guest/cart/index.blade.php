@@ -49,20 +49,25 @@
                             </td>
                             <td>Rp {{ number_format($cart->menu->price, 0, ',', '.') }}</td>
                             <td>
-                                <form action="{{ route('guest.cart.update', $cart->id) }}" method="POST" class="cart-qty-form">
+                                <form action="{{ route('guest.cart.update', $cart->id) }}" method="POST" class="cart-qty-form" id="form-qty-{{ $cart->id }}">
                                     @csrf
                                     @method('PUT')
-                                    <input type="number" name="quantity" value="{{ $cart->quantity }}" min="1" class="cart-qty-input">
-                                    <button type="submit" class="cart-btn-update"><i class="fas fa-sync-alt"></i></button>
+                                    <div class="input-group input-group-sm" style="width: 110px; margin: 0 auto; justify-content: center;">
+                                        <button type="button" class="btn btn-outline-secondary" onclick="decreaseQty({{ $cart->id }})" style="padding: 2px 8px;"><i class="bi bi-dash"></i></button>
+                                        <input type="number" name="quantity" id="qty-{{ $cart->id }}" value="{{ $cart->quantity }}" min="1" class="form-control text-center" style="padding: 2px; max-width: 40px; -moz-appearance: textfield;" onchange="document.getElementById('form-qty-{{ $cart->id }}').submit()">
+                                        <button type="button" class="btn btn-outline-secondary" onclick="increaseQty({{ $cart->id }})" style="padding: 2px 8px;"><i class="bi bi-plus"></i></button>
+                                    </div>
+                                    <!-- Hide default update button as it is auto submitted -->
+                                    <button type="submit" class="d-none"></button>
                                 </form>
                             </td>
                             <td class="cart-subtotal">Rp {{ number_format($subtotal, 0, ',', '.') }}</td>
                             <td style="text-align: center;">
-                                <form action="{{ route('guest.cart.remove', $cart->id) }}" method="POST">
+                                <form action="{{ route('guest.cart.remove', $cart->id) }}" method="POST" id="form-delete-{{ $cart->id }}">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="cart-btn-delete" onclick="return confirm('Hapus item ini?')">
-                                        <i class="fas fa-trash"></i>
+                                    <button type="submit" class="btn btn-danger btn-sm cart-btn-delete" onclick="return confirm('Hapus item ini?')">
+                                        <i class="fas fa-trash"></i> Hapus
                                     </button>
                                 </form>
                             </td>
@@ -91,3 +96,42 @@
     @endif
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    // Menyembunyikan spinner/panah pada input type number
+    document.querySelectorAll('input[type=number]').forEach(function(input) {
+        input.addEventListener('wheel', function(e) {
+            e.preventDefault();
+        });
+    });
+
+    function decreaseQty(cartId) {
+        let input = document.getElementById('qty-' + cartId);
+        let val = parseInt(input.value);
+        if (val > 1) {
+            input.value = val - 1;
+            document.getElementById('form-qty-' + cartId).submit();
+        } else {
+            if(confirm('Hapus item ini dari keranjang?')) {
+                document.getElementById('form-delete-' + cartId).submit();
+            }
+        }
+    }
+    
+    function increaseQty(cartId) {
+        let input = document.getElementById('qty-' + cartId);
+        let val = parseInt(input.value);
+        input.value = val + 1;
+        document.getElementById('form-qty-' + cartId).submit();
+    }
+</script>
+<style>
+    /* Hiding the spinner arrows for input type number */
+    input[type=number]::-webkit-inner-spin-button, 
+    input[type=number]::-webkit-outer-spin-button { 
+        -webkit-appearance: none; 
+        margin: 0; 
+    }
+</style>
+@endpush

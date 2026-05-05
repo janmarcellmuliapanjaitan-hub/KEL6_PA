@@ -103,11 +103,11 @@
                   <div class="testi-avatar">
                     {{ strtoupper(substr($testimoni->nama, 0, 1)) }}
                   </div>
-                  <div class="flex-grow-1">
-                    <div class="testi-name">{{ $testimoni->nama }}</div>
-                    <div class="testi-email">{{ $testimoni->email }}</div>
+                  <div class="flex-grow-1" style="min-width: 0;">
+                    <div class="testi-name text-truncate" title="{{ $testimoni->nama }}">{{ $testimoni->nama }}</div>
+                    <div class="testi-email text-truncate" title="{{ $testimoni->email }}">{{ $testimoni->email }}</div>
                   </div>
-                  <div class="testi-date">{{ $testimoni->tanggal }}</div>
+                  <div class="testi-date flex-shrink-0 text-end">{{ $testimoni->tanggal }}</div>
                 </div>
 
                 <hr class="testi-divider">

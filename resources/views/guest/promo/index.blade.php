@@ -5,7 +5,7 @@
 @section('content')
 <div class="container py-5 mt-4">
     <div class="text-center mb-5">
-        <h2 class="display-5 fw-bold" style="color: #2c1810;">Promo & Penawaran Spesial</h2>
+        <h2 class="display-5 fw-bold" style="color: #2c1810;">Promo Spesial</h2>
         <p class="text-muted">Nikmati berbagai promo menarik dari Janji Martahan Coffee</p>
         <hr class="w-25 mx-auto">
     </div>
