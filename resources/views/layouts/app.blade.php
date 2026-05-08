@@ -229,7 +229,7 @@
                             <span style="font-size: 13px; font-weight: 500;">WhatsApp</span>
                         </a>
 
-                        <a href="#" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #f5e6d3; transition: all 0.2s;" onmouseover="this.style.color='#e8c98a';" onmouseout="this.style.color='#f5e6d3';">
+                        <a href="https://www.tiktok.com/@janji.martahan" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #f5e6d3; transition: all 0.2s;" onmouseover="this.style.color='#e8c98a';" onmouseout="this.style.color='#f5e6d3';">
                             <div style="width: 32px; height: 32px; border-radius: 50%; background: #2b1a10; border: 1px solid rgba(232,201,138,0.4); display: flex; align-items: center; justify-content: center;">
                                 <i class="bi bi-tiktok" style="color: #e8c98a; font-size: 13px;"></i>
                             </div>
