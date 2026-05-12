@@ -96,7 +96,7 @@ class CheckoutController extends Controller
 
         $waUrl = "https://api.whatsapp.com/send?phone={$adminWa}&text=" . urlencode($message);
 
-        // Redirect to WA
-        return redirect()->away($waUrl);
+        // Redirect directly to home, passing the waUrl in session flash
+        return redirect()->route('home')->with('waUrl', $waUrl);
     }
 }

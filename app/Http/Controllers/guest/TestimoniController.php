@@ -38,6 +38,6 @@ class TestimoniController extends Controller
             'status' => false // status false karena butuh persetujuan admin
         ]);
 
-        return redirect()->back()->with('success', 'Terima kasih! Testimoni Anda akan segera ditampilkan!');
+        return redirect()->back()->with('success', 'Terima kasih! Testimoni Anda Telah Diterima!');
     }
 }

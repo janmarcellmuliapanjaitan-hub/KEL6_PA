@@ -126,6 +126,15 @@
 
 @push('scripts')
 <script>
+  @if(session('waUrl'))
+      // Gunakan ID unik untuk mencegah loop redirect saat user menekan tombol Back (BFCache)
+      var waId = "{{ md5(session('waUrl') . uniqid()) }}";
+      if (sessionStorage.getItem('wa_redirect_id') !== waId) {
+          sessionStorage.setItem('wa_redirect_id', waId);
+          window.location.href = "{!! session('waUrl') !!}";
+      }
+  @endif
+
   // Navbar scroll effect (existing)
   window.addEventListener('scroll', function () {
     const nav = document.querySelector('.navbar');

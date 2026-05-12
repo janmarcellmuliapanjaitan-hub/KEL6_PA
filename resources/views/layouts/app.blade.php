@@ -18,6 +18,16 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 <body>
+    @php
+        $recentOrders = collect();
+        if(Auth::check() && Auth::user()->role !== 'admin') {
+            $recentOrders = \App\Models\Order::where('user_id', Auth::id())
+                ->with('items.menu')
+                ->orderBy('created_at', 'desc')
+                ->take(5)
+                ->get();
+        }
+    @endphp
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top">
         <div class="container-fluid px-4 px-lg-5 justify-content-center">
@@ -90,48 +100,47 @@
                             </ul>
                         </li>
                         @else
-                        @php
-                            $recentOrders = \App\Models\Order::where('user_id', Auth::id())
-                                ->orderBy('created_at', 'desc')
-                                ->take(5)
-                                ->get();
-                        @endphp
                         <li class="nav-item dropdown me-2">
                             <a class="nav-link position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-bell-fill fs-5" style="color: #2b1a10;"></i>
+                                <i class="bi bi-bell-fill fs-5" style="color: #d4a373; transition: color 0.3s;" onmouseover="this.style.color='#b07d4b'" onmouseout="this.style.color='#d4a373'"></i>
                                 @if($recentOrders->count() > 0)
                                     <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle" style="margin-top: 10px; margin-left: -15px;">
                                         <span class="visually-hidden">New alerts</span>
                                     </span>
                                 @endif
                             </a>
-                            <ul class="dropdown-menu dropdown-menu-end shadow" style="min-width: 260px; background-color: #1a0f08; border: 1px solid rgba(232,201,138,0.3); border-radius: 8px;">
+                            <ul class="dropdown-menu dropdown-menu-end shadow" style="min-width: 300px; background-color: #1a0f08; border: 1px solid rgba(232,201,138,0.3); border-radius: 8px;">
                                 <li><h6 class="dropdown-header text-uppercase" style="color: #e8c98a; font-weight: 700; letter-spacing: 0.05em; font-size: 0.8rem;">Notifikasi Pesanan</h6></li>
                                 <li><hr class="dropdown-divider" style="border-color: rgba(232,201,138,0.2);"></li>
                                 @forelse($recentOrders as $order)
                                     <li>
-                                        <a class="dropdown-item py-2" href="#" style="background-color: transparent; transition: all 0.2s ease;" onmouseover="this.style.backgroundColor='#2b1a10'" onmouseout="this.style.backgroundColor='transparent'">
-                                            <div class="d-flex align-items-center">
+                                        <a class="dropdown-item py-2 px-3" href="#" onclick="event.preventDefault(); showOrderDetails({{ $order->id }});" style="background-color: transparent; transition: all 0.2s ease;" onmouseover="this.style.backgroundColor='#2b1a10'" onmouseout="this.style.backgroundColor='transparent'">
+                                            <div class="d-flex align-items-center w-100">
                                                 <div class="me-3">
                                                     @if($order->status == 'pending')
                                                         <i class="bi bi-hourglass-split fs-4" style="color: #ffc107;"></i>
                                                     @elseif($order->status == 'completed')
-                                                        <i class="bi bi-check-circle-fill fs-4" style="color: #e8c98a;"></i>
+                                                        <i class="bi bi-check-circle-fill fs-4" style="color: #28a745;"></i>
                                                     @else
                                                         <i class="bi bi-x-circle-fill fs-4" style="color: #dc3545;"></i>
                                                     @endif
                                                 </div>
-                                                <div>
-                                                    <h6 class="mb-0" style="font-size: 0.9rem; color: #f5e6d3;">Pesanan #{{ $order->order_number }}</h6>
-                                                    <small style="font-size: 0.8rem; color: #c4a27a;">
-                                                        @if($order->status == 'pending')
-                                                            Sedang diproses
-                                                        @elseif($order->status == 'completed')
-                                                            Selesai diproses
-                                                        @else
-                                                            Dibatalkan
-                                                        @endif
-                                                    </small>
+                                                <div class="w-100">
+                                                    <h6 class="mb-1" style="font-size: 0.95rem; color: #f5e6d3; font-weight: 600;">Pesanan #{{ $order->order_number }}</h6>
+                                                    <div class="d-flex justify-content-between align-items-center mt-1">
+                                                        <small style="font-size: 0.8rem; color: #c4a27a;">
+                                                            @if($order->status == 'pending')
+                                                                <span class="text-warning"><i class="bi bi-circle-fill me-1" style="font-size: 6px; vertical-align: middle;"></i>Sedang diproses</span>
+                                                            @elseif($order->status == 'completed')
+                                                                <span class="text-success"><i class="bi bi-circle-fill me-1" style="font-size: 6px; vertical-align: middle;"></i>Selesai</span>
+                                                            @else
+                                                                <span class="text-danger"><i class="bi bi-circle-fill me-1" style="font-size: 6px; vertical-align: middle;"></i>Dibatalkan</span>
+                                                            @endif
+                                                        </small>
+                                                        <span style="font-size: 0.7rem; color: #e8c98a; background: rgba(232,201,138,0.1); padding: 3px 8px; border-radius: 4px; font-weight: 500; border: 1px solid rgba(232,201,138,0.2);">
+                                                            Detail <i class="bi bi-arrow-right ms-1"></i>
+                                                        </span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </a>
@@ -220,7 +229,7 @@
                             <span style="font-size: 13px; font-weight: 500;">WhatsApp</span>
                         </a>
 
-                        <a href="#" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #f5e6d3; transition: all 0.2s;" onmouseover="this.style.color='#e8c98a';" onmouseout="this.style.color='#f5e6d3';">
+                        <a href="https://www.tiktok.com/@janji.martahan" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #f5e6d3; transition: all 0.2s;" onmouseover="this.style.color='#e8c98a';" onmouseout="this.style.color='#f5e6d3';">
                             <div style="width: 32px; height: 32px; border-radius: 50%; background: #2b1a10; border: 1px solid rgba(232,201,138,0.4); display: flex; align-items: center; justify-content: center;">
                                 <i class="bi bi-tiktok" style="color: #e8c98a; font-size: 13px;"></i>
                             </div>
@@ -278,6 +287,126 @@
             </div>
         </div>
     </footer>
+
+    @auth
+        @if(Auth::user()->role !== 'admin')
+        <!-- Modal Notifikasi Pesanan -->
+        <div class="modal fade" id="orderDetailModal" tabindex="-1" aria-labelledby="orderDetailModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content shadow-lg" style="background-color: #1a0f08; border: 1px solid rgba(232,201,138,0.5); border-radius: 12px; color: #f5e6d3; box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important;">
+                    <div class="modal-header border-0 pb-0 mt-2 mx-2">
+                        <h5 class="modal-title" id="orderDetailModalLabel" style="color: #e8c98a; font-family: 'Playfair Display', serif; font-weight: 700; letter-spacing: 0.5px;">Detail Pesanan</h5>
+                        <button type="button" class="btn-close btn-close-white opacity-75" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="orderDetailModalBody" style="padding: 1.5rem;">
+                        <!-- Content will be populated by JS -->
+                    </div>
+                    <div class="modal-footer border-0 pt-0 mx-2 mb-2">
+                        <button type="button" class="btn w-100" style="background-color: #e8c98a; color: #1a0f08; font-weight: 600; border-radius: 8px; padding: 10px;" data-bs-dismiss="modal">Tutup</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            const userOrders = {
+                @foreach($recentOrders as $o)
+                "{{ $o->id }}": {
+                    order_number: "{{ $o->order_number }}",
+                    status: "{{ $o->status }}",
+                    total_price: "Rp {{ number_format($o->total_price, 0, ',', '.') }}",
+                    created_at: "{{ $o->created_at->format('d M Y H:i') }}",
+                    delivery_type: "{{ $o->delivery_type == 'delivery' ? 'Pesan Antar' : 'Ambil di Tempat' }}",
+                    address: "{{ $o->address ? addslashes(str_replace(["\r", "\n"], ' ', $o->address)) : '' }}",
+                    items: [
+                        @foreach($o->items as $item)
+                        {
+                            name: "{{ $item->menu ? addslashes($item->menu->name) : 'Item' }}",
+                            quantity: {{ $item->quantity }},
+                            price: "Rp {{ number_format($item->price, 0, ',', '.') }}",
+                            subtotal: "Rp {{ number_format($item->subtotal, 0, ',', '.') }}"
+                        },
+                        @endforeach
+                    ]
+                },
+                @endforeach
+            };
+            
+            function showOrderDetails(orderId) {
+                const order = userOrders[orderId];
+                if(!order) return;
+                
+                let statusBadge = '';
+                if(order.status === 'pending') {
+                    statusBadge = '<span class="badge" style="background-color: rgba(255,193,7,0.15); color: #ffc107; border: 1px solid rgba(255,193,7,0.3); padding: 6px 12px; font-weight: 500; border-radius: 6px;">Sedang diproses</span>';
+                } else if(order.status === 'completed') {
+                    statusBadge = '<span class="badge" style="background-color: rgba(40,167,69,0.15); color: #28a745; border: 1px solid rgba(40,167,69,0.3); padding: 6px 12px; font-weight: 500; border-radius: 6px;">Selesai diproses</span>';
+                } else {
+                    statusBadge = '<span class="badge" style="background-color: rgba(220,53,69,0.15); color: #dc3545; border: 1px solid rgba(220,53,69,0.3); padding: 6px 12px; font-weight: 500; border-radius: 6px;">Dibatalkan</span>';
+                }
+
+                let itemsHtml = '<ul class="list-group list-group-flush mb-3">';
+                order.items.forEach(item => {
+                    itemsHtml += `
+                        <li class="list-group-item bg-transparent text-white px-0" style="border-bottom: 1px dashed rgba(232,201,138,0.2);">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <h6 class="mb-0" style="color: #f5e6d3; font-size: 0.95rem; font-weight: 500;">${item.name}</h6>
+                                <span style="color: #e8c98a; font-weight: 600;">${item.subtotal}</span>
+                            </div>
+                            <small style="color: #c4a27a; font-size: 0.85rem;">${item.quantity} x ${item.price}</small>
+                        </li>
+                    `;
+                });
+                itemsHtml += '</ul>';
+
+                const bodyHtml = `
+                    <div class="mb-4 d-flex justify-content-between align-items-center">
+                        <div>
+                            <p class="mb-0 text-uppercase" style="font-size: 0.75rem; color: #c4a27a; letter-spacing: 1px;">Nomor Pesanan</p>
+                            <h4 style="color: #e8c98a; margin-bottom: 0; font-family: 'Playfair Display', serif; font-weight: 700;">#${order.order_number}</h4>
+                        </div>
+                        <div>
+                            ${statusBadge}
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4 p-3 rounded" style="background-color: #2b1a10; border: 1px solid rgba(232,201,138,0.15); border-radius: 8px;">
+                        <div class="d-flex align-items-center mb-2" style="color: #c4a27a; font-size: 0.9rem;">
+                            <div style="width: 24px; height: 24px; border-radius: 50%; background: rgba(232,201,138,0.1); display: flex; align-items: center; justify-content: center; margin-right: 12px;">
+                                <i class="bi bi-clock" style="color: #e8c98a; font-size: 0.8rem;"></i>
+                            </div>
+                            ${order.created_at}
+                        </div>
+                        <div class="d-flex align-items-center ${order.address ? 'mb-2' : ''}" style="color: #c4a27a; font-size: 0.9rem;">
+                            <div style="width: 24px; height: 24px; border-radius: 50%; background: rgba(232,201,138,0.1); display: flex; align-items: center; justify-content: center; margin-right: 12px;">
+                                <i class="bi bi-truck" style="color: #e8c98a; font-size: 0.8rem;"></i>
+                            </div>
+                            ${order.delivery_type}
+                        </div>
+                        ${order.address ? `<div class="d-flex align-items-start mt-2" style="color: #c4a27a; font-size: 0.9rem;">
+                            <div style="width: 24px; height: 24px; border-radius: 50%; background: rgba(232,201,138,0.1); display: flex; align-items: center; justify-content: center; margin-right: 12px; flex-shrink: 0;">
+                                <i class="bi bi-geo-alt" style="color: #e8c98a; font-size: 0.8rem;"></i>
+                            </div>
+                            <div style="padding-top: 2px; line-height: 1.4;">${order.address}</div>
+                        </div>` : ''}
+                    </div>
+                    
+                    <h6 class="text-uppercase mb-3" style="color: #c4a27a; font-size: 0.8rem; letter-spacing: 1px; font-weight: 600;">Ringkasan Pesanan</h6>
+                    ${itemsHtml}
+                    
+                    <div class="d-flex justify-content-between align-items-center mt-4 pt-3" style="border-top: 1px solid rgba(232,201,138,0.2);">
+                        <h6 style="color: #f5e6d3; margin-bottom: 0; font-size: 0.9rem;">Total Pembayaran</h6>
+                        <h4 style="color: #e8c98a; margin-bottom: 0; font-weight: 700; font-family: 'Playfair Display', serif;">${order.total_price}</h4>
+                    </div>
+                `;
+                
+                document.getElementById('orderDetailModalBody').innerHTML = bodyHtml;
+                const modal = new bootstrap.Modal(document.getElementById('orderDetailModal'));
+                modal.show();
+            }
+        </script>
+        @endif
+    @endauth
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
