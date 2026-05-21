@@ -30,7 +30,7 @@ Route::get('/testimoni', [TestimoniController::class, 'index'])->name('testimoni
 Route::get('/kontak', [GuestContactController::class, 'index'])->name('kontak');
 Route::get('/contacts', [GuestContactController::class, 'index'])->name('contacts');
 
-/*
+/*sss
 |--------------------------------------------------------------------------
 | Guest Protected Routes (Pelanggan)
 |--------------------------------------------------------------------------
