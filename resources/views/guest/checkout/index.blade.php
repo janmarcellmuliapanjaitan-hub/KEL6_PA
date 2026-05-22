@@ -23,7 +23,10 @@
                     @csrf
                     <div class="checkout-form-group">
                         <label class="checkout-label">Nomor WhatsApp Anda</label>
-                        <input type="text" name="whatsapp_number" class="checkout-input" placeholder="Cth: 08123456789" required>
+                        <input type="text" name="whatsapp_number" class="checkout-input @error('whatsapp_number') is-invalid @enderror" placeholder="Cth: 08123456789" pattern="[0-9]*" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')" value="{{ old('whatsapp_number') }}" required>
+                        @error('whatsapp_number')
+                            <span class="text-danger" style="font-size: 0.8rem; display: block; margin-top: 5px;">{{ $message }}</span>
+                        @enderror
                     </div>
 
                     <div class="checkout-form-group">

@@ -20,12 +20,16 @@
 <body>
     @php
         $recentOrders = collect();
+        $notificationState = '';
         if(Auth::check() && Auth::user()->role !== 'admin') {
             $recentOrders = \App\Models\Order::where('user_id', Auth::id())
                 ->with('items.menu')
                 ->orderBy('created_at', 'desc')
                 ->take(5)
                 ->get();
+            $notificationState = $recentOrders->map(function($order) {
+                return $order->id . ':' . $order->status;
+            })->implode(',');
         }
     @endphp
     <!-- Navbar -->
@@ -100,11 +104,11 @@
                             </ul>
                         </li>
                         @else
-                        <li class="nav-item dropdown me-2">
+                        <li class="nav-item dropdown me-2" id="notificationDropdown">
                             <a class="nav-link position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-bell-fill fs-5" style="color: #d4a373; transition: color 0.3s;" onmouseover="this.style.color='#b07d4b'" onmouseout="this.style.color='#d4a373'"></i>
                                 @if($recentOrders->count() > 0)
-                                    <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle" style="margin-top: 10px; margin-left: -15px;">
+                                    <span id="notification-badge" class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle d-none" style="margin-top: 10px; margin-left: -15px;">
                                         <span class="visually-hidden">New alerts</span>
                                     </span>
                                 @endif
@@ -404,6 +408,26 @@
                 const modal = new bootstrap.Modal(document.getElementById('orderDetailModal'));
                 modal.show();
             }
+
+            document.addEventListener('DOMContentLoaded', function () {
+                const currentNotificationState = "{{ $notificationState }}";
+                const badge = document.getElementById('notification-badge');
+                const dropdown = document.getElementById('notificationDropdown');
+                
+                if (currentNotificationState) {
+                    const lastSeenState = localStorage.getItem('last_seen_notification_state');
+                    if (lastSeenState !== currentNotificationState) {
+                        if (badge) badge.classList.remove('d-none');
+                    }
+                    
+                    if (dropdown) {
+                        dropdown.addEventListener('show.bs.dropdown', function () {
+                            localStorage.setItem('last_seen_notification_state', currentNotificationState);
+                            if (badge) badge.classList.add('d-none');
+                        });
+                    }
+                }
+            });
         </script>
         @endif
     @endauth
