@@ -30,8 +30,10 @@ class CheckoutController extends Controller
         $request->validate([
             'delivery_type' => 'required|in:Take Away,Delivery',
             'address' => 'required_if:delivery_type,Delivery',
-            'whatsapp_number' => 'required|string',
+            'whatsapp_number' => 'required|regex:/^[0-9]{8,15}$/',
             'notes' => 'nullable|string'
+        ], [
+            'whatsapp_number.regex' => 'Nomor WhatsApp hanya boleh berisi angka dengan panjang 8 hingga 15 digit.'
         ]);
 
         $user = Auth::user();
