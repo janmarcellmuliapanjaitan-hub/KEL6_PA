@@ -1,8 +1,3 @@
-<!-- Nama : Jan Marcell Mulia Panjaitan 
-     NIM  : 42325040
-     Prodi : D3 Teknologi Informasi -->
-
-     
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,7 +31,7 @@
 
     <!-- Preloader -->
     <div class="preloader flex-column justify-content-center align-items-center">
-        <img class="animation__shake" src="{{ URL::asset('adminlte/dist/img/logo.jpg') }}" alt="AdminLTELogo" height="60" width="60">
+        <img class="animation__shake" src="{{ URL::asset('adminlte/dist/img/logo.jpeg') }}" alt="AdminLTELogo" height="60" width="60">
     </div>
 
     <!-- Navbar -->

@@ -72,7 +72,7 @@ class CheckoutController extends Controller
                 'subtotal' => $subtotal
             ]);
             $itemsText .= "- {$cart->quantity}x {$cart->menu->name} (Rp " . number_format($cart->menu->price, 0, ',', '.') . ")\n";
-        }
+        }   
 
         // 3. Clear Cart
         Cart::where('user_id', $user->id)->delete();

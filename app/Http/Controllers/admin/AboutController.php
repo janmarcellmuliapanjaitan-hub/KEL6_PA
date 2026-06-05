@@ -19,29 +19,29 @@ class AboutController extends Controller
         return view('admin.about.create');
     }
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'judul' => 'required',
-            'deskripsi' => 'required',
-            'gambar' => 'image|mimes:jpeg,png,jpg|max:2048'
-        ]);
+        public function store(Request $request)
+        {
+            $request->validate([
+                'judul' => 'required',
+                'deskripsi' => 'required',
+                'gambar' => 'image|mimes:jpeg,png,jpg|max:2048'
+            ]);
 
-        $data = [
-            'judul' => $request->judul,
-            'deskripsi' => $request->deskripsi
-        ];
+            $data = [
+                'judul' => $request->judul,
+                'deskripsi' => $request->deskripsi
+            ];
 
-        if ($request->hasFile('gambar')) {
-            $gambar = time().'.'.$request->gambar->extension();
-            $request->gambar->move(public_path('uploads/about'), $gambar);
-            $data['gambar'] = $gambar;
+            if ($request->hasFile('gambar')) {
+                $gambar = time().'.'.$request->gambar->extension();
+                $request->gambar->move(public_path('uploads/about'), $gambar);
+                $data['gambar'] = $gambar;
+            }
+
+            AboutUs::create($data);
+
+            return redirect()->route('admin.about.index')->with('success', 'Data berhasil disimpan');
         }
-
-        AboutUs::create($data);
-
-        return redirect()->route('admin.about.index')->with('success', 'Data berhasil disimpan');
-    }
 
     public function edit($id)
     {

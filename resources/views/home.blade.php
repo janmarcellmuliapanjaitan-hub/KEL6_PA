@@ -11,7 +11,9 @@
 
 {{-- HERO --}}
 <section class="hero">
-    <img src="{{ asset('image/home.png') }}" alt="">
+    <video autoplay loop muted playsinline poster="{{ asset('image/home.png') }}">
+        <source src="{{ asset('image/video.mp4') }}" type="video/mp4">
+    </video>
   <div class="hero-body">
     <p class="hero-eyebrow">Janji Martahan Coffee</p>
     <h1>Temukan Kenikmatan<br><em>Kopi Khas Balige</em></h1>
@@ -210,12 +212,12 @@
     menuCards.forEach(card => menuObserver.observe(card));
   });
 
-  // Parallax effect for hero image (optional)
+  // Parallax effect for hero background (optional)
   window.addEventListener('scroll', function() {
-    const heroImg = document.querySelector('.hero img');
-    if (heroImg) {
+    const heroBg = document.querySelector('.hero img, .hero video');
+    if (heroBg) {
       const scrolled = window.pageYOffset;
-      heroImg.style.transform = `translateY(${scrolled * 0.5}px) scale(1.05)`;
+      heroBg.style.transform = `translateY(${scrolled * 0.5}px) scale(1.05)`;
     }
   });
 </script>

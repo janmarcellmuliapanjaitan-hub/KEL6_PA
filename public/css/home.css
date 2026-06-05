@@ -282,7 +282,8 @@ body {
 }
 
 /* Hero Section Animation */
-.hero img {
+.hero img,
+.hero video {
     animation: zoomIn 1.5s ease-out;
 }
 
@@ -459,9 +460,11 @@ h2.title em { font-style:italic; color:var(--gold); }
     background:#1a0f06;
     overflow:hidden;
 }
-.hero img {
+.hero img,
+.hero video {
     position:absolute; inset:0; width:100%; height:100%;
     object-fit:cover; opacity:.30;
+    pointer-events: none;
 }
 .hero-body { position:relative; z-index:1; padding:5rem 2rem; max-width:1080px; margin:0 auto; }
 
