@@ -8,10 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 class Testimoni extends Model
 {
     protected $table = 'testimonis';
-    
+
     protected $fillable = [
-        'nama', 'email', 'ulasan', 'status'
+        'nama',
+        'email',
+        'ulasan',
+        'status',
+        'user_id'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     // Format tanggal Indonesia
     public function getTanggalAttribute()

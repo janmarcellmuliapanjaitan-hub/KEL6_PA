@@ -14,10 +14,10 @@ class TestimoniController extends Controller
     {
         // Ambil testimoni yang sudah disetujui (status = true)
         $testimonis = Testimoni::where('status', true)
-                               ->orderBy('created_at', 'desc')
-                               ->get();
-        
-    return view('guest.testimoni.index', compact('testimonis'));
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('guest.testimoni.index', compact('testimonis'));
     }
 
     // Menyimpan testimoni baru
@@ -35,7 +35,8 @@ class TestimoniController extends Controller
             'nama' => $request->nama,
             'email' => $request->email,
             'ulasan' => $request->ulasan,
-            'status' => false // status false karena butuh persetujuan admin
+            'status' => false, // status false karena butuh persetujuan admin
+            'user_id' => auth()->id()
         ]);
 
         return redirect()->back()->with('success', 'Terima kasih! Testimoni Anda Telah Diterima!');

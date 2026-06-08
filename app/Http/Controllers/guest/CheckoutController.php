@@ -72,13 +72,13 @@ class CheckoutController extends Controller
                 'subtotal' => $subtotal
             ]);
             $itemsText .= "- {$cart->quantity}x {$cart->menu->name} (Rp " . number_format($cart->menu->price, 0, ',', '.') . ")\n";
-        }
+        }   
 
         // 3. Clear Cart
         Cart::where('user_id', $user->id)->delete();
 
         // 4. Generate WhatsApp Message
-        $adminWa = "6281260990395"; // Admin WA Number (ganti dengan nomor asli)
+        $adminWa = "6283131162879"; // Admin WA Number (ganti dengan nomor asli)
         
         $message = "Halo Admin Janji Martahan Coffee, saya ingin memesan:\n\n";
         $message .= "*No Order:* {$order->order_number}\n";
