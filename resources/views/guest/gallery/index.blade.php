@@ -5,7 +5,7 @@
 @push('styles')
 <style>
     .gallery-header {
-        background: linear-gradient(rgba(44, 24, 16, 0.8), rgba(44, 24, 16, 0.8)), url('https://images.unsplash.com/photo-1497935586351-b67a49e012bf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') center/cover;
+        background: linear-gradient(rgba(44, 24, 16, 0.8), rgba(44, 24, 16, 0.8)), url('{{ asset('image/gallery.png') }}') center/cover;
         color: white;
         padding: 100px 0 60px;
         text-align: center;
