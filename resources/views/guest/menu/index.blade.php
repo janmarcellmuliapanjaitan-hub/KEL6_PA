@@ -57,6 +57,7 @@
                                      data-category="{{ $menu->category }}"
                                      data-description="{{ $menu->description }}"
                                      data-price="Rp {{ number_format($menu->price, 0, ',', '.') }}"
+                                     data-raw-price="{{ $menu->price }}"
                                      data-image="{{ $menu->image ? asset($menu->image) : '' }}"
                                      data-action="{{ route('guest.cart.add', $menu->id) }}">
                                     @if($menu->image)
@@ -68,20 +69,38 @@
                                     <p class="menu-desc">{{ Str::limit($menu->description, 60) }}</p>
                                     <div class="menu-price">Rp {{ number_format($menu->price, 0, ',', '.') }}</div>
 
-                                    @auth
-                                        <form action="{{ route('guest.cart.add', $menu->id) }}" method="POST" onclick="event.stopPropagation()">
-                                            @csrf
-                                            <input type="hidden" name="quantity" value="1">
-                                            <button type="submit" class="btn-add-cart">
-                                                <i class="fas fa-shopping-cart"></i> Tambah ke Keranjang
-                                            </button>
-                                        </form>
-                                    @else
-                                        <a href="{{ route('guest.register.form') }}" class="btn-add-cart"
-                                            onclick="event.stopPropagation(); alert('Silakan daftar menjadi pelanggan terlebih dahulu untuk melakukan pemesanan.')">
-                                            <i class="fas fa-shopping-cart"></i> Tambah ke Keranjang
-                                        </a>
-                                    @endauth
+                                    <div class="menu-order-section" onclick="event.stopPropagation()">
+                                        <!-- Quantity Selector -->
+                                        <div class="card-qty-selector">
+                                            <button type="button" class="card-qty-btn" onclick="changeCardQty(this, -1)">-</button>
+                                            <input type="number" class="card-qty-input" value="1" min="1" readonly>
+                                            <button type="button" class="card-qty-btn" onclick="changeCardQty(this, 1)">+</button>
+                                        </div>
+                                        
+                                        <!-- Total Price Display -->
+                                        <div class="card-qty-total" data-base-price="{{ $menu->price }}">
+                                            Total: <span class="card-qty-total-val">Rp {{ number_format($menu->price, 0, ',', '.') }}</span>
+                                        </div>
+
+                                        <!-- Action Buttons -->
+                                        <div class="card-action-buttons">
+                                            @auth
+                                                <button type="button" class="btn-add-ajax-card" onclick="addToCartAjax({{ $menu->id }}, this)" title="Masukkan ke Keranjang">
+                                                    <i class="fas fa-shopping-cart"></i>
+                                                </button>
+                                                <button type="button" class="btn-order-direct-card" onclick="orderDirect({{ $menu->id }}, this)">
+                                                    Pesan
+                                                </button>
+                                            @else
+                                                <button type="button" class="btn-add-ajax-card" onclick="guestAlert()" title="Masukkan ke Keranjang">
+                                                    <i class="fas fa-shopping-cart"></i>
+                                                </button>
+                                                <button type="button" class="btn-order-direct-card" onclick="guestAlert()">
+                                                    Pesan
+                                                </button>
+                                            @endauth
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         @endforeach
@@ -108,24 +127,37 @@
                         
                         <div class="detail-action-box">
                             @auth
-                                <form id="detail-add-form" action="" method="POST">
-                                    @csrf
-                                    <div class="detail-qty-wrapper">
-                                        <label for="detail-qty">Jumlah:</label>
-                                        <div class="detail-qty-controls">
-                                            <button type="button" class="qty-btn" onclick="decreaseDetailQty()"><i class="fas fa-minus"></i></button>
-                                            <input type="number" name="quantity" id="detail-qty" value="1" min="1" class="qty-input">
-                                            <button type="button" class="qty-btn" onclick="increaseDetailQty()"><i class="fas fa-plus"></i></button>
-                                        </div>
+                                <div class="detail-qty-wrapper">
+                                    <label for="detail-qty">Jumlah:</label>
+                                    <div class="detail-qty-controls">
+                                        <button type="button" class="qty-btn" onclick="decreaseDetailQty()"><i class="fas fa-minus"></i></button>
+                                        <input type="number" name="quantity" id="detail-qty" value="1" min="1" class="qty-input" readonly>
+                                        <button type="button" class="qty-btn" onclick="increaseDetailQty()"><i class="fas fa-plus"></i></button>
                                     </div>
-                                    <button type="submit" class="btn-add-cart-detail">
-                                        <i class="fas fa-shopping-cart"></i> Tambah ke Keranjang
+                                </div>
+                                
+                                <!-- Total Price Display -->
+                                <div class="card-qty-total mb-3 text-end" id="detail-qty-total-box" style="font-size: 0.95rem; margin-top: -10px;">
+                                    Total: <span id="detail-qty-total-val" class="card-qty-total-val" style="font-size: 1.1rem;">Rp 0</span>
+                                </div>
+
+                                <div class="card-action-buttons">
+                                    <button type="button" class="btn-add-ajax-card" onclick="addSidebarToCartAjax()" title="Masukkan ke Keranjang" style="height: 46px; width: 50px; border-radius: 8px;">
+                                        <i class="fas fa-shopping-cart" style="font-size: 1.2rem;"></i>
                                     </button>
-                                </form>
+                                    <button type="button" class="btn-order-direct-card" onclick="orderSidebarDirect()" style="height: 46px; border-radius: 8px; font-size: 1rem;">
+                                        Pesan
+                                    </button>
+                                </div>
                             @else
-                                <a href="{{ route('guest.register.form') }}" class="btn-add-cart-detail" onclick="alert('Silakan daftar menjadi pelanggan terlebih dahulu untuk melakukan pemesanan.')">
-                                    <i class="fas fa-shopping-cart"></i> Tambah ke Keranjang
-                                </a>
+                                <div class="card-action-buttons">
+                                    <button type="button" class="btn-add-ajax-card" onclick="guestAlert()" title="Masukkan ke Keranjang" style="height: 46px; width: 50px; border-radius: 8px;">
+                                        <i class="fas fa-shopping-cart" style="font-size: 1.2rem;"></i>
+                                    </button>
+                                    <button type="button" class="btn-order-direct-card" onclick="guestAlert()" style="height: 46px; border-radius: 8px; font-size: 1rem;">
+                                        Pesan
+                                    </button>
+                                </div>
                             @endauth
                         </div>
                     </div>
@@ -136,112 +168,13 @@
 
     @push('scripts')
         <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const filterBtns = document.querySelectorAll('.filter-btn');
-                const menuItems = document.querySelectorAll('.menu-item');
-
-                filterBtns.forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        filterBtns.forEach(b => b.classList.remove('active'));
-                        btn.classList.add('active');
-
-                        const filterValue = btn.getAttribute('data-filter');
-
-                        menuItems.forEach(item => {
-                            if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
-                                item.classList.add('show');
-                            } else {
-                                item.classList.remove('show');
-                            }
-                        });
-                    });
-                });
-
-                // Close detail btn click listener
-                const closeBtn = document.getElementById('close-detail-btn');
-                if (closeBtn) {
-                    closeBtn.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        document.querySelectorAll('.menu-card').forEach(c => c.classList.remove('active-card'));
-                        document.querySelector('.menu-container').classList.remove('has-active-detail');
-                    });
-                }
-
-                // Hide browser defaults for number input scrolling
-                document.querySelectorAll('.qty-input').forEach(function(input) {
-                    input.addEventListener('wheel', function(e) {
-                        e.preventDefault();
-                    });
-                });
-            });
-
-            function showMenuDetail(cardElement) {
-                // Extract data
-                const id = cardElement.getAttribute('data-id');
-                const name = cardElement.getAttribute('data-name');
-                const category = cardElement.getAttribute('data-category');
-                const description = cardElement.getAttribute('data-description');
-                const price = cardElement.getAttribute('data-price');
-                const image = cardElement.getAttribute('data-image');
-                const action = cardElement.getAttribute('data-action');
-                
-                // Populate sidebar details
-                const detailImg = document.getElementById('detail-img');
-                const detailImgEmpty = document.getElementById('detail-img-empty');
-                
-                if (image) {
-                    detailImg.src = image;
-                    detailImg.alt = name;
-                    detailImg.style.display = 'block';
-                    detailImgEmpty.style.display = 'none';
-                } else {
-                    detailImg.style.display = 'none';
-                    detailImgEmpty.style.display = 'flex';
-                }
-                
-                document.getElementById('detail-category').textContent = category;
-                document.getElementById('detail-title').textContent = name;
-                document.getElementById('detail-desc').textContent = description;
-                document.getElementById('detail-price').textContent = price;
-                
-                // Set quantity back to 1
-                const qtyInput = document.getElementById('detail-qty');
-                if (qtyInput) qtyInput.value = 1;
-                
-                // Set form action URL
-                const addForm = document.getElementById('detail-add-form');
-                if (addForm) {
-                    addForm.action = action;
-                }
-                
-                // Expand sidebar layout by adding class
-                document.querySelector('.menu-container').classList.add('has-active-detail');
-                
-                // Highlight active card
-                document.querySelectorAll('.menu-card').forEach(c => c.classList.remove('active-card'));
-                cardElement.classList.add('active-card');
-                
-                // Scroll to details on mobile/tablet view
-                if (window.innerWidth <= 1024) {
-                    const contentCard = document.getElementById('menu-detail-content');
-                    contentCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            }
-
-            function decreaseDetailQty() {
-                let input = document.getElementById('detail-qty');
-                let val = parseInt(input.value);
-                if (val > 1) {
-                    input.value = val - 1;
-                }
-            }
-
-            function increaseDetailQty() {
-                let input = document.getElementById('detail-qty');
-                let val = parseInt(input.value);
-                input.value = val + 1;
-            }
+            window.menuConfig = {
+                registerUrl: "{{ route('guest.register.form') }}",
+                cartUrl: "{{ route('guest.cart.index') }}",
+                csrfToken: "{{ csrf_token() }}"
+            };
         </script>
+        <script src="{{ asset('js/menu.js') }}"></script>
     @endpush
 
 @endsection

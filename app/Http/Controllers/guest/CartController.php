@@ -32,6 +32,14 @@ class CartController extends Controller
             ]);
         }
 
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Menu ditambahkan ke keranjang.',
+                'cart_count' => Cart::where('user_id', Auth::id())->sum('quantity'),
+            ]);
+        }
+
         return redirect()->back()->with('success', 'Menu ditambahkan ke keranjang.');
     }
 

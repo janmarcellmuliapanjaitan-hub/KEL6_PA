@@ -644,3 +644,49 @@ h2.title em { font-style:italic; color:var(--gold); }
         transform: scaleX(1);
     }
 }
+
+/* Testimoni Carousel Styling */
+#testiCarousel .carousel-indicators button {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #d1d5db;
+    border: none;
+    margin: 0 6px;
+    opacity: 1;
+    transition: all 0.3s ease;
+}
+
+#testiCarousel .carousel-indicators button.active {
+    background-color: #3b82f6;
+    transform: scale(1.2);
+}
+
+.testi-avatar-replacement {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.testi-slider-item:hover .testi-avatar-replacement {
+    transform: scale(1.05);
+}
+
+.testi-text-slider {
+    position: relative;
+    padding: 0 20px;
+}
+
+/* Custom Premium Carousel Slide Transition */
+#testiCarousel .carousel-item {
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#testiCarousel .carousel-item .testi-slider-item {
+    opacity: 0.3;
+    transform: scale(0.95);
+    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#testiCarousel .carousel-item.active .testi-slider-item {
+    opacity: 1;
+    transform: scale(1);
+}
