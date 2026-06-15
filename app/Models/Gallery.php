@@ -12,5 +12,11 @@ class Gallery extends Model
     protected $fillable = [
         'file_path',
         'description',
+        'user_id',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -34,6 +34,7 @@ class GalleryController extends Controller
         Gallery::create([
             'file_path' => $path,
             'description' => $request->description,
+            'user_id' => auth()->id(),
         ]);
 
         return redirect()->route('admin.gallery.index')->with('success', 'Galeri berhasil ditambahkan.');

@@ -104,7 +104,7 @@
                             </ul>
                         </li>
                         @else
-                        <li class="nav-item dropdown me-2" id="notificationDropdown">
+                        <li class="nav-item dropdown me-2" id="notificationDropdown"> 
                             <a class="nav-link position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-bell-fill fs-5" style="color: #d4a373; transition: color 0.3s;" onmouseover="this.style.color='#b07d4b'" onmouseout="this.style.color='#d4a373'"></i>
                                 @if($recentOrders->count() > 0)

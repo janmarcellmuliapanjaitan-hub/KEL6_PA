@@ -9,7 +9,12 @@ class Menu extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'price', 'category', 'image'];
+    protected $fillable = ['name', 'description', 'price', 'category', 'image', 'user_id'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function carts()
     {

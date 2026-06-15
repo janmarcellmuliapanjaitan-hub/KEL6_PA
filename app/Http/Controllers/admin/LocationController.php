@@ -27,7 +27,9 @@ class LocationController extends Controller
             'longitude' => 'required',
         ]);
 
-        Location::create($request->all());
+        $data = $request->all();
+        $data['user_id'] = auth()->id();
+        Location::create($data);
 
         return redirect()->route('admin.locations.index')->with('success', 'Lokasi berhasil ditambahkan!');
     }

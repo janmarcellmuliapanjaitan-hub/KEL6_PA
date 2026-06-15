@@ -12,6 +12,12 @@ class AboutUs extends Model
     protected $fillable = [
         'judul',
         'deskripsi',
-        'gambar'
+        'gambar',
+        'user_id'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -11,11 +11,11 @@ use Illuminate\Support\Facades\Log;
 class LoginController extends Controller
 {
     /**
-     * Show admin login form
+     * Show admin login form - redirects to the unified guest login form
      */
     public function showLoginForm()
     {
-        return view('auth.login');
+        return redirect()->route('guest.login.form');
     }
 
     /**

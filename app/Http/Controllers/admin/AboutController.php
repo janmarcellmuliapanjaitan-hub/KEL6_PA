@@ -38,6 +38,7 @@ class AboutController extends Controller
                 $data['gambar'] = $gambar;
             }
 
+            $data['user_id'] = auth()->id();
             AboutUs::create($data);
 
             return redirect()->route('admin.about.index')->with('success', 'Data berhasil disimpan');

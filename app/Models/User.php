@@ -51,4 +51,34 @@ class User extends Authenticatable
     {
         return $this->hasMany(Testimoni::class);
     }
+
+    public function galleries()
+    {
+        return $this->hasMany(Gallery::class);
+    }
+
+    public function contacts()
+    {
+        return $this->hasMany(Contact::class);
+    }
+
+    public function aboutUs()
+    {
+        return $this->hasMany(AboutUs::class);
+    }
+
+    public function promos()
+    {
+        return $this->hasMany(Promo::class);
+    }
+
+    public function locations()
+    {
+        return $this->hasMany(Location::class);
+    }
+
+    public function menus()
+    {
+        return $this->hasMany(Menu::class);
+    }
 }
