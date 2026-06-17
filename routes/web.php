@@ -52,7 +52,7 @@ Route::middleware('auth')->group(function () {
 | Admin Routes (Halaman Admin - Perlu Login)
 |--------------------------------------------------------------------------
 */
-Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'is_admin'])->group(function () {
     
     // Dashboard Admin
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
