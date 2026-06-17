@@ -23,9 +23,9 @@ class ContactController extends Controller
     {
         $request->validate([
             'email'=>'required|email',
-            'no_telepon'=>'required',
-            'alamat'=>'required',
-            'jadwal'=>'required'
+            'phone'=>'required',
+            'address'=>'required',
+            'schedule'=>'required'
         ]);
 
         $data = $request->all();
@@ -43,9 +43,9 @@ class ContactController extends Controller
     {
         $request->validate([
             'email'=>'required|email',
-            'no_telepon'=>'required',
-            'alamat'=>'required',
-            'jadwal'=>'required'
+            'phone'=>'required',
+            'address'=>'required',
+            'schedule'=>'required'
         ]);
 
         $contact->update($request->all());

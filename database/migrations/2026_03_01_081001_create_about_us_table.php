@@ -10,9 +10,10 @@ return new class extends Migration
     {
         Schema::create('about_us', function (Blueprint $table) {
             $table->id();
-            $table->string('judul')->default('Tentang Kami');
-            $table->text('deskripsi'); 
-            $table->string('gambar')->nullable();
+            $table->string('title')->default('About Us');
+            $table->text('description'); 
+            $table->string('image')->nullable();
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

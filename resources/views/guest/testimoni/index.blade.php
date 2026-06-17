@@ -37,13 +37,13 @@
                 </div>
                 
                 <!-- Name & Subtitle -->
-                <h4 class="testi-name mb-1" style="font-family: 'Poppins', sans-serif; font-weight: 600; color: var(--brown); font-size: 1.25rem;">{{ $testi->nama }}</h4>
+                <h4 class="testi-name mb-1" style="font-family: 'Poppins', sans-serif; font-weight: 600; color: var(--brown); font-size: 1.25rem;">{{ $testi->name }}</h4>
                 <p class="testi-role mb-2" style="color: var(--muted); font-size: 0.88rem; font-family: 'Poppins', sans-serif;">Pengguna Layanan</p>
                 <div style="color: var(--muted); font-size: 0.72rem; margin-bottom: 1.25rem;">{{ $testi->tanggal }}</div>
                 
                 <!-- Quote Text -->
                 <p class="testi-text-slider mx-auto" style="font-family: 'Playfair Display', serif; font-size: 1.1rem; font-style: italic; color: var(--mid); line-height: 1.7; max-width: 500px;">
-                  <span style="color: #64b5f6; font-size: 1.5rem; font-family: sans-serif; font-weight: bold; margin-right: 5px;">“</span>{{ $testi->ulasan }}<span style="color: #64b5f6; font-size: 1.5rem; font-family: sans-serif; font-weight: bold; margin-left: 5px;">”</span>
+                  <span style="color: #64b5f6; font-size: 1.5rem; font-family: sans-serif; font-weight: bold; margin-right: 5px;">“</span>{{ $testi->review }}<span style="color: #64b5f6; font-size: 1.5rem; font-family: sans-serif; font-weight: bold; margin-left: 5px;">”</span>
                 </p>
               </div>
             </div>
@@ -92,11 +92,11 @@
           @csrf
 
           <div class="mb-3">
-            <label for="nama" class="form-label" style="color: var(--muted); font-weight: 500; font-family: 'Poppins', sans-serif; font-size: 0.9rem;">Nama Lengkap</label>
-            <input type="text" class="form-control @error('nama') is-invalid @enderror"
+            <label for="name" class="form-label" style="color: var(--muted); font-weight: 500; font-family: 'Poppins', sans-serif; font-size: 0.9rem;">Nama Lengkap</label>
+            <input type="text" class="form-control @error('name') is-invalid @enderror"
                    style="border: 1px solid var(--line); background-color: #fff; color: var(--brown); font-family: 'Poppins', sans-serif;"
-                   id="nama" name="nama" value="{{ old('nama', auth()->user()->name) }}" placeholder="Nama kamu" required readonly>
-            @error('nama')
+                   id="name" name="name" value="{{ old('name', auth()->user()->name) }}" placeholder="Nama kamu" required readonly>
+            @error('name')
               <div class="invalid-feedback">{{ $message }}</div>
             @enderror
           </div>
@@ -112,12 +112,12 @@
           </div>
 
           <div class="mb-4">
-            <label for="ulasan" class="form-label" style="color: var(--muted); font-weight: 500; font-family: 'Poppins', sans-serif; font-size: 0.9rem;">Ulasan</label>
-            <textarea class="form-control @error('ulasan') is-invalid @enderror"
+            <label for="review" class="form-label" style="color: var(--muted); font-weight: 500; font-family: 'Poppins', sans-serif; font-size: 0.9rem;">Ulasan</label>
+            <textarea class="form-control @error('review') is-invalid @enderror"
                       style="border: 1px solid var(--line); background-color: #fff; color: var(--brown); font-family: 'Poppins', sans-serif;"
-                      id="ulasan" name="ulasan" rows="4"
-                      placeholder="Ceritakan pengalamanmu..." required>{{ old('ulasan') }}</textarea>
-            @error('ulasan')
+                      id="review" name="review" rows="4"
+                      placeholder="Ceritakan pengalamanmu..." required>{{ old('review') }}</textarea>
+            @error('review')
               <div class="invalid-feedback">{{ $message }}</div>
             @enderror
           </div>

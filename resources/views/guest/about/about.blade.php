@@ -16,12 +16,12 @@
 
 {{-- ── PREMIUM HERO ── --}}
 <div class="page-hero">
-    <img src="{{ $about && $about->gambar ? asset('uploads/about/'.$about->gambar) : 'https://images.unsplash.com/photo-1559925393-8be0ec4767c8?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80' }}" alt="Janji Martahan Coffee">
+    <img src="{{ $about && $about->image ? asset('uploads/about/'.$about->image) : 'https://images.unsplash.com/photo-1559925393-8be0ec4767c8?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80' }}" alt="Janji Martahan Coffee">
     <div class="page-hero__body">
         <div class="page-hero__eyebrow">
             <span>Janji Martahan Coffee</span>
         </div>
-        <h1>{{ $about->judul ?? 'Tentang Janji Martahan Coffee' }}</h1>
+        <h1>{{ $about->title ?? 'Tentang Janji Martahan Coffee' }}</h1>
     </div>
 </div>
 
@@ -35,7 +35,7 @@
 
         @if($about)
             @php
-                $deskripsi = $about->deskripsi ?? '';
+                $deskripsi = $about->description ?? '';
 
                 $howToOrder = '';
                 if ($deskripsi && preg_match('/## HOW TO ORDER(.*?)(?=##|$)/s', $deskripsi, $matches)) {
@@ -52,7 +52,7 @@
                 {{-- LEFT — image dengan efek premium --}}
                 <div style="position: relative;">
                     <div class="img-wrap">
-                        <img src="{{ $about->gambar ? asset('uploads/about/'.$about->gambar) : 'https://images.unsplash.com/photo-1559925393-8be0ec4767c8?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80' }}"
+                        <img src="{{ $about->image ? asset('uploads/about/'.$about->image) : 'https://images.unsplash.com/photo-1559925393-8be0ec4767c8?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80' }}"
                              alt="Janji Martahan Coffee">
                     </div>
                     <div class="img-chip">

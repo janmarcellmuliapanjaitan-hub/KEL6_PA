@@ -25,9 +25,9 @@
                         <label>Judul</label>
 
                         <input type="text"
-                               name="judul"
+                               name="title"
                                class="form-control"
-                               value="{{ old('judul') }}"
+                               value="{{ old('title') }}"
                                placeholder="Masukkan judul"
                                required>
                     </div>
@@ -35,18 +35,18 @@
                     <div class="form-group">
                         <label>Deskripsi</label>
 
-                        <textarea name="deskripsi"
+                        <textarea name="description"
                                   rows="8"
                                   class="form-control"
                                   placeholder="Masukkan deskripsi"
-                                  required>{{ old('deskripsi') }}</textarea>
+                                  required>{{ old('description') }}</textarea>
                     </div>
 
                     <div class="form-group">
                         <label>Gambar</label>
 
                         <input type="file"
-                               name="gambar"
+                               name="image"
                                class="form-control"
                                required>
                     </div>

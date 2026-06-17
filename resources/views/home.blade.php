@@ -108,12 +108,12 @@
             </div>
             
             <!-- Name & Subtitle -->
-            <h4 class="testi-name mb-1" style="font-family: 'Poppins', sans-serif; font-weight: 600; color: var(--brown); font-size: 1.25rem;">{{ $testi->nama }}</h4>
+            <h4 class="testi-name mb-1" style="font-family: 'Poppins', sans-serif; font-weight: 600; color: var(--brown); font-size: 1.25rem;">{{ $testi->name }}</h4>
             <p class="testi-role mb-4" style="color: var(--muted); font-size: 0.88rem; font-family: 'Poppins', sans-serif;">Pengguna Layanan</p>
             
             <!-- Quote Text (without stars) -->
             <p class="testi-text-slider mx-auto" style="font-family: 'Playfair Display', serif; font-size: 1.15rem; font-style: italic; color: var(--mid); line-height: 1.8; max-width: 650px;">
-              <span style="color: #64b5f6; font-size: 1.5rem; font-family: sans-serif; font-weight: bold; margin-right: 5px;">“</span>{{ $testi->ulasan }}<span style="color: #64b5f6; font-size: 1.5rem; font-family: sans-serif; font-weight: bold; margin-left: 5px;">”</span>
+              <span style="color: #64b5f6; font-size: 1.5rem; font-family: sans-serif; font-weight: bold; margin-right: 5px;">“</span>{{ $testi->review }}<span style="color: #64b5f6; font-size: 1.5rem; font-family: sans-serif; font-weight: bold; margin-left: 5px;">”</span>
             </p>
           </div>
         </div>

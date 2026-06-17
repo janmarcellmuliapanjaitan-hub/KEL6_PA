@@ -8,9 +8,9 @@ class Contact extends Model
 {
     protected $fillable = [
         'email',
-        'no_telepon',
-        'alamat',
-        'jadwal',
+        'phone',
+        'address',
+        'schedule',
         'user_id'
     ];
 

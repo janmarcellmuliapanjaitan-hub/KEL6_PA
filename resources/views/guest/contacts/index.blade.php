@@ -62,7 +62,7 @@
             <div class="info-icon"><i class="bi bi-geo-alt-fill"></i></div>
             <div>
               <h6>Address</h6>
-              <p>{{ $contact->alamat }}</p>
+              <p>{{ $contact->address }}</p>
             </div>
           </div>
         </div>
@@ -84,7 +84,7 @@
             <div class="info-icon"><i class="bi bi-telephone-fill"></i></div>
             <div>
               <h6>Call Us</h6>
-              <a href="tel:{{ $contact->no_telepon }}">{{ $contact->no_telepon }}</a>
+              <a href="tel:{{ $contact->phone }}">{{ $contact->phone }}</a>
             </div>
           </div>
         </div>
@@ -95,7 +95,7 @@
             <div class="info-icon"><i class="bi bi-clock-fill"></i></div>
             <div>
               <h6>Opening Hours</h6>
-              <p>Senin - Minggu: 08.00 - 22.00</p>
+              <p>{{ $contact->schedule }}</p>
             </div>
           </div>
         </div>

@@ -22,20 +22,20 @@ class AboutController extends Controller
         public function store(Request $request)
         {
             $request->validate([
-                'judul' => 'required',
-                'deskripsi' => 'required',
-                'gambar' => 'image|mimes:jpeg,png,jpg|max:2048'
+                'title' => 'required',
+                'description' => 'required',
+                'image' => 'image|mimes:jpeg,png,jpg|max:2048'
             ]);
 
             $data = [
-                'judul' => $request->judul,
-                'deskripsi' => $request->deskripsi
+                'title' => $request->title,
+                'description' => $request->description
             ];
 
-            if ($request->hasFile('gambar')) {
-                $gambar = time().'.'.$request->gambar->extension();
-                $request->gambar->move(public_path('uploads/about'), $gambar);
-                $data['gambar'] = $gambar;
+            if ($request->hasFile('image')) {
+                $image = time().'.'.$request->image->extension();
+                $request->image->move(public_path('uploads/about'), $image);
+                $data['image'] = $image;
             }
 
             $data['user_id'] = auth()->id();
@@ -55,23 +55,23 @@ class AboutController extends Controller
         $about = AboutUs::findOrFail($id);
 
         $request->validate([
-            'judul' => 'required',
-            'deskripsi' => 'required',
-            'gambar' => 'image|mimes:jpeg,png,jpg|max:2048'
+            'title' => 'required',
+            'description' => 'required',
+            'image' => 'image|mimes:jpeg,png,jpg|max:2048'
         ]);
 
         $data = [
-            'judul' => $request->judul,
-            'deskripsi' => $request->deskripsi
+            'title' => $request->title,
+            'description' => $request->description
         ];
 
-        if ($request->hasFile('gambar')) {
-            if ($about->gambar && file_exists(public_path('uploads/about/'.$about->gambar))) {
-                unlink(public_path('uploads/about/'.$about->gambar));
+        if ($request->hasFile('image')) {
+            if ($about->image && file_exists(public_path('uploads/about/'.$about->image))) {
+                unlink(public_path('uploads/about/'.$about->image));
             }
-            $gambar = time().'.'.$request->gambar->extension();
-            $request->gambar->move(public_path('uploads/about'), $gambar);
-            $data['gambar'] = $gambar;
+            $image = time().'.'.$request->image->extension();
+            $request->image->move(public_path('uploads/about'), $image);
+            $data['image'] = $image;
         }
 
         $about->update($data);
@@ -83,8 +83,8 @@ class AboutController extends Controller
     {
         $about = AboutUs::findOrFail($id);
         
-        if ($about->gambar && file_exists(public_path('uploads/about/'.$about->gambar))) {
-            unlink(public_path('uploads/about/'.$about->gambar));
+        if ($about->image && file_exists(public_path('uploads/about/'.$about->image))) {
+            unlink(public_path('uploads/about/'.$about->image));
         }
         
         $about->delete();

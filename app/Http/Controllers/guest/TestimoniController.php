@@ -25,16 +25,16 @@ class TestimoniController extends Controller
     {
         // Validasi data
         $request->validate([
-            'nama' => 'required|max:255',
+            'name' => 'required|max:255',
             'email' => 'required|email|max:255',
-            'ulasan' => 'required|min:1'
+            'review' => 'required|min:1'
         ]);
 
         // Simpan ke database
         Testimoni::create([
-            'nama' => $request->nama,
+            'name' => $request->name,
             'email' => $request->email,
-            'ulasan' => $request->ulasan,
+            'review' => $request->review,
             'status' => false, // status false karena butuh persetujuan admin
             'user_id' => auth()->id()
         ]);
