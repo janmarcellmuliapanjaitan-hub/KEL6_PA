@@ -39,6 +39,7 @@ class MenuController extends Controller
             $data['image'] = 'images/menus/' . $imageName;
         }
 
+        $data['user_id'] = auth()->id();
         Menu::create($data);
 
         return redirect()->route('admin.menu.index')->with('success', 'Menu berhasil ditambahkan!');

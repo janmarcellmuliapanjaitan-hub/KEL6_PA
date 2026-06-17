@@ -28,7 +28,9 @@ class ContactController extends Controller
             'jadwal'=>'required'
         ]);
 
-        Contact::create($request->all());
+        $data = $request->all();
+        $data['user_id'] = auth()->id();
+        Contact::create($data);
         return redirect()->route('admin.contacts.index')->with('success','Kontak berhasil ditambahkan');
     }
 

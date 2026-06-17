@@ -43,6 +43,7 @@ class PromoController extends Controller
             $validated['image'] = $imagePath;
         }
 
+        $validated['user_id'] = auth()->id();
         Promo::create($validated);
 
         return redirect()->route('admin.promo.index')->with('success', 'Promo berhasil ditambahkan.');

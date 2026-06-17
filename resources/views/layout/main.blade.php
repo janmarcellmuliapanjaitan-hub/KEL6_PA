@@ -107,9 +107,43 @@
             color: white !important;
         }
 
+        .card-primary:not(.card-outline) > .card-header .card-title {
+            color: white !important;
+        }
+
         .card-title {
             color: var(--brown) !important;
             font-weight: 600 !important;
+        }
+
+        /* Custom Tabs Styling */
+        .nav-tabs {
+            border-bottom: 2px solid var(--line) !important;
+        }
+
+        .nav-tabs .nav-link {
+            color: var(--muted) !important;
+            border: none !important;
+            font-weight: 500;
+            padding: 10px 20px;
+            transition: all 0.2s ease;
+            background: transparent !important;
+        }
+
+        .nav-tabs .nav-link:hover {
+            color: var(--brown) !important;
+        }
+
+        .nav-tabs .nav-link.active {
+            color: var(--gold) !important;
+            background-color: transparent !important;
+            border-bottom: 3px solid var(--gold) !important;
+            font-weight: 600;
+        }
+
+        /* Theme Text Primary */
+        .text-primary {
+            color: var(--gold) !important;
         }
 
         /* Primary Buttons */

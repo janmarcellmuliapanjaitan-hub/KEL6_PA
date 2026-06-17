@@ -10,6 +10,12 @@ class Contact extends Model
         'email',
         'no_telepon',
         'alamat',
-        'jadwal'
+        'jadwal',
+        'user_id'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
