@@ -12,9 +12,10 @@ return new class extends Migration
         Schema::create('contacts', function (Blueprint $table) {
             $table->id();
             $table->string('email');
-            $table->string('no_telepon');
-            $table->text('alamat');
-            $table->string('jadwal'); 
+            $table->string('phone');
+            $table->text('address');
+            $table->string('schedule'); 
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

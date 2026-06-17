@@ -10,10 +10,11 @@ return new class extends Migration
     {
         Schema::create('testimonis', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
+            $table->string('name');
             $table->string('email');
-            $table->text('ulasan');
+            $table->text('review');
             $table->boolean('status')->default(false); // false = menunggu, true = ditampilkan
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->timestamps(); // otomatis ada created_at dan updated_at
         });
     }

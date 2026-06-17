@@ -37,9 +37,9 @@
                 @forelse($testimonis as $testimoni)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
-                    <td>{{ $testimoni->nama }}</td>
+                    <td>{{ $testimoni->name }}</td>
                     <td>{{ $testimoni->email }}</td>
-                    <td>{{ \Illuminate\Support\Str::limit($testimoni->ulasan,60) }}</td>
+                    <td>{{ \Illuminate\Support\Str::limit($testimoni->review,60) }}</td>
                     <td>{{ $testimoni->created_at->format('d/m/Y H:i') }}</td>
                     <td>
                         @if($testimoni->status)
@@ -57,7 +57,7 @@
                                 @csrf
                                 <button type="submit" 
                                         class="btn btn-success btn-sm"
-                                        onclick="return confirm('Setujui testimoni dari {{ $testimoni->nama }}?')">
+                                        onclick="return confirm('Setujui testimoni dari {{ $testimoni->name }}?')">
                                     <i class="fas fa-check"></i> Setujui
                                 </button>
                             </form>
@@ -71,7 +71,7 @@
                             @method('DELETE')
                             <button type="submit" 
                                     class="btn btn-danger btn-sm"
-                                    onclick="return confirm('Hapus testimoni dari {{ $testimoni->nama }}?')">
+                                    onclick="return confirm('Hapus testimoni dari {{ $testimoni->name }}?')">
                                 <i class="fas fa-trash"></i> Hapus
                             </button>
                         </form>

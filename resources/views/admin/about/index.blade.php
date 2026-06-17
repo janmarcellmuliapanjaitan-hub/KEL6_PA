@@ -42,8 +42,8 @@
 
                 
                 <div class="col-md-4 p-0">
-                    @if($about->gambar)
-                        <img src="{{ asset('uploads/about/'.$about->gambar) }}" 
+                    @if($about->image)
+                        <img src="{{ asset('uploads/about/'.$about->image) }}" 
                             style="width: 100%; height: 100%; object-fit: cover; display: block; min-height: 300px;">
                     @else
                         <div class="bg-light p-5 text-muted border rounded h-100 d-flex align-items-center justify-content-center">
@@ -61,12 +61,12 @@
 
                             <tr>
                                 <th width="150" class="align-middle">Judul</th>
-                                <td class="align-middle">{{ $about->judul }}</td>
+                                <td class="align-middle">{{ $about->title }}</td>
                             </tr>
 
                             <tr>
                                 <th class="align-middle">Deskripsi</th>
-                                <td class="align-middle">{!! nl2br(e($about->deskripsi)) !!}</td>
+                                <td class="align-middle">{!! nl2br(e($about->description)) !!}</td>
                             </tr>
 
                         </table>

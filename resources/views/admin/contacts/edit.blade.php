@@ -24,17 +24,17 @@
 
                     <div class="form-group">
                         <label><i class="fas fa-phone mr-1 text-primary"></i> No Telepon</label>
-                        <input type="text" name="no_telepon" class="form-control" value="{{ $contact->no_telepon }}" required>
+                        <input type="text" name="phone" class="form-control" value="{{ $contact->phone }}" required>
                     </div>
 
                     <div class="form-group">
                         <label><i class="fas fa-map-marker-alt mr-1 text-primary"></i> Alamat</label>
-                        <textarea name="alamat" class="form-control" rows="3" required>{{ $contact->alamat }}</textarea>
+                        <textarea name="address" class="form-control" rows="3" required>{{ $contact->address }}</textarea>
                     </div>
 
                     <div class="form-group">
                         <label><i class="fas fa-calendar-alt mr-1 text-primary"></i> Jadwal</label>
-                        <input type="text" name="jadwal" class="form-control" value="{{ $contact->jadwal }}" required>
+                        <input type="text" name="schedule" class="form-control" value="{{ $contact->schedule }}" required>
                     </div>
                 </div>
 

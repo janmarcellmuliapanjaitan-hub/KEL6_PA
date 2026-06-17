@@ -44,9 +44,9 @@
                             <tr>
                                 <td class="align-middle">{{ $loop->iteration }}</td>
                                 <td class="align-middle">{{ $contact->email }}</td>
-                                <td class="align-middle">{{ $contact->no_telepon }}</td>
-                                <td class="align-middle text-left">{{ Str::limit($contact->alamat, 50) }}</td>
-                                <td class="align-middle">{{ $contact->jadwal }}</td>
+                                <td class="align-middle">{{ $contact->phone }}</td>
+                                <td class="align-middle text-left">{{ Str::limit($contact->address, 50) }}</td>
+                                <td class="align-middle">{{ $contact->schedule }}</td>
                                 <td class="align-middle">
                                     <a href="{{ route('admin.contacts.edit', $contact->id) }}" class="btn btn-warning btn-sm">
                                         <i class="fas fa-edit"></i> Edit

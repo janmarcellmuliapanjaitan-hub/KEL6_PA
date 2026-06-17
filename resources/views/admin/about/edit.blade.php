@@ -26,35 +26,35 @@
                         <label>Judul</label>
 
                         <input type="text"
-                               name="judul"
+                               name="title"
                                class="form-control"
-                               value="{{ old('judul',$about->judul) }}"
+                               value="{{ old('title',$about->title) }}"
                                required>
                     </div>
 
                     <div class="form-group">
                         <label>Deskripsi</label>
 
-                        <textarea name="deskripsi"
+                        <textarea name="description"
                                   rows="8"
                                   class="form-control"
-                                  required>{{ old('deskripsi',$about->deskripsi) }}</textarea>
+                                  required>{{ old('description',$about->description) }}</textarea>
                     </div>
 
                     <div class="form-group">
                         <label>Gambar Baru</label>
 
                         <input type="file"
-                               name="gambar"
+                               name="image"
                                class="form-control">
                     </div>
 
-                    @if($about->gambar)
+                    @if($about->image)
 
                     <div class="form-group">
                         <label>Gambar Saat Ini</label><br>
 
-                        <img src="{{ asset('uploads/about/'.$about->gambar) }}"
+                        <img src="{{ asset('uploads/about/'.$about->image) }}"
                              width="150"
                              class="img-thumbnail">
                     </div>
