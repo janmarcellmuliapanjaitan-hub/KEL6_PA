@@ -14,6 +14,12 @@ use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Guest\ContactController as GuestContactController;
+use App\Http\Controllers\Admin\MenuController;
+use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\PromoController;
+use App\Http\Controllers\Admin\GalleryController;
+use App\Http\Controllers\Admin\LocationController;
+use App\Http\Controllers\Admin\TestimoniController as AdminTestimoniController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,25 +64,60 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'is_admin'])->group(
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     
     // Menu Management
-    Route::resource('menu', \App\Http\Controllers\Admin\MenuController::class);
+    Route::prefix('menu')->name('menu.')->group(function () {
+        Route::get('/', [MenuController::class, 'index'])->name('index');
+        Route::get('/create', [MenuController::class, 'create'])->name('create');
+        Route::post('/', [MenuController::class, 'store'])->name('store');
+        Route::get('/{menu}/edit', [MenuController::class, 'edit'])->name('edit');
+        Route::put('/{menu}', [MenuController::class, 'update'])->name('update');
+        Route::delete('/{menu}', [MenuController::class, 'destroy'])->name('destroy');
+    });
 
     // Order Management
-    Route::resource('orders', \App\Http\Controllers\Admin\OrderController::class)->only(['index', 'show', 'destroy']);
-    Route::post('orders/{id}/approve', [\App\Http\Controllers\Admin\OrderController::class, 'approve'])->name('orders.approve');
-    Route::post('orders/{id}/cancel', [\App\Http\Controllers\Admin\OrderController::class, 'cancel'])->name('orders.cancel');
+    Route::prefix('orders')->name('orders.')->group(function () {
+        Route::get('/', [OrderController::class, 'index'])->name('index');
+        Route::get('/{id}', [OrderController::class, 'show'])->name('show');
+        Route::delete('/{id}', [OrderController::class, 'destroy'])->name('destroy');
+        Route::post('/{id}/approve', [OrderController::class, 'approve'])->name('approve');
+        Route::post('/{id}/cancel', [OrderController::class, 'cancel'])->name('cancel');
+    });
     
     // Promo Management
-    Route::resource('promo', \App\Http\Controllers\Admin\PromoController::class);
+    Route::prefix('promo')->name('promo.')->group(function () {
+        Route::get('/', [PromoController::class, 'index'])->name('index');
+        Route::get('/create', [PromoController::class, 'create'])->name('create');
+        Route::post('/', [PromoController::class, 'store'])->name('store');
+        Route::get('/{promo}/edit', [PromoController::class, 'edit'])->name('edit');
+        Route::put('/{promo}', [PromoController::class, 'update'])->name('update');
+        Route::delete('/{promo}', [PromoController::class, 'destroy'])->name('destroy');
+    });
 
     // Gallery Management
-    Route::resource('gallery', \App\Http\Controllers\Admin\GalleryController::class);
+    Route::prefix('gallery')->name('gallery.')->group(function () {
+        Route::get('/', [GalleryController::class, 'index'])->name('index');
+        Route::get('/create', [GalleryController::class, 'create'])->name('create');
+        Route::post('/', [GalleryController::class, 'store'])->name('store');
+        Route::get('/{gallery}/edit', [GalleryController::class, 'edit'])->name('edit');
+        Route::put('/{gallery}', [GalleryController::class, 'update'])->name('update');
+        Route::delete('/{gallery}', [GalleryController::class, 'destroy'])->name('destroy');
+    });
 
     // Location Management
-    Route::resource('locations', \App\Http\Controllers\Admin\LocationController::class);
+    Route::prefix('locations')->name('locations.')->group(function () {
+        Route::get('/', [LocationController::class, 'index'])->name('index');
+        Route::get('/create', [LocationController::class, 'create'])->name('create');
+        Route::post('/', [LocationController::class, 'store'])->name('store');
+        Route::get('/{location}/edit', [LocationController::class, 'edit'])->name('edit');
+        Route::put('/{location}', [LocationController::class, 'update'])->name('update');
+        Route::delete('/{location}', [LocationController::class, 'destroy'])->name('destroy');
+    });
 
     // Testimoni Management
-    Route::resource('testimoni', \App\Http\Controllers\Admin\TestimoniController::class);
-    Route::post('testimoni/{id}/approve', [\App\Http\Controllers\Admin\TestimoniController::class, 'approve'])->name('testimoni.approve');
+    Route::prefix('testimoni')->name('testimoni.')->group(function () {
+        Route::get('/', [AdminTestimoniController::class, 'index'])->name('index');
+        Route::delete('/{id}', [AdminTestimoniController::class, 'destroy'])->name('destroy');
+        Route::post('/{id}/approve', [AdminTestimoniController::class, 'approve'])->name('approve');
+    });
     
     // About Us Management
     Route::prefix('about')->name('about.')->group(function () {
