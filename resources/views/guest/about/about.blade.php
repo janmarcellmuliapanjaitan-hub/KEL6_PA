@@ -49,7 +49,7 @@
 
             <div class="about-grid">
 
-                {{-- LEFT — image dengan efek premium --}}
+                
                 <div style="position: relative;">
                     <div class="img-wrap">
                         <img src="{{ $about->image ? asset('uploads/about/'.$about->image) : 'https://images.unsplash.com/photo-1559925393-8be0ec4767c8?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80' }}"
@@ -69,7 +69,7 @@
                         </div>
                     @else
                         <div class="about-content">
-                            <p>✨ Informasi tentang Janji Martahan Coffee akan segera hadir. Kami sedang mempersiapkan cerita dan filosofi di balik setiap cangkir kopi yang kami sajikan.</p>
+                            <p>informasi tentang Janji Martahan Coffee akan segera hadir. Kami sedang mempersiapkan cerita dan filosofi di balik setiap cangkir kopi yang kami sajikan.</p>
                             <p>Setiap tegukan kopi kami membawa cerita tentang passion, dedikasi, dan cinta terhadap budaya kopi Indonesia.</p>
                         </div>
                     @endif
@@ -77,7 +77,6 @@
 
             </div>
 
-            {{-- HOW TO ORDER — banner premium di bawah grid --}}
             @if($howToOrder)
                 <div class="order-banner">
                     <div class="order-banner__left">
