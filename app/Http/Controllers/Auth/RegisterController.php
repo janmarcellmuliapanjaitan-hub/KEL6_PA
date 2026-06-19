@@ -39,7 +39,7 @@ class RegisterController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => 'user',
+            'role' => 'pelanggan',
         ]);
 
         Log::info('New guest registered: ' . $user->email);
