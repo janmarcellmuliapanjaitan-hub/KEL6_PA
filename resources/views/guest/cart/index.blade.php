@@ -10,11 +10,7 @@
 <div class="cart-container">
     <h2 class="cart-title">Keranjang Belanja</h2>
 
-    @if(session('success'))
-        <div class="cart-alert">
-            {{ session('success') }}
-        </div>
-    @endif
+
 
     @if($carts->count() > 0)
         <div class="cart-wrapper">

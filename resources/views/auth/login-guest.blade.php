@@ -107,6 +107,12 @@
             <p style="color: #c4a27a; font-size: 0.9rem;">Masuk ke akun pelanggan Anda</p>
         </div>
         
+        @if(session('success'))
+            <div class="alert alert-success" style="background: rgba(40,167,69,0.15); border: 1px solid rgba(40,167,69,0.3); color: #2ecc71; border-radius: 8px; font-size: 0.9rem;">
+                <i class="bi bi-check-circle me-2"></i>{{ session('success') }}
+            </div>
+        @endif
+
         @if(session('error'))
             <div class="alert alert-danger" style="background: rgba(220,53,69,0.15); border: 1px solid rgba(220,53,69,0.3); color: #ff6b6b; border-radius: 8px; font-size: 0.9rem;">
                 <i class="bi bi-exclamation-circle me-2"></i>{{ session('error') }}

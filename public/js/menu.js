@@ -4,9 +4,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
+
             filterBtns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-
+            
             const filterValue = btn.getAttribute('data-filter');
 
             menuItems.forEach(item => {
@@ -250,37 +251,37 @@ function addSidebarToCartAjax() {
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'X-CSRF-TOKEN': csrfToken,
-            'X-Requested-With': 'XMLHttpRequest'
-        },
-        body: JSON.stringify({ quantity: quantity })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (btn) {
-            btn.disabled = false;
-            btn.innerHTML = '<i class="fas fa-shopping-cart" style="font-size: 1.2rem;"></i>';
-        }
-        
-        if (data.success) {
-            showToast(data.message);
-            updateCartBadge(data.cart_count);
-        } else {
-            alert(data.message || 'Gagal menambahkan ke keranjang.');
-        }
-    })
-    .catch(error => {
-        if (btn) {
-            btn.disabled = false;
-            btn.innerHTML = '<i class="fas fa-shopping-cart" style="font-size: 1.2rem;"></i>';
-        }
-        console.error('Error:', error);
-        alert('Terjadi kesalahan. Silakan coba lagi.');
-    });
-}
+                            'X-CSRF-TOKEN': csrfToken,
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        body: JSON.stringify({ quantity: quantity })
+                    })  
+                    .then(response => response.json())
+                    .then(data => {
+                        if (btn) {
+                            btn.disabled = false;
+                            btn.innerHTML = '<i class="fas fa-shopping-cart" style="font-size: 1.2rem;"></i>';
+                        }
+                        
+                        if (data.success) {
+                            showToast(data.message);
+                            updateCartBadge(data.cart_count);
+                        } else {
+                            alert(data.message || 'Gagal menambahkan ke keranjang.');
+                        }
+                    })
+                    .catch(error => {
+                        if (btn) {
+                            btn.disabled = false;
+                            btn.innerHTML = '<i class="fas fa-shopping-cart" style="font-size: 1.2rem;"></i>';
+                        }
+                        console.error('Error:', error);
+                        alert('Terjadi kesalahan. Silakan coba lagi.');
+                    });
+                }
 
-function orderSidebarDirect() {
-    if (!currentSidebarMenuId) return;
+                function orderSidebarDirect() {
+                    if (!currentSidebarMenuId) return;
     const qtyInput = document.getElementById('detail-qty');
     const quantity = qtyInput ? parseInt(qtyInput.value) : 1;
     

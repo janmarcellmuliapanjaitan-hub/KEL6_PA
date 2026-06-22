@@ -41,11 +41,7 @@
 
         <div class="menu-layout-wrapper">
             <div class="menu-left-content">
-                @if(session('success'))
-                    <div class="menu-alert-success">
-                        {{ session('success') }}
-                    </div>
-                @endif
+
 
                 <div class="menu-grid">
                     @forelse($menus as $category => $items)
