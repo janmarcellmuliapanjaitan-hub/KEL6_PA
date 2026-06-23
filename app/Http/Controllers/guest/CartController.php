@@ -46,7 +46,7 @@ class CartController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate(['quantity' => 'required|integer|min:1']);
-        
+
         $cart = Cart::where('user_id', Auth::id())->where('id', $id)->firstOrFail();
         $cart->update(['quantity' => $request->quantity]);
 
