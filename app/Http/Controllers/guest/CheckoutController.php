@@ -63,9 +63,28 @@ class CheckoutController extends Controller
             return $cart->menu->price * $cart->quantity;
         });
 
-        // 1. Save Order
-        $order = Order::create([
-            'order_number' => 'ORD-' . strtoupper(uniqid()),
+        $orderNumber = 'ORD-' . strtoupper(uniqid());
+
+        // 2. Map items for WhatsApp and encoding
+        $itemsText = "";
+        $itemsData = [];
+        foreach ($carts as $cart) {
+            $subtotal = $cart->menu->price * $cart->quantity;
+            $itemsData[] = [
+                'menu_id' => $cart->menu_id,
+                'quantity' => $cart->quantity,
+                'price' => $cart->menu->price,
+                'subtotal' => $subtotal
+            ];
+            $itemsText .= "- {$cart->quantity}x {$cart->menu->name} (Rp " . number_format($cart->menu->price, 0, ',', '.') . ")\n";
+        }   
+
+        // 3. Clear Cart
+        Cart::where('user_id', $user->id)->delete();
+
+        // 4. Create CheckoutRequest in DB
+        $checkoutRequest = \App\Models\CheckoutRequest::create([
+            'order_number' => $orderNumber,
             'user_id' => $user->id,
             'name' => $user->name,
             'whatsapp_number' => $request->whatsapp_number,
@@ -73,44 +92,31 @@ class CheckoutController extends Controller
             'address' => $request->delivery_type === 'Delivery' ? $request->address : null,
             'total_price' => $totalPrice,
             'notes' => $request->notes,
-            'status' => 'pending'
+            'items' => $itemsData
         ]);
 
-        // 2. Save Order Items & generate message detailed list
-        $itemsText = "";
-        foreach ($carts as $cart) {
-            $subtotal = $cart->menu->price * $cart->quantity;
-            OrderItem::create([
-                'order_id' => $order->id,
-                'menu_id' => $cart->menu_id,
-                'quantity' => $cart->quantity,
-                'price' => $cart->menu->price,
-                'subtotal' => $subtotal
-            ]);
-            $itemsText .= "- {$cart->quantity}x {$cart->menu->name} (Rp " . number_format($cart->menu->price, 0, ',', '.') . ")\n";
-        }   
+        $confirmUrl = route('admin.orders.confirm-wa-view', ['id' => $checkoutRequest->id]);
 
-        // 3. Clear Cart
-        Cart::where('user_id', $user->id)->delete();
-
-        // 4. Generate WhatsApp Message
-        $adminWa = "6283131162879"; // Admin WA Number (ganti dengan nomor asli)
+        // 5. Generate WhatsApp Message
+        $adminWa = \App\Models\Setting::get('admin_whatsapp', env('ADMIN_WA'));
         
         $message = "Halo Admin Janji Martahan Coffee, saya ingin memesan:\n\n";
-        $message .= "*No Order:* {$order->order_number}\n";
-        $message .= "*Nama:* {$order->name}\n";
-        $message .= "*Tipe Pengambilan:* {$order->delivery_type}\n";
+        $message .= "*No Order:* {$orderNumber}\n";
+        $message .= "*Nama:* {$user->name}\n";
+        $message .= "*Tipe Pengambilan:* {$request->delivery_type}\n";
         
-        if ($order->delivery_type === 'Delivery') {
-            $message .= "*Alamat Pengiriman:* {$order->address}\n";
+        if ($request->delivery_type === 'Delivery') {
+            $message .= "*Alamat Pengiriman:* {$request->address}\n";
         }
         
         $message .= "\n*Daftar Pesanan:*\n{$itemsText}";
         $message .= "\n*Total Biaya:* Rp " . number_format($totalPrice, 0, ',', '.') . "\n";
         
-        if ($order->notes) {
-            $message .= "*Catatan:* {$order->notes}\n";
+        if ($request->notes) {
+            $message .= "*Catatan:* {$request->notes}\n";
         }
+
+        $message .= "\n*Link Konfirmasi Admin:* {$confirmUrl}\n";
 
         $waUrl = "https://api.whatsapp.com/send?phone={$adminWa}&text=" . urlencode($message);
 
