@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\AboutController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Guest\ContactController as GuestContactController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\OrderController;
@@ -168,3 +169,7 @@ Route::prefix('guest')->name('guest.')->group(function () {
     Route::get('/register', [RegisterController::class, 'showGuestRegistrationForm'])->name('register.form');
     Route::post('/register', [RegisterController::class, 'guestRegister'])->name('register');
 });
+
+// Password Reset Routes
+Route::get('/forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('/forgot-password', [ForgotPasswordController::class, 'resetPasswordDirectly'])->name('password.update');
