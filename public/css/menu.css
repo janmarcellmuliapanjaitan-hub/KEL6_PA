@@ -737,3 +737,37 @@
         font-size: 0.8rem;
     }
 }
+
+/* Style for unavailable menus */
+.menu-card.unavailable {
+    opacity: 0.65;
+    background: #f5f0e6;
+    position: relative;
+    cursor: not-allowed;
+    border-color: #dcd1c4;
+}
+.menu-card.unavailable .menu-img {
+    filter: grayscale(80%) contrast(90%);
+}
+.menu-card.unavailable .menu-img-empty {
+    background: #e8e3d9;
+    color: #b0a596;
+}
+.menu-card.unavailable .menu-price {
+    color: #8c8275;
+}
+.menu-badge-unavailable {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: #c82333;
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    z-index: 5;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}

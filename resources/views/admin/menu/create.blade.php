@@ -44,6 +44,15 @@
                     </div>
 
                     <div class="form-group">
+                        <label>Status Ketersediaan</label>
+                        <select name="is_available" class="form-control @error('is_available') is-invalid @enderror" required>
+                            <option value="1" {{ old('is_available', '1') == '1' ? 'selected' : '' }}>Tersedia</option>
+                            <option value="0" {{ old('is_available') == '0' ? 'selected' : '' }}>Tidak Tersedia</option>
+                        </select>
+                        @error('is_available') <span class="text-danger">{{ $message }}</span> @enderror
+                    </div>
+
+                    <div class="form-group">
                         <label>Gambar Menu</label>
                         <input type="file" name="image" class="form-control-file @error('image') is-invalid @enderror" accept="image/*">
                         @error('image') <br><span class="text-danger">{{ $message }}</span> @enderror

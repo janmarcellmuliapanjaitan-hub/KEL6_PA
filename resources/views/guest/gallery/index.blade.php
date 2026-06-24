@@ -133,5 +133,10 @@
             </div>
         @endforelse
     </div>
+
+    <!-- Pagination Links -->
+    <div class="d-flex justify-content-center mt-5">
+        {{ $galleries->links() }}
+    </div>
 </div>
 @endsection

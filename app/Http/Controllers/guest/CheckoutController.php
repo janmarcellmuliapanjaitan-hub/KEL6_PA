@@ -18,6 +18,14 @@ class CheckoutController extends Controller
             return redirect()->route('guest.cart.index')->with('error', 'Keranjang Anda kosong.');
         }
 
+        $hasUnavailableItems = $carts->contains(function($cart) {
+            return !$cart->menu->is_available;
+        });
+
+        if ($hasUnavailableItems) {
+            return redirect()->route('guest.cart.index')->with('error', 'Ada menu di keranjang Anda yang sedang tidak tersedia. Silakan hapus menu tersebut terlebih dahulu.');
+        }
+
         $total = $carts->sum(function($cart) {
             return $cart->menu->price * $cart->quantity;
         });
@@ -41,6 +49,14 @@ class CheckoutController extends Controller
 
         if ($carts->count() == 0) {
             return redirect()->route('menu')->with('error', 'Keranjang kosong.');
+        }
+
+        $hasUnavailableItems = $carts->contains(function($cart) {
+            return !$cart->menu->is_available;
+        });
+
+        if ($hasUnavailableItems) {
+            return redirect()->route('guest.cart.index')->with('error', 'Ada menu di keranjang Anda yang sedang tidak tersedia. Silakan hapus menu tersebut terlebih dahulu.');
         }
 
         $totalPrice = $carts->sum(function($cart) {

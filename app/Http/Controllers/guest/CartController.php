@@ -20,6 +20,16 @@ class CartController extends Controller
     {
         $request->validate(['quantity' => 'required|integer|min:1']);
 
+        if (!$menu->is_available) {
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Menu ini sedang tidak tersedia.',
+                ], 422);
+            }
+            return redirect()->back()->with('error', 'Menu ini sedang tidak tersedia.');
+        }
+
         $cart = Cart::where('user_id', Auth::id())->where('menu_id', $menu->id)->first();
 
         if ($cart) {

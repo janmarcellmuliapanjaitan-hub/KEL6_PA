@@ -71,6 +71,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'is_admin'])->group(
         Route::get('/{menu}/edit', [MenuController::class, 'edit'])->name('edit');
         Route::put('/{menu}', [MenuController::class, 'update'])->name('update');
         Route::delete('/{menu}', [MenuController::class, 'destroy'])->name('destroy');
+        Route::patch('/{menu}/toggle-status', [MenuController::class, 'toggleStatus'])->name('toggle-status');
     });
 
     // Order Management

@@ -10,7 +10,17 @@
 <div class="cart-container">
     <h2 class="cart-title">Keranjang Belanja</h2>
 
+    @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-bottom: 20px;">
+            {{ session('success') }}
+        </div>
+    @endif
 
+    @if(session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-bottom: 20px;">
+            {{ session('error') }}
+        </div>
+    @endif
 
     @if($carts->count() > 0)
         <div class="cart-wrapper">
@@ -38,7 +48,11 @@
                                         <img src="{{ asset($cart->menu->image) }}" class="cart-item-img">
                                     @endif
                                     <div>
-                                        <strong>{{ $cart->menu->name }}</strong><br>
+                                        <strong>{{ $cart->menu->name }}</strong>
+                                        @if(!$cart->menu->is_available)
+                                            <span class="badge badge-danger text-white ml-2" style="font-size: 0.75rem; background-color: #dc3545; padding: 3px 8px; border-radius: 4px;">Tidak Tersedia</span>
+                                        @endif
+                                        <br>
                                         <span class="cart-item-cat">{{ $cart->menu->category }}</span>
                                     </div>
                                 </div>

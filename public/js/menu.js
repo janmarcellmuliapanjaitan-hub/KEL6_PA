@@ -50,6 +50,7 @@ function showMenuDetail(cardElement) {
     const price = cardElement.getAttribute('data-price');
     const rawPrice = parseFloat(cardElement.getAttribute('data-raw-price'));
     const image = cardElement.getAttribute('data-image');
+    const isAvailable = cardElement.getAttribute('data-available') === 'true';
 
     currentSidebarMenuId = id;
     currentSidebarMenuPrice = rawPrice;
@@ -79,6 +80,17 @@ function showMenuDetail(cardElement) {
 
     // Update detail total price
     updateSidebarTotal();
+
+    // Toggle available/unavailable action buttons in sidebar
+    const availableSection = document.getElementById('detail-available-section');
+    const unavailableSection = document.getElementById('detail-unavailable-section');
+    if (isAvailable) {
+        if (availableSection) availableSection.style.display = 'block';
+        if (unavailableSection) unavailableSection.style.display = 'none';
+    } else {
+        if (availableSection) availableSection.style.display = 'none';
+        if (unavailableSection) unavailableSection.style.display = 'block';
+    }
 
     // Expand sidebar layout by adding class
     document.querySelector('.menu-container').classList.add('has-active-detail');

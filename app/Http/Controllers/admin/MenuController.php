@@ -28,6 +28,7 @@ class MenuController extends Controller
             'price' => 'required|numeric|min:0',
             'category' => 'required|in:Kopi,Non Kopi,Snack',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'is_available' => 'required|boolean',
         ]);
 
         $data = $request->except('image');
@@ -58,6 +59,7 @@ class MenuController extends Controller
             'price' => 'required|numeric|min:0',
             'category' => 'required|in:Kopi,Non Kopi,Snack',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'is_available' => 'required|boolean',
         ]);
 
         $data = $request->except('image');
@@ -87,5 +89,14 @@ class MenuController extends Controller
         $menu->delete();
 
         return redirect()->route('admin.menu.index')->with('success', 'Menu berhasil dihapus!');
+    }
+
+    public function toggleStatus(Menu $menu)
+    {
+        $menu->update([
+            'is_available' => !$menu->is_available
+        ]);
+
+        return redirect()->route('admin.menu.index')->with('success', 'Status ketersediaan menu berhasil diubah!');
     }
 }
