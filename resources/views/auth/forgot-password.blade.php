@@ -1,10 +1,9 @@
-<!-- resources/views/auth/login-guest.blade.php -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Pelanggan - Janji Martahan Coffee</title>
+    <title>Lupa Password - Janji Martahan Coffee</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -39,7 +38,7 @@
             padding: 2.5rem;
             position: relative;
             overflow: hidden;
-            margin: 0 15px;
+            margin: 20px 15px;
         }
         .login-card::before {
             content: '';
@@ -103,22 +102,10 @@
     <div class="login-card">
         <div class="text-center mb-4">
             <img src="{{ asset('image/logo.png') }}" alt="Logo" class="logo-img">
-            <h4 class="title mb-1">Selamat Datang</h4>
-            <p style="color: #c4a27a; font-size: 0.9rem;">Masuk ke akun pelanggan Anda</p>
+            <h4 class="title mb-1">Ubah Password</h4>
+            <p style="color: #c4a27a; font-size: 0.9rem;">Verifikasi Nama Lengkap & Email untuk memperbarui password Anda secara langsung</p>
         </div>
         
-        @if(session('success'))
-            <div class="alert alert-success" style="background: rgba(40,167,69,0.15); border: 1px solid rgba(40,167,69,0.3); color: #2ecc71; border-radius: 8px; font-size: 0.9rem;">
-                <i class="bi bi-check-circle me-2"></i>{{ session('success') }}
-            </div>
-        @endif
-
-        @if(session('error'))
-            <div class="alert alert-danger" style="background: rgba(220,53,69,0.15); border: 1px solid rgba(220,53,69,0.3); color: #ff6b6b; border-radius: 8px; font-size: 0.9rem;">
-                <i class="bi bi-exclamation-circle me-2"></i>{{ session('error') }}
-            </div>
-        @endif
-
         @if($errors->any())
             <div class="alert alert-danger" style="background: rgba(220,53,69,0.15); border: 1px solid rgba(220,53,69,0.3); color: #ff6b6b; border-radius: 8px; font-size: 0.9rem;">
                 @foreach($errors->all() as $error)
@@ -127,43 +114,43 @@
             </div>
         @endif
 
-        <form method="POST" action="{{ route('guest.login') }}">
+        <form method="POST" action="{{ route('password.update') }}">
             @csrf
             
-            <div class="mb-4 position-relative">
+            <!-- Email Input -->
+            <div class="mb-3 position-relative">
                 <i class="bi bi-envelope input-icon"></i>
-                <input type="email" name="email" class="form-control" placeholder="Email Address" value="{{ old('email') }}" required>
+                <input type="email" name="email" class="form-control" placeholder="Alamat Email" value="{{ old('email') }}" required>
             </div>
-            
-            <div class="mb-4 position-relative">
+
+            <!-- Full Name (Username) Input -->
+            <div class="mb-3 position-relative">
+                <i class="bi bi-person input-icon"></i>
+                <input type="text" name="name" class="form-control" placeholder="Nama Lengkap (Username)" value="{{ old('name') }}" required>
+            </div>
+
+            <!-- New Password Input -->
+            <div class="mb-3 position-relative">
                 <i class="bi bi-lock input-icon"></i>
-                <input type="password" name="password" class="form-control" placeholder="Password" required>
+                <input type="password" name="password" class="form-control" placeholder="Password Baru" required>
+            </div>
+
+            <!-- Confirm New Password Input -->
+            <div class="mb-3 position-relative">
+                <i class="bi bi-lock-fill input-icon"></i>
+                <input type="password" name="password_confirmation" class="form-control" placeholder="Konfirmasi Password Baru" required>
             </div>
             
-            <div class="mb-4 d-flex justify-content-between align-items-center">
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="remember" name="remember" style="background-color: transparent; border-color: #c4a27a;">
-                    <label class="form-check-label" for="remember" style="color: #c4a27a; font-size: 0.85rem; cursor: pointer;">Ingat saya</label>
-                </div>
-                <div>
-                    <a href="{{ route('password.request') }}" style="color: #e8c98a; font-size: 0.85rem; text-decoration: none;">Lupa Password?</a>
-                </div>
-            </div>
-            
-            <button type="submit" class="btn btn-primary-custom w-100 mb-4">
-                Login Sekarang
+            <button type="submit" class="btn btn-primary-custom w-100 mb-3">
+                Ubah Password Sekarang
             </button>
         </form>
         
         <div class="text-center">
-            <p class="mb-2" style="color: #c4a27a; font-size: 0.9rem;">
-                Belum punya akun? 
-                <a href="{{ route('guest.register.form') }}" style="color: #e8c98a; font-weight: 500; text-decoration: none; border-bottom: 1px solid rgba(232,201,138,0.5); padding-bottom: 1px;">Daftar di sini</a>
-            </p>
-            <a href="{{ route('home') }}" style="color: #6c757d; font-size: 0.85rem; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#f5e6d3'" onmouseout="this.style.color='#6c757d'">
-                <i class="bi bi-arrow-left me-1"></i> Kembali ke Beranda
+            <a href="{{ route('guest.login.form') }}" style="color: #e8c98a; font-size: 0.9rem; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#f5e6d3'" onmouseout="this.style.color='#e8c98a'">
+                <i class="bi bi-arrow-left me-1"></i> Kembali ke Halaman Login
             </a>
         </div>
     </div>
 </body>
-</html>p
+</html>

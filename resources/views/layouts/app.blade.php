@@ -195,7 +195,7 @@
         </div>
     </nav>
 
-    <!-- Content -->
+    <!-- (conten) peambilan session untuk guest/pelanggan -->
     <main>
         @if(session('success') || session('error'))
             <div class="container mt-3">
@@ -219,11 +219,13 @@
     </main>
 
     <footer style="background: #1a0f08; color: white; padding: 30px 0 0;">
+        
+        <!-- Pengambilan data dari $mapQery dn $adress tuk di tmpilkan ke footer -->
         @php
             $footerLocation = \App\Models\Location::first();
             $address = $footerLocation ? $footerLocation->address : 'Balige, Sumatera Utara, Indonesia';
-            $mapQuery = $footerLocation && $footerLocation->latitude && $footerLocation->longitude 
-                ? "{$footerLocation->latitude},{$footerLocation->longitude}" 
+            $mapQuery = $footerLocation && $footerLocation->latitude && $footerLocation->longitude
+                ? $footerLocation->latitude . ',' . $footerLocation->longitude
                 : urlencode($address);
         @endphp
         <div class="container px-4 px-lg-3">
@@ -320,7 +322,7 @@
                         <h5 class="modal-title" id="orderDetailModalLabel" style="color: #e8c98a; font-family: 'Playfair Display', serif; font-weight: 700; letter-spacing: 0.5px;">Detail Pesanan</h5>
                     </div>
                     <div class="modal-body" id="orderDetailModalBody" style="padding: 1.5rem;">
-                        <!-- Content will be populated by JS -->
+                      
                     </div>
                     <div class="modal-footer border-0 pt-0 mx-2 mb-2">
                         <button type="button" class="btn w-100" style="background-color: #e8c98a; color: #1a0f08; font-weight: 600; border-radius: 8px; padding: 10px;" data-bs-dismiss="modal">Tutup</button>

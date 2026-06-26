@@ -53,6 +53,24 @@
                         </tr>
                     </table>
                 </div>
+                <div class="card-footer text-center">
+                    @if($order->status == 'pending')
+                        <div class="d-flex justify-content-between">
+                            <form action="{{ route('admin.orders.approve', $order->id) }}" method="POST" class="d-inline flex-fill mr-1">
+                                @csrf
+                                <button class="btn btn-success btn-block" onclick="return confirm('Selesaikan pesanan ini?')">
+                                    <i class="fas fa-check mr-1"></i> Selesaikan
+                                </button>
+                            </form>
+                            <form action="{{ route('admin.orders.cancel', $order->id) }}" method="POST" class="d-inline flex-fill ml-1">
+                                @csrf
+                                <button class="btn btn-warning btn-block" onclick="return confirm('Batalkan pesanan ini?')">
+                                    <i class="fas fa-times mr-1"></i> Batalkan
+                                </button>
+                            </form>
+                        </div>
+                    @endif
+                </div>
             </div>
         </div>
 

@@ -10,9 +10,7 @@ use Illuminate\Support\Facades\Log;
 
 class LoginController extends Controller
 {
-    /**
-     * Show admin login form - redirects to the unified guest login form
-     */
+
     public function showLoginForm()
     {
         return redirect()->route('guest.login.form');
@@ -26,9 +24,6 @@ class LoginController extends Controller
         return view('auth.login-guest');
     }
 
-    /**
-     * Handle admin login request - only allows admin account
-     */
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -38,7 +33,7 @@ class LoginController extends Controller
 
         // Check if email belongs to admin
         $admin = User::where('email', $request->email)->where('role', 'admin')->first();
-        
+
         if (!$admin) {
             Log::warning('Non-admin user attempted to login: ' . $request->email);
             return back()->withErrors([
@@ -50,7 +45,7 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
             $request->session()->regenerate();
-            
+
             // Double check if user is admin
             if ($user->role === 'admin') {
                 Log::info('Admin logged in: ' . $user->email);
@@ -69,9 +64,7 @@ class LoginController extends Controller
         ])->withInput($request->except('password'));
     }
 
-    /**
-     * Handle guest login request
-     */
+
     public function guestLogin(Request $request)
     {
         $credentials = $request->validate([
@@ -79,17 +72,17 @@ class LoginController extends Controller
             'password' => 'required',
         ]);
 
-        // Attempt to login
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
-            
+
             $request->session()->regenerate();
             Log::info('User logged in via guest login: ' . $user->email);
-            
+
             if ($user->role === 'admin') {
                 return redirect()->intended(route('admin.dashboard'))->with('success', 'Selamat datang, ' . $user->name . '!');
             }
-            
+
+
             return redirect()->intended(route('home'))->with('success', 'Selamat datang, ' . $user->name . '!');
         }
 
@@ -108,7 +101,7 @@ class LoginController extends Controller
         if ($user) {
             Log::info('User logged out: ' . $user->email);
         }
-        
+
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();

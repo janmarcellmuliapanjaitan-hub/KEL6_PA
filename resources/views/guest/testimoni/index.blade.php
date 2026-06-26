@@ -15,11 +15,7 @@
     <h2 class="section-title">Testimoni <em>Pelanggan</em></h2>
   </div>
 
-  @if(session('success'))
-    <div class="alert alert-success py-2 px-3 mb-4 mx-auto text-center" style="font-size:.85rem; border-radius:4px; max-width: 600px;">
-      {{ session('success') }}
-    </div>
-  @endif
+
 
   <div class="row justify-content-center">
     <div class="col-lg-8">

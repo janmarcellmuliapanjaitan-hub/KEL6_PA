@@ -52,6 +52,7 @@
                                         <th>Kategori</th>
                                         <th>Harga</th>
                                         <th>Deskripsi</th>
+                                        <th width="130">Status</th>
                                         <th width="150">Aksi</th>
                                     </tr>
                                 </thead>
@@ -73,6 +74,21 @@
                                             <td class="align-middle">Rp {{ number_format($menu->price, 0, ',', '.') }}</td>
                                             <td class="align-middle text-left">{{ Str::limit($menu->description, 50) }}</td>
                                             <td class="align-middle">
+                                                @if($menu->is_available)
+                                                    <span class="badge badge-success d-block mb-1">Tersedia</span>
+                                                @else
+                                                    <span class="badge badge-danger d-block mb-1">Tidak Tersedia</span>
+                                                @endif
+                                                <form action="{{ route('admin.menu.toggle-status', $menu->id) }}" method="POST" class="d-inline">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <button type="submit" class="btn btn-xs {{ $menu->is_available ? 'btn-outline-danger' : 'btn-outline-success' }} btn-block">
+                                                        <i class="fas {{ $menu->is_available ? 'fa-ban' : 'fa-check' }} mr-1"></i>
+                                                        {{ $menu->is_available ? 'Nonaktifkan' : 'Aktifkan' }}
+                                                    </button>
+                                                </form>
+                                            </td>
+                                            <td class="align-middle">
                                                 <a href="{{ route('admin.menu.edit', $menu->id) }}" class="btn btn-warning btn-sm">
                                                     <i class="fas fa-edit"></i> Edit
                                                 </a>
@@ -88,7 +104,7 @@
                                         @endforeach
                                     @else
                                         <tr>
-                                            <td colspan="7" class="text-center">Belum ada menu di kategori ini.</td>
+                                            <td colspan="8" class="text-center">Belum ada menu di kategori ini.</td>
                                         </tr>
                                     @endif
                                 </tbody>

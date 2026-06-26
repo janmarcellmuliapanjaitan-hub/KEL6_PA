@@ -58,6 +58,15 @@
                     </div>
 
                     <div class="form-group">
+                        <label><i class="fas fa-toggle-on mr-1 text-primary"></i> Status Ketersediaan</label>
+                        <select name="is_available" class="form-control @error('is_available') is-invalid @enderror" required>
+                            <option value="1" {{ old('is_available', $menu->is_available ? '1' : '0') == '1' ? 'selected' : '' }}>Tersedia</option>
+                            <option value="0" {{ old('is_available', $menu->is_available ? '1' : '0') == '0' ? 'selected' : '' }}>Tidak Tersedia</option>
+                        </select>
+                        @error('is_available') <span class="text-danger">{{ $message }}</span> @enderror
+                    </div>
+
+                    <div class="form-group">
                         <label><i class="fas fa-image mr-1 text-primary"></i> Gambar Menu</label>
 
                         @if($menu->image)

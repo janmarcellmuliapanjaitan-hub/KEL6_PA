@@ -88,6 +88,13 @@
                             </a>
                         </li>
 
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('admin.settings*') ? 'active' : '' }}" 
+                               href="{{ route('admin.settings.index') }}">
+                                <i class="fas fa-cogs"></i> Pengaturan
+                            </a>
+                        </li>
+
 
             </ul>
         </nav>

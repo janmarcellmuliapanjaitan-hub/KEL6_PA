@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\AboutController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Guest\ContactController as GuestContactController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\OrderController;
@@ -20,6 +21,7 @@ use App\Http\Controllers\Admin\PromoController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\LocationController;
 use App\Http\Controllers\Admin\TestimoniController as AdminTestimoniController;
+use App\Http\Controllers\Admin\SettingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,11 +73,13 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'is_admin'])->group(
         Route::get('/{menu}/edit', [MenuController::class, 'edit'])->name('edit');
         Route::put('/{menu}', [MenuController::class, 'update'])->name('update');
         Route::delete('/{menu}', [MenuController::class, 'destroy'])->name('destroy');
+        Route::patch('/{menu}/toggle-status', [MenuController::class, 'toggleStatus'])->name('toggle-status');
     });
 
     // Order Management
     Route::prefix('orders')->name('orders.')->group(function () {
         Route::get('/', [OrderController::class, 'index'])->name('index');
+        Route::get('/confirm-wa', [OrderController::class, 'confirmWaView'])->name('confirm-wa-view');
         Route::get('/{id}', [OrderController::class, 'show'])->name('show');
         Route::delete('/{id}', [OrderController::class, 'destroy'])->name('destroy');
         Route::post('/{id}/approve', [OrderController::class, 'approve'])->name('approve');
@@ -138,6 +142,12 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'is_admin'])->group(
         Route::put('/{contact}', [ContactController::class, 'update'])->name('update');
         Route::delete('/{contact}', [ContactController::class, 'destroy'])->name('destroy');
     });
+
+    // System Settings Management
+    Route::prefix('settings')->name('settings.')->group(function () {
+        Route::get('/', [SettingController::class, 'index'])->name('index');
+        Route::put('/', [SettingController::class, 'update'])->name('update');
+    });
 });
 
 /*
@@ -159,3 +169,7 @@ Route::prefix('guest')->name('guest.')->group(function () {
     Route::get('/register', [RegisterController::class, 'showGuestRegistrationForm'])->name('register.form');
     Route::post('/register', [RegisterController::class, 'guestRegister'])->name('register');
 });
+
+// Password Reset Routes
+Route::get('/forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('/forgot-password', [ForgotPasswordController::class, 'resetPasswordDirectly'])->name('password.update');
